@@ -6,7 +6,11 @@ export default (orders: any, pagination: any, filters: any): URLSearchParams => 
 
   if (pagination && (pagination.page || pagination.page === 0) && pagination.pageSize) {
     result.set('page', pagination.page.toString())
-    result.set('size', pagination.size.toString())
+    result.set('size', pagination.pageSize.toString())
+  }
+
+  if (orders && Array.isArray(orders) && orders.length > 0) {
+    result.set('orders', JSON.stringify(orders))
   }
 
   console.log('Server transformation orders:', orders)

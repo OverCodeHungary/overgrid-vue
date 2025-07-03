@@ -14,6 +14,13 @@ export interface OverGridPaginationConfig {
   initialSize: number
 
   /**
+   * If true, the pagination starts with page 0. If false, it starts with page 1.
+   * This is useful for APIs that use 0-based pagination.
+   * If not set, the default is false (1-based pagination).
+   */
+  startWithZero?: boolean
+
+  /**
    * The possible page sizes that the user can select/change in settins menu. If not set, the grid will not show the page size selector.
    */
   possiblePageSizes?: Array<number>

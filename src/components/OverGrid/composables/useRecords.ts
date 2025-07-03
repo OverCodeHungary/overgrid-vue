@@ -1,20 +1,25 @@
-import { ref, nextTick } from 'vue'
+import { ref, nextTick, watch } from 'vue'
 import type { OverGridConfig } from '../types/OverGridConfig'
 import usePagination from './usePagination'
+import useOrdering from './useOrdering'
 import useLogger from './useLogger'
 import axios from 'axios'
+import useAutoRefresh from './useAutoRefresh'
 import DefaultServerTransformation from '../serverTransformations/DefaultServerTransformation'
 
 export default (gridConfig: OverGridConfig) => {
   const records = ref<any[]>([])
-  const pagination = usePagination(gridConfig.pagination)
+  const pagination = usePagination(gridConfig.pagination, gridConfig.gridUniqueId)
+  const ordering = useOrdering(gridConfig.orderConfiguration)
   const logger = useLogger()
+  const loading = ref(false)
 
   const fetchRecords = async () => {
+    loading.value = true
     let response = await axios.get(gridConfig.endpoint, {
       params: gridConfig.serverTransformation
-        ? gridConfig.serverTransformation(null, pagination.state, null)
-        : DefaultServerTransformation(null, pagination.state, null),
+        ? gridConfig.serverTransformation(ordering.rawState.value, pagination.state, null) // @TODO: Handle orders state and filters state
+        : DefaultServerTransformation(ordering.rawState.value, pagination.state, null), // @TODO: Handle orders state and filters state
       responseType: 'json',
     })
 
@@ -52,10 +57,34 @@ export default (gridConfig: OverGridConfig) => {
         gridConfig.events?.readyAfterRefresh()
       }
     })
+
+    loading.value = false
   }
+
+  const autoRefresh = useAutoRefresh(gridConfig.refreshable, gridConfig.gridUniqueId, fetchRecords)
+
+  watch(
+    () => [pagination.state.page, pagination.state.pageSize],
+    (newPage) => {
+      logger.info('Page changed to:', newPage)
+      fetchRecords()
+    },
+  )
+
+  watch(
+    () => ordering.rawState,
+    (newOrders) => {
+      fetchRecords()
+    },
+    { deep: true }, // Deep watch to capture changes in the orders array
+  )
 
   return {
     records,
     fetchRecords,
+    pagination,
+    ordering,
+    loading,
+    autoRefresh,
   }
 }

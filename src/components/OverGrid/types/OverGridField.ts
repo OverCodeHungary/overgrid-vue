@@ -1,8 +1,11 @@
 export class OverGridField {
-  constructor(key: string, title: string) {
+  constructor(key: string, title: string, fieldsObject: any) {
     this.key = key
     this.title = title
+    this.fieldsObject = fieldsObject
   }
+
+  fieldsObject: any
 
   /**
    * The field name is the key of the field in the record object. It is used to access the value of the field in the record object responded from server.
@@ -69,13 +72,15 @@ export class OverGridField {
 
   /**
    * If true, the column is selectable in the Column Selector Panel. If false, the column is not selectable.
+   * Default is true.
    */
-  selectable?: boolean
+  selectable?: boolean = true
 
   /**
    * If true, the column is orderable/sortable. If false, the column is not orderable/sortable.
+   * Default is true.
    */
-  orderable?: boolean
+  orderable?: boolean = true
 
   /**
    * You can set a custom order key for the column. If not set, the order key is the same as the field name. Useful when the server expects a different key as it serves in the DTO.
@@ -84,8 +89,9 @@ export class OverGridField {
 
   /**
    * If its true or not set, the column is exportable and will be added in the export file. If false, the column is not exportable.
+   * Default is true.
    */
-  exportable?: boolean
+  exportable?: boolean = true
 
   /**
    * Sets the width of the column. If not set, the column width is auto. Example values: '100px', '10%'.
@@ -110,4 +116,6 @@ export class OverGridField {
      */
     config?: any
   }
+
+  commit() {}
 }

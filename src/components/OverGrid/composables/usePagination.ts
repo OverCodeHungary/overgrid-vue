@@ -1,32 +1,65 @@
-import { reactive } from 'vue'
+import { reactive, computed } from 'vue'
 import type { OverGridPaginationConfig } from '../types/OverGridPaginationConfig'
+import type { OverGridUsePaginationInterface } from '../types/OverGridUsePaginationInterface'
 
-export default (paginationConfig?: OverGridPaginationConfig) => {
-  console.log(paginationConfig)
+export default (
+  paginationConfig?: OverGridPaginationConfig,
+  gridUniqueId?: string,
+): OverGridUsePaginationInterface => {
   const state = reactive({
     page:
-      paginationConfig?.initialPage || paginationConfig?.initialPage === 0
+      paginationConfig?.initialPage ||
+      (paginationConfig?.startWithZero && paginationConfig?.initialPage === 0)
         ? paginationConfig?.initialPage
-        : 1,
+        : paginationConfig?.startWithZero
+          ? 0
+          : 1,
     pageSize: paginationConfig?.initialSize || 10,
     totalPages: 0,
   })
 
   function nextPage() {
-    if (state.totalPages > 0 && state.page < state.totalPages) {
+    if (
+      state.totalPages > 0 &&
+      state.page < state.totalPages - (paginationConfig?.startWithZero ? 1 : 0)
+    ) {
       state.page += 1
     }
   }
 
   function previousPage() {
-    if (state.page > 1) {
+    if (state.page > 1 - (paginationConfig?.startWithZero ? 1 : 0)) {
       state.page -= 1
     }
   }
 
   function setPage(newPage: number) {
-    if (newPage > 0 && newPage <= state.totalPages) {
+    if (
+      newPage > 0 + (paginationConfig?.startWithZero ? 0 : 1) &&
+      newPage < state.totalPages - (paginationConfig?.startWithZero ? 1 : 0)
+    ) {
       state.page = newPage
+    }
+  }
+
+  function lastPage() {
+    if (state.totalPages > 0) {
+      state.page = state.totalPages - (paginationConfig?.startWithZero ? 1 : 0)
+    }
+  }
+
+  function firstPage() {
+    if (state.totalPages > 0) {
+      state.page = paginationConfig?.startWithZero ? 0 : 1
+    }
+  }
+
+  function changePageSize(newPageSize: number) {
+    if (paginationConfig?.possiblePageSizes?.includes(newPageSize)) {
+      state.pageSize = newPageSize
+      // Reset to the first page when changing page size
+      state.page = paginationConfig?.startWithZero ? 0 : 1
+      localStorage.setItem('overgrid-page-size-' + gridUniqueId, newPageSize.toString())
     }
   }
 
@@ -59,11 +92,30 @@ export default (paginationConfig?: OverGridPaginationConfig) => {
     }
   }
 
+  function hasPreviousPage() {
+    return state.page > 1 - (paginationConfig?.startWithZero ? 1 : 0)
+  }
+
+  function hasNextPage() {
+    return state.page < state.totalPages - (paginationConfig?.startWithZero ? 1 : 0)
+  }
+
+  const currentPageForUI = computed(() => {
+    return paginationConfig?.startWithZero ? state.page + 1 : state.page
+  })
+
   return {
     state,
     nextPage,
     previousPage,
     setPage,
     setByResponse,
+    hasPreviousPage,
+    hasNextPage,
+    firstPage,
+    lastPage,
+    currentPageForUI,
+    changePageSize,
+    pageSize: computed(() => state.pageSize),
   }
 }

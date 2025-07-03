@@ -1,5 +1,8 @@
 import type { OverGridField } from './OverGridField'
 import type { OverGridPaginationConfig } from './OverGridPaginationConfig'
+import type { OverGridOrderConfig } from './OverGridOrderConfig'
+import type { OverGridRefreshableConfig } from './OverGridRefreshableConfig'
+import type { OverGridColumnSelectorConfig } from './OverGridColumnSelectorConfig'
 
 /**
  * The full configuration object for the OverGrid
@@ -47,42 +50,7 @@ interface OverGridConfig {
   /**
    * The configuration object for the ordering in grid. If not set, the order is fully disabled.
    */
-  orderConfiguration?: {
-    /**
-     * If true, the ordering is active. If false, the ordering is disabled.
-     */
-    active: boolean
-
-    /**
-     * Sets the default key for ordering in grid. Works only if the defaultOrderDirection is set. If not set, default ordering is disabled.
-     */
-    defaultOrderKey?: string
-
-    /**
-     * Sets the default direction for ordering in grid. Works only if the defaultOrderKey is set. If not set, default ordering is disabled.
-     */
-    defaultOrderDirection?: 'ASC' | 'DESC'
-
-    /**
-     * If true, the ordering is local. If false, the ordering is server-side.
-     */
-    orderLocal?: boolean
-
-    /**
-     * If true, the user can define multiple fields for ordering. If false, the user can define only one field for ordering.
-     */
-    orderMultiple?: boolean
-
-    /**
-     * If true, the grid will show the order index in column title. Works only if the orderMultiple is set to true. For example if the user orders by 'name' and 'age', the grid will show '1' on name column title, and '2' in age column title.
-     */
-    showOrderIndex?: boolean
-
-    /**
-     * The key used in request payload to send ordering list to server. If not set, the default key is 'sorting'.
-     */
-    payloadField?: string
-  }
+  orderConfiguration?: OverGridOrderConfig
 
   /**
    * You can modify the server request parameters before sending to the server. This function is called before the request is sent. You can modify the ordering, pagination and filtering parameters in order to your needs. If not set, the grid will send the parameters as is.
@@ -104,6 +72,7 @@ interface OverGridConfig {
    * The pagination configuration object for the grid.
    */
   pagination?: OverGridPaginationConfig
+
   rowHighlighter?: {
     /**
      * Row highlighter: You can highlight any row in the grid (e.g. you can set a slightly darker background color). For example you can set background color based on a priority value in record.
@@ -217,12 +186,7 @@ interface OverGridConfig {
   /*
    * The column selector configuration object for the grid.
    */
-  columnSelector?: {
-    /**
-     * If true, the column selector is active. If false, the column selector is disabled.
-     */
-    active: boolean
-  }
+  columnSelector?: OverGridColumnSelectorConfig
   /*
    * The XLSX/CSV export configuration object for the grid.
    */
@@ -244,47 +208,7 @@ interface OverGridConfig {
   /*
    * The refreshable configuration object for the grid.
    */
-  refreshable?: {
-    /**
-     * If true, the refresh button is active. If false, the refresh button is hidden.
-     */
-    manualActive: boolean
-
-    /**
-     * If true, the auto refresh is active in the grid's menu. If false, the auto refresh is disabled.
-     */
-    autoActive: boolean
-
-    /**
-     * If true, the auto refresh can be disabled in the grid's menu by the user. If false, the auto refresh cannot be disabled.
-     */
-    autoCanBeDisabled: boolean
-
-    /**
-     * The auto refresh values. You can set multiple values here. Each value has a key (must be unique), a refresh interval in seconds and a title. The default value is the value that is selected by default in the grid's menu.
-     */
-    autoValues: Array<{
-      /**
-       * The key of the value. This key is used in the grid's menu to identify the value. It must be unique in the array.
-       */
-      key: string
-
-      /**
-       * The refresh interval in seconds.
-       */
-      refreshInterval: number
-
-      /**
-       * The title of the value. This title is shown in the grid's menu.
-       */
-      title: string
-
-      /**
-       * If true, the value is the default value. If false, the value is not the default value.
-       */
-      default?: boolean
-    }>
-  }
+  refreshable?: OverGridRefreshableConfig
 
   /**
    * The columns configuration object for the grid. The key of the object is the field name in the server's response. The value is the configuration object for the column. See the MappingRecordType for more information.

@@ -1,0 +1,45 @@
+@import 'tailwindcss';
+
+.overgrid-dropdown-panel {
+  background-color: white;
+}
+
+.overgrid-toolbar-dropdown-section-title {
+  @apply flex flex-row font-bold;
+}
+
+.overgrid-toolbar-dropdown-section-item {
+  @apply flex flex-row;
+}
+
+.overgrid-autorefresh-item {
+  @apply flex flex-row items-center justify-between gap-1;
+}
+
+.overgrid-autorefresh-item svg {
+  @apply h-4 w-4;
+}
+
+.overgrid-autorefresh-item-selected {
+  @apply text-blue-500;
+}
+
+.overgrid-page-size-selector-item {
+  @apply flex flex-row items-center justify-between gap-1;
+}
+
+.overgrid-page-size-selector-item svg {
+  @apply h-4 w-4;
+}
+
+.overgrid-page-size-selector-item-selected {
+  @apply text-blue-500;
+}
+
+.overgrid-base-operator-item {
+  @apply flex flex-row items-center justify-between gap-1;
+}
+
+.overgrid-base-operator-item svg {
+  @apply h-4 w-4;
+}

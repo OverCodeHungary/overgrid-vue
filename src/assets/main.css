@@ -1,1 +1,9 @@
 @import 'tailwindcss';
+
+.overgrid {
+  @apply w-full;
+}
+
+.overgrid .overgrid-cell {
+  @apply border-2;
+}

@@ -1,6 +1,10 @@
 export default () => {
   const prefix = '[OverGrid]'
 
+  function info(...args: any[]) {
+    console.info(prefix, ...args)
+  }
+
   function log(...args: any[]) {
     console.log(prefix, ...args)
   }
@@ -14,6 +18,7 @@ export default () => {
   }
 
   return {
+    info,
     log,
     warn,
     error,
