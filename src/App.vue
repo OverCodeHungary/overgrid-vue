@@ -52,6 +52,11 @@ const config = {
   },
   columnSelector: {
     active: true
+  },
+  currentPageExport: {
+    active: true,
+    xlsxEnabled: true,
+    csvEnabled: true,
   }
 }
 

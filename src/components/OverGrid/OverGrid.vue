@@ -15,7 +15,8 @@
       <Dropdown :orientation="((clientWidth < 640) ? 'right' : 'left')" ref="operationsDropdown"
         class="overgrid-operations-dropdown">
         <template #content>
-          <BaseOperations :config="props.config" :columnSelector="columnSelector" />
+          <BaseOperations :config="props.config" :columnSelector="columnSelector"
+            :currentPageExporter="currentPageExporter" />
           <AutoRefresh :autoRefresher="records.autoRefresh"
             v-if="props.config?.refreshable && props.config?.refreshable.autoActive"
             :config="props.config?.refreshable" />
@@ -58,6 +59,9 @@
 
     <!-- MODALS -->
     <ColumnSelectorModal :mappingVisible="fields.mappingVisible()" :columnSelector="columnSelector" />
+    <CurrentPageExporterModal :currentPageExporterConfig="props.config.currentPageExport"
+      :mappingVisible="columnSelector.filter(fields.mappingVisible())" :currentPageExporter="currentPageExporter"
+      :currentRecords="records.records" />
     <!-- MODALS -->
   </div>
 </template>
@@ -70,6 +74,7 @@ import BaseOperations from './components/ToolbarSections/BaseOperations.vue';
 import AutoRefresh from './components/ToolbarSections/AutoRefresh.vue';
 import PageSize from './components/ToolbarSections/PageSize.vue';
 import ColumnSelectorModal from './components/Modals/ColumnSelectorModal.vue';
+import CurrentPageExporterModal from './components/Modals/CurrentPageExporterModal.vue';
 import { onMounted } from 'vue';
 import useFields from './composables/useFields';
 import useRecords from './composables/useRecords';
@@ -78,6 +83,7 @@ import { ref } from 'vue';
 import useI18n from './composables/useI18n';
 import './themes/default.css'
 import useColumnSelector from './composables/useColumnSelector';
+import useCurrentPageExport from './composables/useCurrentPageExport';
 
 const props = defineProps<{
   config: OverGridConfig;
@@ -88,6 +94,7 @@ const i18n = useI18n(props.config.locale || 'en');
 const fields = useFields();
 const records = useRecords(props.config);
 const columnSelector = useColumnSelector(props.config.columnSelector, props.config.gridUniqueId);
+const currentPageExporter = useCurrentPageExport(props.config.currentPageExport);
 
 onMounted(() => {
   records.fetchRecords();

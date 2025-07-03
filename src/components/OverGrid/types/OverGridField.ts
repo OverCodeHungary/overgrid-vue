@@ -62,7 +62,7 @@ export class OverGridField {
 
   /**
    * A function to transform the data before export to an XLSX (or CSV) cell. This function is called before the data is written to the XLSX (or CSV) file. You can modify the data here. For example, you can format a date, or you can show a different value based on the raw data.
-   * If the exportMiddleware is set, the middleware function will not be called for the export. If the exportMiddleware is not set, the middleware function will be called for the export. If neither are set, the data will be exported as is.
+   * If the exportMiddleware is set, the middleware function will not be called for the export. If the exportMiddleware is not set, the middleware function will be called for the export. If neither are set, the Formatter will be used to format the data for export, if applicable (e.g.: Status formatter, Boolean formatter, etc.).
    * @param data The raw data of the cell
    * @param record The full record object
    * @param format The format of the cell. The format is used to determine the type of the export. Currently, the possible values are 'xlsx', 'csv'.

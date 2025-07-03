@@ -2,14 +2,14 @@
   <CustomContentModal :show="props.columnSelector.isModalShown" :title="i18n.l('column_selector')"
     :close="() => { props.columnSelector.closeModal() }" :ok="setColumns">
     <template #content>
-      <div class="grid grid-cols-2 gap-2 mb-5">
-        <label class="inline-flex items-center mb-2" v-for="(overGridField, index) in props.mappingVisible"
-          :key="index">
+      <div class="grid grid-cols-2 overgrid-checkbox-nest">
+        <label class="inline-flex items-center overgrid-checkbox-label"
+          v-for="(overGridField, index) in props.mappingVisible" :key="index">
           <span class="flex flex-row" v-if="overGridField.title != ''">
             <input :disabled="!overGridField.selectable" v-model="selectedFields" :value="overGridField.key"
               class="overgrid-checkbox" type="checkbox" />
-            <p :class="[{ 'opacity-40': !overGridField.selectable }]" class="pl-2 cursor-pointer">{{ overGridField.title
-            }}</p>
+            <p :class="[{ 'opacity-40': !overGridField.selectable }]" class="cursor-pointer">{{ overGridField.title
+              }}</p>
           </span>
         </label>
       </div>

@@ -2,27 +2,22 @@ import { reactive, computed } from 'vue'
 import type { OverGridPaginationConfig } from '../types/OverGridPaginationConfig'
 import type { OverGridUsePaginationInterface } from '../types/OverGridUsePaginationInterface'
 
-export default (
-  paginationConfig?: OverGridPaginationConfig,
-  gridUniqueId?: string,
-): OverGridUsePaginationInterface => {
+export default (paginationConfig?: OverGridPaginationConfig, gridUniqueId?: string): OverGridUsePaginationInterface => {
   const state = reactive({
     page:
-      paginationConfig?.initialPage ||
-      (paginationConfig?.startWithZero && paginationConfig?.initialPage === 0)
+      paginationConfig?.initialPage || (paginationConfig?.startWithZero && paginationConfig?.initialPage === 0)
         ? paginationConfig?.initialPage
         : paginationConfig?.startWithZero
           ? 0
           : 1,
-    pageSize: paginationConfig?.initialSize || 10,
+    pageSize: localStorage.getItem('overgrid-page-size-' + gridUniqueId)
+      ? parseInt(localStorage.getItem('overgrid-page-size-' + gridUniqueId) || '10')
+      : paginationConfig?.initialSize || 10,
     totalPages: 0,
   })
 
   function nextPage() {
-    if (
-      state.totalPages > 0 &&
-      state.page < state.totalPages - (paginationConfig?.startWithZero ? 1 : 0)
-    ) {
+    if (state.totalPages > 0 && state.page < state.totalPages - (paginationConfig?.startWithZero ? 1 : 0)) {
       state.page += 1
     }
   }

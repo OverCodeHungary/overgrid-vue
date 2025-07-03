@@ -3,6 +3,7 @@ import type { OverGridPaginationConfig } from './OverGridPaginationConfig'
 import type { OverGridOrderConfig } from './OverGridOrderConfig'
 import type { OverGridRefreshableConfig } from './OverGridRefreshableConfig'
 import type { OverGridColumnSelectorConfig } from './OverGridColumnSelectorConfig'
+import type { OverGridCurrentPageExportConfig } from './OverGridCurrentPageExportConfig'
 
 /**
  * The full configuration object for the OverGrid
@@ -190,21 +191,7 @@ interface OverGridConfig {
   /*
    * The XLSX/CSV export configuration object for the grid.
    */
-  xlsxExport?: {
-    /**
-     * If true, the XLSX/CSV export is active. If false, the XLSX/CSV export is disabled.
-     */
-    active: boolean
-    /**
-     * @TBD
-     */
-    additionalExportFields?: {
-      /**
-       * User-defined function to append additional fields for the export. The function gets the record object and should return an array.
-       */
-      columnsFn?: Function
-    }
-  }
+  currentPageExport?: OverGridCurrentPageExportConfig
   /*
    * The refreshable configuration object for the grid.
    */
