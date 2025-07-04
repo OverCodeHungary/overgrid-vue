@@ -4,6 +4,7 @@ import type { OverGridOrderConfig } from './OverGridOrderConfig'
 import type { OverGridRefreshableConfig } from './OverGridRefreshableConfig'
 import type { OverGridColumnSelectorConfig } from './OverGridColumnSelectorConfig'
 import type { OverGridCurrentPageExportConfig } from './OverGridCurrentPageExportConfig'
+import type { OverGridBulkOperationsConfig } from './OverGridBulkOperationsConfig'
 
 /**
  * The full configuration object for the OverGrid
@@ -149,20 +150,7 @@ interface OverGridConfig {
   /*
    * The column selector/bulk operation configuration object for the grid.
    */
-  bulkOperation?: {
-    /**
-     * If true, the column selector/bulk operation is active. If false, the column selector/bulk operation is disabled.
-     */
-    active: boolean
-    /**
-     * The bulk operation methods. You can define multiple methods here. Each method has a title, a key (must be unique) and an action function. The action function gets the checked rows and a function to clear the checked rows.
-     */
-    methods: Array<{
-      title: string
-      key: string
-      action: (checkedRows: Array<any>, clearRows: () => void) => void
-    }>
-  }
+  bulkOperations?: OverGridBulkOperationsConfig
   /*
    * The events configuration object for the grid.
    */

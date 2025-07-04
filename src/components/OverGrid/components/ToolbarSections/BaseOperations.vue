@@ -26,6 +26,16 @@
         <span class="">{{ i18n.l('current_page_export') }}</span>
       </a>
     </li>
+    <li class="overgrid-toolbar-dropdown-section-item" v-if="!props.config?.hideAboutWindow">
+      <a href="javascript:void(null)" @click="props.aboutModal.showModal" class="overgrid-base-operator-item">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+          class="size-6">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
+        </svg>
+        <span class="">{{ i18n.l('about') }}</span>
+      </a>
+    </li>
   </ul>
 </template>
 
@@ -35,17 +45,20 @@ import useI18n from '../../composables/useI18n';
 import type { OverGridConfig } from '../../types/OverGridConfig';
 import type { OverGridUseColumnSelectorInterface } from '../../types/OverGridUseColumnSelectorInterface';
 import type { OverGridUseCurrentPageExportInterface } from '../../types/OverGridUseCurrentPageExportInterface';
+import type { OverGridUseAboutModalInterface } from '../../types/OverGridUseAboutModalInterface';
 const i18n = useI18n();
 
 const needsToShow = computed(() => {
   return props.config?.columnSelector?.active ||
-    (props.config?.currentPageExport?.active && (props.config.currentPageExport?.xlsxEnabled || props.config.currentPageExport?.csvEnabled))
+    (props.config?.currentPageExport?.active && (props.config.currentPageExport?.xlsxEnabled || props.config.currentPageExport?.csvEnabled)) ||
+    !props.config?.hideAboutWindow
 })
 
 const props = defineProps<{
   config: OverGridConfig,
   columnSelector: OverGridUseColumnSelectorInterface,
-  currentPageExporter: OverGridUseCurrentPageExportInterface
+  currentPageExporter: OverGridUseCurrentPageExportInterface,
+  aboutModal: OverGridUseAboutModalInterface
 }>();
 
 

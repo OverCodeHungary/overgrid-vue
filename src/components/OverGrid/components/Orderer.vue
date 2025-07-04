@@ -1,6 +1,6 @@
 <template>
   <div v-if="props.orderer.isFieldActive(props.field)">
-    <button @click="props.orderer.toggleOrderDirection(props.field)"
+    <button data-test="asc-button" @click="props.orderer.toggleOrderDirection(props.field)"
       v-if="props.orderer.getFieldOrderDirection(props.field) == 'DESC'"
       class="overgrid-btn overgrid-order-btn overgrid-order-btn-inactive">
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
@@ -8,7 +8,7 @@
         <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 13.5 12 21m0 0-7.5-7.5M12 21V3" />
       </svg>
     </button>
-    <button @click="props.orderer.toggleOrderDirection(props.field)"
+    <button data-test="desc-button" @click="props.orderer.toggleOrderDirection(props.field)"
       v-if="props.orderer.getFieldOrderDirection(props.field) == 'ASC'"
       class="overgrid-btn overgrid-order-btn overgrid-order-btn-inactive">
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
@@ -16,7 +16,7 @@
         <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 10.5 12 3m0 0 7.5 7.5M12 3v18" />
       </svg>
     </button>
-    <button @click="props.orderer.removeOrder(props.field)"
+    <button data-test="remove-button" @click="props.orderer.removeOrder(props.field)"
       class="overgrid-btn overgrid-order-btn overgrid-order-btn-inactive">
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
         class="size-6">
@@ -25,7 +25,7 @@
       </svg>
     </button>
   </div>
-  <button @click="props.orderer.addOrder(props.field)"
+  <button data-test="add-button" @click="props.orderer.addOrder(props.field)"
     class="overgrid-btn overgrid-order-btn overgrid-order-btn-inactive" v-else>
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
       class="size-6">

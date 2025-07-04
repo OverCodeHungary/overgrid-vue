@@ -7,6 +7,7 @@ export default {
   export_format: 'Format',
   export_fields: 'Fields',
   export_records: 'Export current page',
+  about: 'About OverGrid',
 
   auto_refresh_menu_title: 'Automatic refresh',
   'automatic-list-update-disabled': 'Disabled',
@@ -50,7 +51,6 @@ export default {
   ascending: 'Ascending order',
   descending: 'Descending order',
   remove_order: 'Remove ordering',
-  about: 'About OverGrid',
   close: 'Close',
   start_date: 'Start date',
   end_date: 'End date',

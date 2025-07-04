@@ -12,6 +12,7 @@ const config = {
   gridUniqueId: 'overgrid-dev',
   endpoint: 'https://robber.hu/overgrid-api/overgrid-demo-api.php',
   rootkey: 'data',
+  idkey: 'id',
   pagination: {
     active: true,
     initialPage: 0,
@@ -57,7 +58,18 @@ const config = {
     active: true,
     xlsxEnabled: true,
     csvEnabled: true,
-  }
+  },
+  bulkOperations: {
+    active: true,
+    methods: [{
+      title: 'Alert me',
+      key: 'alertMe',
+      action: (checkedRows: any[], clearRows: () => void) => {
+        alert(`You have selected ${checkedRows.length} rows.`);
+        clearRows();
+      }
+    }]
+  },
 }
 
 onMounted(() => {
