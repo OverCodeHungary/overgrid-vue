@@ -1,5 +1,13 @@
 <template>
-  <OverGrid :config="config" ref="overgrid" />
+  <OverGrid :config="config" ref="overgrid">
+    <template #extraRow="{ record, extraSlotParams }">
+      <div class="overgrid-extra-row-content">
+        <p>Extra Row Content for ID: {{ record }}</p>
+        <p>Extra Params: {{ extraSlotParams.test }}</p>
+        <p>More data can be added here...</p>
+      </div>
+    </template>
+  </OverGrid>
 </template>
 
 <script setup lang="ts">
@@ -70,6 +78,13 @@ const config = {
       }
     }]
   },
+  extraRow: {
+    active: true,
+    multiOpen: true,
+    extraSlotParams: {
+      test: 'This is a test value',
+    }
+  }
 }
 
 onMounted(() => {

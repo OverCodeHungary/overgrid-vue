@@ -5,6 +5,7 @@ import type { OverGridRefreshableConfig } from './OverGridRefreshableConfig'
 import type { OverGridColumnSelectorConfig } from './OverGridColumnSelectorConfig'
 import type { OverGridCurrentPageExportConfig } from './OverGridCurrentPageExportConfig'
 import type { OverGridBulkOperationsConfig } from './OverGridBulkOperationsConfig'
+import type { OverGridExtraRowConfig } from './OverGridExtraRowConfig'
 
 /**
  * The full configuration object for the OverGrid
@@ -133,20 +134,7 @@ interface OverGridConfig {
   /*
    * The extra row configuration object for the grid.
    */
-  extraRow?: {
-    /**
-     * If true, the extra row is active. If false, the extra row is disabled.
-     */
-    active: boolean
-    /**
-     * Determines the user can open more than one extra row at the same time. If false, the user can open only one extra row at a time (close the other when open a new one).
-     */
-    multiOpen: boolean
-    /**
-     * Ths extraRow slot gets the full record object of the "parent". You can define extra fields here that you want to pass to the slot.
-     */
-    extraParams: object
-  }
+  extraRow?: OverGridExtraRowConfig
   /*
    * The column selector/bulk operation configuration object for the grid.
    */

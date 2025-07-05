@@ -3,7 +3,7 @@
     :grid-unique-id="props.config.gridUniqueId">
     <div class="overgrid-toolbar flex flex-row">
       <span>@TODO: Filtering</span>
-      <span class="overgrid-toolbar-spacer hidden lg:flex grow"></span>
+      <span class="overgrid-toolbar-spacer flex grow"></span>
       <button v-if="props.config.refreshable?.manualActive" @click="records.fetchRecords"
         class="overgrid-btn overgrid-btn-manual-refresh">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
@@ -32,6 +32,11 @@
     <table class="w-full">
       <thead class="overgrid-header">
         <tr>
+          <th class="overgrid-cell overgrid-extra-row-cell"
+            v-if="props.config.extraRow && props.config.extraRow.active && props.config.idkey">
+            <label class="">
+            </label>
+          </th>
           <th class="overgrid-cell overgrid-checkbox-cell"
             v-if="props.config.bulkOperations && props.config.bulkOperations.active && props.config.bulkOperations.methods?.length > 0 && props.config.idkey">
             <label class="">
@@ -49,19 +54,47 @@
         </tr>
       </thead>
       <tbody class="overgrid-body">
-        <tr v-for="(record, index) in records.records.value" :key="'record_' + index">
-          <td class="overgrid-cell overgrid-checkbox-cell"
-            v-if="props.config.bulkOperations && props.config.bulkOperations.active && props.config.bulkOperations.methods?.length > 0 && props.config.idkey">
-            <label class="overgrid-checkbox-label">
-              <input :value="record[props.config.idkey]?.toString()" v-model="bulkOperations.checkedRows.value"
-                class="overgrid-checkbox" type="checkbox" />
-            </label>
-          </td>
-          <td class="overgrid-cell" v-for="bodyField in columnSelector.filter(fields.mappingVisible())"
-            :key="'body_' + bodyField.key">
-            {{ record[bodyField.key] }}
-          </td>
-        </tr>
+        <template v-for="(record, index) in records.records.value" :key="'record_' + index">
+          <tr>
+            <td class="overgrid-cell overgrid-extra-row-cell"
+              v-if="props.config.extraRow && props.config.extraRow.active && props.config.idkey">
+              <button @click="extraRow.toggleRow(record[props.config.idkey]?.toString())"
+                class="overgrid-btn overgrid-btn-extra-row">
+                <svg v-if="!extraRow.isRowOpened(record[props.config.idkey]?.toString())"
+                  xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                  stroke="currentColor" class="size-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                </svg>
+                <svg v-else xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                  stroke="currentColor" class="size-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                </svg>
+              </button>
+            </td>
+            <td class="overgrid-cell overgrid-checkbox-cell"
+              v-if="props.config.bulkOperations && props.config.bulkOperations.active && props.config.bulkOperations.methods?.length > 0 && props.config.idkey">
+              <label class="overgrid-checkbox-label">
+                <input :value="record[props.config.idkey]?.toString()" v-model="bulkOperations.checkedRows.value"
+                  class="overgrid-checkbox" type="checkbox" />
+              </label>
+            </td>
+            <td class="overgrid-cell" v-for="bodyField in columnSelector.filter(fields.mappingVisible())"
+              :key="'body_' + bodyField.key">
+              {{ record[bodyField.key] }}
+            </td>
+          </tr>
+          <Transition name="overgrid-anim-extra-row">
+            <tr class="overgrid-extra-row"
+              v-if="props.config.extraRow && props.config.extraRow.active && props.config.idkey"
+              v-show="extraRow.isRowOpened(record[props.config.idkey]?.toString())">
+              <td
+                :colspan="columnSelector.filter(fields.mappingVisible()).length + (props.config.bulkOperations && props.config.bulkOperations.active && props.config.bulkOperations.methods?.length > 0 && props.config.idkey ? 1 : 0) + 1">
+                <slot v-bind:record="record" v-bind:extraSlotParams="props.config.extraRow?.extraSlotParams"
+                  name="extraRow"></slot>
+              </td>
+            </tr>
+          </Transition>
+        </template>
       </tbody>
     </table>
 
@@ -83,6 +116,7 @@
 </template>
 
 <script lang="ts" setup>
+import { computed } from 'vue';
 import Paginator from './components/Paginator.vue';
 import Orderer from './components/Orderer.vue';
 import Dropdown from './components/Dropdown.vue';
@@ -104,6 +138,7 @@ import useCurrentPageExport from './composables/useCurrentPageExport';
 import useAboutModal from './composables/useAboutModal';
 import useBulkOperations from './composables/useBulkOperations';
 import BulkOperationsDropdown from './components/BulkOperationsDropdown.vue';
+import useExtraRow from './composables/useExtraRow';
 
 const props = defineProps<{
   config: OverGridConfig;
@@ -117,6 +152,7 @@ const columnSelector = useColumnSelector(props.config.columnSelector, props.conf
 const currentPageExporter = useCurrentPageExport(props.config.currentPageExport);
 const aboutModal = useAboutModal();
 const bulkOperations = useBulkOperations(props.config.bulkOperations, props.config.idkey);
+const extraRow = useExtraRow(props.config.extraRow, props.config.idkey);
 
 onMounted(() => {
   records.fetchRecords();
