@@ -19,29 +19,41 @@ class OverGridFields {
     return field
   }
 
-  addNumberField(key: string, title: string) {
+  addNumberField(key: string, title: string, extraConfig: any = {}) {
     let field: OverGridField = this.addField(key, title)
-    return this
+    field.columnFilter = {
+      active: true,
+      type: 'number',
+      config: {},
+      ...(extraConfig.columnFilter ? extraConfig.columnFilter : {}),
+    }
+    return field
   }
 
   addTextField(key: string, title: string) {
     let field: OverGridField = this.addField(key, title)
-    return this
+    return field
   }
 
-  addDateField(key: string, title: string) {
+  addDateField(key: string, title: string, extraConfig: any = {}) {
     let field: OverGridField = this.addField(key, title)
-    return this
+    field.columnFilter = {
+      active: true,
+      type: 'date',
+      config: {},
+      ...(extraConfig.columnFilter ? extraConfig.columnFilter : {}),
+    }
+    return field
   }
 
   addEnumField(key: string, title: string) {
     let field: OverGridField = this.addField(key, title)
-    return this
+    return field
   }
 
   addBooleanField(key: string, title: string) {
     let field: OverGridField = this.addField(key, title)
-    return this
+    return field
   }
 }
 

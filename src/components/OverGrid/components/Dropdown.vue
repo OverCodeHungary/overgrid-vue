@@ -1,18 +1,12 @@
 <template>
   <div class="relative overgrid-dropdown" :id="componentId">
-    <span class="overgrid-dropdown-btn z-10" @click="toggleOpen">
-      <button class="rounded-full p-2">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-          stroke-width="2">
-          <path stroke-linecap="round" stroke-linejoin="round"
-            d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
-        </svg>
-      </button>
+    <span class="overgrid-dropdown-btn z-10" @click.stop.prevent="toggleOpen">
+      <slot name="iconButton"></slot>
     </span>
     <Transition :name="'overgrid-anim-dd-' + props.orientation">
       <div v-show="state.open"
-        class="absolute mt-2 z-20 flex items-center justify-start p-2 px-3 rounded-md w-[250px] overgrid-dropdown-panel"
-        :class="[{ 'right-0': props.orientation == 'left' }, { 'left-0': props.orientation == 'right' }]">
+        class="absolute mt-2 z-20 flex items-center justify-start p-2 px-3 rounded-md overgrid-dropdown-panel"
+        :class="[{ 'right-0': props.orientation == 'left' }, { 'left-0': props.orientation == 'right' }, props.extraClass]">
         <div class="flex flex-col p-1.5 w-full">
           <slot name="content"></slot>
         </div>
@@ -30,6 +24,10 @@ const props = defineProps({
   orientation: {
     type: String,
     default: 'left'
+  },
+  extraClass: {
+    type: String,
+    default: 'w-[250px]'
   }
 });
 

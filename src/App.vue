@@ -3,7 +3,6 @@
     <template #extraRow="{ record, extraSlotParams }">
       <div class="overgrid-extra-row-content">
         <p>Extra Row Content for ID: {{ record }}</p>
-        <p>Extra Params: {{ extraSlotParams.test }}</p>
         <p>More data can be added here...</p>
       </div>
     </template>
@@ -35,6 +34,7 @@ const config = {
     initialOrderDirection: 'DESC',
     defaultOrder: {
       key: 'id',
+      orderKey: 'id2', // This is the key used for ordering, can be different from the field key
       direction: 'DESC'
     }
   },
@@ -84,17 +84,20 @@ const config = {
     extraSlotParams: {
       test: 'This is a test value',
     }
-  }
+  },
+  columnFilters: {
+    active: true
+  },
 }
 
 onMounted(() => {
   overgrid.value?.fields
-    .addNumberField('id', 'ID')
-    .addTextField('name', 'Name')
-    .addNumberField('age', 'Age')
-    .addDateField('birthDate', 'Birth Date')
-    .addEnumField('gender', 'Gender')
-    .addBooleanField('isActive', 'Active')
+    .addNumberField('id', 'ID').setOrderKey('id2').setFilterKey('id2').commit()
+    .addTextField('name', 'Name').commit()
+    .addNumberField('age', 'Age').commit()
+    .addDateField('birthDate', 'Birth Date').commit()
+    .addEnumField('gender', 'Gender').commit()
+    .addBooleanField('isActive', 'Active').commit();
 
 });
 

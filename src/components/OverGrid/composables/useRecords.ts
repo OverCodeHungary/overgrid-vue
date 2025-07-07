@@ -5,12 +5,14 @@ import useOrdering from './useOrdering'
 import useLogger from './useLogger'
 import axios from 'axios'
 import useAutoRefresh from './useAutoRefresh'
+import useColumnFilters from './useColumnFilters'
 import DefaultServerTransformation from '../serverTransformations/DefaultServerTransformation'
 
 export default (gridConfig: OverGridConfig) => {
   const records = ref<any[]>([])
   const pagination = usePagination(gridConfig.pagination, gridConfig.gridUniqueId)
   const ordering = useOrdering(gridConfig.orderConfiguration)
+  const columnFilters = useColumnFilters(gridConfig.columnFilters)
   const logger = useLogger()
   const loading = ref(false)
 
@@ -18,8 +20,8 @@ export default (gridConfig: OverGridConfig) => {
     loading.value = true
     let response = await axios.get(gridConfig.endpoint, {
       params: gridConfig.serverTransformation
-        ? gridConfig.serverTransformation(ordering.rawState.value, pagination.state, null) // @TODO: Handle orders state and filters state
-        : DefaultServerTransformation(ordering.rawState.value, pagination.state, null), // @TODO: Handle orders state and filters state
+        ? gridConfig.serverTransformation(ordering.rawState.value, pagination.state, columnFilters.filters.value)
+        : DefaultServerTransformation(ordering.rawState.value, pagination.state, columnFilters.filters.value),
       responseType: 'json',
     })
 
@@ -28,9 +30,7 @@ export default (gridConfig: OverGridConfig) => {
     // @TODO: Event handling: registeredEvents.onDataLoad
 
     let cRecords =
-      gridConfig.rootkey && response.data[gridConfig.rootkey]
-        ? response.data[gridConfig.rootkey]
-        : response.data
+      gridConfig.rootkey && response.data[gridConfig.rootkey] ? response.data[gridConfig.rootkey] : response.data
 
     if (!Array.isArray(cRecords)) {
       logger.error(
@@ -79,6 +79,14 @@ export default (gridConfig: OverGridConfig) => {
     { deep: true }, // Deep watch to capture changes in the orders array
   )
 
+  watch(
+    () => columnFilters.filters,
+    (newFilters) => {
+      fetchRecords()
+    },
+    { deep: true }, // Deep watch to capture changes in the filters array
+  )
+
   return {
     records,
     fetchRecords,
@@ -86,5 +94,6 @@ export default (gridConfig: OverGridConfig) => {
     ordering,
     loading,
     autoRefresh,
+    columnFilters,
   }
 }

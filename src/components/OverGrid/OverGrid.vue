@@ -17,6 +17,15 @@
         :config="props.config.bulkOperations" :bulkOperator="bulkOperations" />
       <Dropdown :orientation="((clientWidth < 640) ? 'right' : 'left')" ref="operationsDropdown"
         class="overgrid-operations-dropdown">
+        <template #iconButton>
+          <button class="overgrid-btn overgrid-operations-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
+            </svg>
+          </button>
+        </template>
         <template #content>
           <BaseOperations :config="props.config" :columnSelector="columnSelector"
             :currentPageExporter="currentPageExporter" :aboutModal="aboutModal" />
@@ -44,10 +53,17 @@
           </th>
           <th class="overgrid-cell" v-for="titleField in columnSelector.filter(fields.mappingVisible())"
             :key="'head_' + titleField.key">
-            <div class="flex flex-row items-center">
+            <div class="flex flex-row items-center overgrid-column-title-container cursor-pointer"
+              @click="() => records.ordering.toggleField(titleField)">
               <span class="overgrid-column-title">{{ titleField.title }}</span>
-              <div v-if="props.config.orderConfiguration?.active" class="overgrid-orderer-base">
+              <span class="grow"></span>
+              <div v-if="props.config.orderConfiguration?.active" class="overgrid-orderer-container">
                 <Orderer :orderer="records.ordering" :field="titleField" :config="props.config.orderConfiguration" />
+              </div>
+              <div v-if="props.config.columnFilters?.active && titleField.columnFilter?.active"
+                class="overgrid-column-filters-container">
+                <ColumnFilter :columnFilter="records.columnFilters" :field="titleField"
+                  :config="props.config.columnFilters" />
               </div>
             </div>
           </th>
@@ -111,20 +127,26 @@
       :mappingVisible="columnSelector.filter(fields.mappingVisible())" :currentPageExporter="currentPageExporter"
       :currentRecords="records.records" />
     <AboutModal :aboutModal="aboutModal" />
+    <ColumnFilterTextModal :columnFilters="records.columnFilters" />
+    <ColumnFilterNumberModal :columnFilters="records.columnFilters" />
+    <ColumnFilterDateModal :columnFilters="records.columnFilters" />
     <!-- MODALS -->
   </div>
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue';
 import Paginator from './components/Paginator.vue';
 import Orderer from './components/Orderer.vue';
+import ColumnFilter from './components/ColumnFilter.vue';
 import Dropdown from './components/Dropdown.vue';
 import BaseOperations from './components/ToolbarSections/BaseOperations.vue';
 import AutoRefresh from './components/ToolbarSections/AutoRefresh.vue';
 import PageSize from './components/ToolbarSections/PageSize.vue';
 import ColumnSelectorModal from './components/Modals/ColumnSelectorModal.vue';
 import CurrentPageExporterModal from './components/Modals/CurrentPageExporterModal.vue';
+import ColumnFilterTextModal from './components/Modals/ColumnFilters/ColumnFilterTextModal.vue';
+import ColumnFilterNumberModal from './components/Modals/ColumnFilters/ColumnFilterNumberModal.vue';
+import ColumnFilterDateModal from './components/Modals/ColumnFilters/ColumnFilterDateModal.vue';
 import AboutModal from './components/Modals/AboutModal.vue';
 import { onMounted } from 'vue';
 import useFields from './composables/useFields';

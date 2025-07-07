@@ -15,6 +15,7 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@coders-tm/vue-number-format": "^3.35.4",
     "axios": "^1.10.0",
     "moment": "^2.30.1",
     "vue": "^3.5.17",

@@ -3,6 +3,13 @@ export class OverGridField {
     this.key = key
     this.title = title
     this.fieldsObject = fieldsObject
+    this.columnFilter = {
+      // Default column filter configuration
+      active: true,
+      type: 'text',
+      filterKey: key,
+      config: {},
+    }
   }
 
   fieldsObject: any
@@ -26,21 +33,16 @@ export class OverGridField {
   /**
    * If set, the column is filterable. If false, the column is not filterable.
    */
-  filterable?: {
+  columnFilter?: {
     /**
      * If true, the filter is active. If false, the filter is disabled for the field.
      */
     active: boolean
 
     /**
-     * The filter type. The filter type is used to determine the filter input field. The possible values are 'text', 'number', 'date', 'status'.
+     * The filter type. The filter type is used to determine the filter input field. The possible values are 'text', 'number', 'date', 'enum'.
      */
     type?: string
-
-    /**
-     * Applicable only in case of 'Status' filter type. If true, the UI will block the possibility to select multiple values. If false or not provided, the UI will allow multiple selections.
-     */
-    disableMultiple?: boolean
 
     /**
      * The key to send to the server. If not set, the key is the same as the field name. If set, the key is the value of the key. Useful when the server expects a different key as it serves in the DTO.
@@ -48,9 +50,11 @@ export class OverGridField {
     filterKey?: string
 
     /**
-     * If set, this title will be shown in the Search Panel. If not set, the title is the same as the field title defined in "title" key.
+     * The configuration object for the filter. The configuration object is specific to the filter type.
+     * For example, a 'enum' filter can have a 'values' field to define the possible statuses.
+     * See the documentation for more information about the filter types.
      */
-    titleOverride?: string
+    config?: any
   }
   /**
    * A function to modify the data after it gets from the server but before showing in the cell. This function is called before the data is shown in the cell. You can modify the data here. For example, you can format a date, or you can show a different value based on the raw data.
@@ -117,5 +121,19 @@ export class OverGridField {
     config?: any
   }
 
-  commit() {}
+  setOrderKey(orderKey: string) {
+    this.orderKey = orderKey
+    return this
+  }
+
+  setFilterKey(filterKey: string) {
+    if (this.columnFilter) {
+      this.columnFilter.filterKey = filterKey
+    }
+    return this
+  }
+
+  commit() {
+    return this.fieldsObject
+  }
 }

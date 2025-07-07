@@ -5,7 +5,7 @@ export interface OverGridUseOrderingInterface {
   isFieldActive: (field: OverGridField) => boolean
   addOrder: (field: OverGridField) => void
   removeOrder: (field: OverGridField) => void
-  toggleOrderDirection: (field: OverGridField) => void
+  toggleField: (field: OverGridField) => void
   getFieldOrderDirection: (field: OverGridField) => string | undefined
   rawState: Ref<
     {

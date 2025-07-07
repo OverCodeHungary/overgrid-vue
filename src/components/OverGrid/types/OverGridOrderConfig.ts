@@ -20,6 +20,11 @@ export interface OverGridOrderConfig {
     key: string
 
     /**
+     * The key used for ordering. This can be different from the field key if the server expects a different key for ordering. Most of the time it is the same as the field key.
+     */
+    orderKey: string
+
+    /**
      * Sets the default direction for ordering in grid. Works only if the defaultOrderKey is set. If not set, default ordering is disabled.
      * Possible values are 'ASC' for ascending order and 'DESC' for descending order.
      */

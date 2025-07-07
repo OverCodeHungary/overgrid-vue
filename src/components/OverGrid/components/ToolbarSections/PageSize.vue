@@ -1,5 +1,5 @@
 <template>
-  <ul>
+  <ul class="overgrid-toolbar-dropdown-section">
     <li>
       <h3 class="overgrid-toolbar-dropdown-section-title">
         {{ i18n.l('page_size') }}

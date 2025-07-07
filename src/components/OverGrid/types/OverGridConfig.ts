@@ -6,6 +6,7 @@ import type { OverGridColumnSelectorConfig } from './OverGridColumnSelectorConfi
 import type { OverGridCurrentPageExportConfig } from './OverGridCurrentPageExportConfig'
 import type { OverGridBulkOperationsConfig } from './OverGridBulkOperationsConfig'
 import type { OverGridExtraRowConfig } from './OverGridExtraRowConfig'
+import type { OverGridColumnFiltersConfig } from './OverGridColumnFIltersConfig'
 
 /**
  * The full configuration object for the OverGrid
@@ -91,46 +92,11 @@ interface OverGridConfig {
   }
 
   /**
-   * The filtering configuration object for the grid.
+   * Setup the column filters for the grid.
+   * If not set, the column filters are disabled.
+   * If you want to use the column filters, you can set the active property to true
    */
-  filtering?: {
-    /**
-     * If true, the filtering is active. If false, the filtering is disabled.
-     */
-    active: boolean
-
-    /**
-     * If true, the filtering is 'simple' mode. If false, the filtering is 'advanced' mode.
-     * In 'simple' mode, the grid will show an input field where the user can type the filter text. The server gets only this text as a filtering value.
-     * In 'advanced' mode, the grid will show a filter panel where the user can set multiple filters. The server gets all filters as an object and gets an operator between filters. The operator can be 'and' or 'or', and it is set in the filter panel.
-     */
-    simple?: boolean
-
-    /**
-     * If true, the filtering set to local mode. If false, the filtering is server-side.
-     * Please be aware that the local filtering is working only on the current page.
-     */
-    local?: boolean
-
-    /**
-     * If the filtering is 'simple' mode, you can set a help text for the filtering. This text will be shown after the input field.
-     */
-    simpleHelpText?: string
-
-    /**
-     * If the filtering is 'simple' mode, you can set the filter template string. Use the {data} placeholder to insert the filter text.
-     * For example: 'name like "{data}", description like {data}'.
-     * This is useful when you have a filtering framework on server side, such as gridify (https://alirezanet.github.io/Gridify/guide/filtering.html#conditional-operators).
-     * If not set, the grid will send the filter text as is.
-     * FYI: You can modify the filtering parameters in the serverTransformation function as well.
-     */
-    simpleFilterTemplate?: string
-
-    /**
-     * If the filtering is 'simple' mode, you can set the placeholder text for the input field.
-     */
-    simplePlaceholder?: string
-  }
+  columnFilters?: OverGridColumnFiltersConfig
   /*
    * The extra row configuration object for the grid.
    */

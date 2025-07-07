@@ -1,5 +1,5 @@
 <template>
-  <ul v-if="needsToShow">
+  <ul v-if="needsToShow" class="overgrid-toolbar-dropdown-section">
     <li>
       <h3 class="overgrid-toolbar-dropdown-section-title">
         {{ i18n.l('base_operations') }}

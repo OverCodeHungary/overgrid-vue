@@ -8,6 +8,7 @@ export default (orderConfig?: OverGridOrderConfig): OverGridUseOrderingInterface
   const orders: Ref<
     {
       key: string
+      orderKey: string
       direction: string
     }[]
   > = ref([])
@@ -36,6 +37,7 @@ export default (orderConfig?: OverGridOrderConfig): OverGridUseOrderingInterface
 
     orders.value.push({
       key: field.key,
+      orderKey: field.orderKey || field.key,
       direction: orderConfig.initialOrderDirection || 'DESC',
     })
   }
@@ -48,19 +50,24 @@ export default (orderConfig?: OverGridOrderConfig): OverGridUseOrderingInterface
     orders.value = orders.value.filter((order) => order.key !== field.key)
   }
 
-  const toggleOrderDirection = (field: OverGridField) => {
+  const toggleField = (field: OverGridField) => {
     if (!orderConfig || !orderConfig.active) {
       return
     }
 
     const orderIndex = orders.value.findIndex((order) => order.key === field.key)
     if (orderIndex === -1) {
-      return
+      addOrder(field)
+    } else {
+      const currentDirection = orders.value[orderIndex].direction
+      const initialOrderDirection = orderConfig.initialOrderDirection || 'DESC'
+      if (currentDirection == initialOrderDirection) {
+        const newDirection = currentDirection === 'ASC' ? 'DESC' : 'ASC'
+        orders.value[orderIndex].direction = newDirection
+      } else {
+        removeOrder(field)
+      }
     }
-
-    const currentDirection = orders.value[orderIndex].direction
-    const newDirection = currentDirection === 'ASC' ? 'DESC' : 'ASC'
-    orders.value[orderIndex].direction = newDirection
   }
 
   const getFieldOrderDirection = (field: OverGridField): string | undefined => {
@@ -75,6 +82,7 @@ export default (orderConfig?: OverGridOrderConfig): OverGridUseOrderingInterface
   if (orderConfig?.defaultOrder) {
     orders.value.push({
       key: orderConfig.defaultOrder.key,
+      orderKey: orderConfig.defaultOrder.orderKey || orderConfig.defaultOrder.key,
       direction: orderConfig.defaultOrder.direction,
     })
   }
@@ -83,7 +91,7 @@ export default (orderConfig?: OverGridOrderConfig): OverGridUseOrderingInterface
     isFieldActive,
     addOrder,
     removeOrder,
-    toggleOrderDirection,
+    toggleField,
     getFieldOrderDirection,
     rawState: orders,
     state: orders.value,

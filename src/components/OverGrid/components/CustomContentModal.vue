@@ -29,7 +29,7 @@
                   {{ cancelButtonTitle ? cancelButtonTitle : i18n.l('cancel') }}
                 </button>
                 <button v-if="!noNeedOkButton" :disabled="okButtonLoading || disableOkButton"
-                  @click="() => { if (props.ok) { props.ok() } }" class="overgrid-modal-ok-btn">
+                  @click="() => { if (props.ok) { props.ok() } }" class="overgrid-modal-ok-btn disabled:opacity-50">
                   <span v-if="!okButtonLoading">{{ okButtonTitle ? okButtonTitle : i18n.l('ok') }}</span>
                   <SpinnerLoader v-else sizeClasses="h-5.5 w-5.5" />
                 </button>
