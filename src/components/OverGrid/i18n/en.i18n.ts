@@ -32,6 +32,10 @@ export default {
   before_this_day: 'before this day',
   on_or_after_this_day: 'on or after this day',
   after_this_day: 'after this day',
+  interval_start: 'Start of interval',
+  interval_end: 'End of interval',
+  check_if_you_want_to_filter_yes:
+    'Check if you want to filter as "Yes", leave unchecked if you want to filter as "No"',
 
   auto_refresh_menu_title: 'Automatic refresh',
   'automatic-list-update-disabled': 'Disabled',
@@ -65,8 +69,6 @@ export default {
   start_date: 'Start date',
   end_date: 'End date',
   boolean: 'Boolean',
-  check_if_you_want_to_filter_yes:
-    'Check if you want to filter as "Yes", leave unchecked if you want to filter as "No"',
   only_one_selection_allowed: 'Only one selection allowed',
   open: 'Open',
 }

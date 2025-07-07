@@ -17,11 +17,25 @@
             <option value="be">{{ i18n.l('in_this_interval') }}</option>
           </select>
         </div>
-        <div class="flex flex-col">
+        <div class="flex flex-col" v-if="operation !== 'be'">
           <label for="overgrid-value" class="overgrid-label">
             {{ i18n.l('value') }}
           </label>
           <input class="overgrid-input" type="date" v-model="value" />
+        </div>
+        <div class="flex flex-row gap-2" v-else>
+          <div class="w-1/2 flex flex-col">
+            <label for="overgrid-value" class="overgrid-label">
+              {{ i18n.l('interval_start') }}
+            </label>
+            <input class="overgrid-input" type="date" v-model="interval1" />
+          </div>
+          <div class="w-1/2 flex flex-col">
+            <label for="overgrid-value" class="overgrid-label">
+              {{ i18n.l('interval_end') }}
+            </label>
+            <input class="overgrid-input" type="date" v-model="interval2" />
+          </div>
         </div>
       </div>
     </template>
@@ -43,14 +57,23 @@ const props = defineProps<{
 
 const operation = ref<string>('eq')
 const value = ref<string>('');
+const interval1 = ref<string>('');
+const interval2 = ref<string>('');
 
 const isValid = computed<boolean>(() => {
-  return value.value !== null;
+  if (operation.value === 'be') {
+    return interval1.value !== '' && interval2.value !== '' && new Date(interval1.value) <= new Date(interval2.value);
+  }
+  else {
+    return value.value !== null
+  }
 });
 
 function resetForm() {
   operation.value = 'eq';
   value.value = '';
+  interval1.value = '';
+  interval2.value = '';
 }
 
 function addFilter() {
@@ -58,12 +81,17 @@ function addFilter() {
     return;
   }
 
+  let finalValue = value.value.toString();
+  if (operation.value == 'be') {
+    finalValue = interval1.value + ',' + interval2.value;
+  }
+
   props.columnFilters.registerColumnFilter({
     type: filterType,
     key: props.columnFilters.fieldUnderAdding.value.key,
     filterKey: props.columnFilters.fieldUnderAdding.value.columnFilter?.filterKey ? props.columnFilters.fieldUnderAdding.value.columnFilter.filterKey : props.columnFilters.fieldUnderAdding.value.key,
     operation: operation.value,
-    value: value.value.toString()
+    value: finalValue
   });
 
   setTimeout(() => {
@@ -75,8 +103,16 @@ watch(() => props.columnFilters.fieldUnderAdding?.value, (newValue) => {
   if (newValue && newValue.columnFilter?.type == filterType) { // modal is opened
     const currentFilter = props.columnFilters.returnCurrentFilter(newValue);
     if (currentFilter) {
-      operation.value = currentFilter.operation;
-      value.value = currentFilter.value;
+      if (currentFilter.operation === 'be') {
+        operation.value = currentFilter.operation;
+        value.value = '';
+        const intervalValues = currentFilter.value.split(',');
+        interval1.value = intervalValues[0] || '';
+        interval2.value = intervalValues[1] || '';
+      } else {
+        operation.value = currentFilter.operation;
+        value.value = currentFilter.value;
+      }
     } else {
       resetForm();
     }

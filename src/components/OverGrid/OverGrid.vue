@@ -130,6 +130,8 @@
     <ColumnFilterTextModal :columnFilters="records.columnFilters" />
     <ColumnFilterNumberModal :columnFilters="records.columnFilters" />
     <ColumnFilterDateModal :columnFilters="records.columnFilters" />
+    <ColumnFilterBooleanModal :columnFilters="records.columnFilters" />
+    <ColumnFilterEnumModal :columnFilters="records.columnFilters" />
     <!-- MODALS -->
   </div>
 </template>
@@ -147,6 +149,8 @@ import CurrentPageExporterModal from './components/Modals/CurrentPageExporterMod
 import ColumnFilterTextModal from './components/Modals/ColumnFilters/ColumnFilterTextModal.vue';
 import ColumnFilterNumberModal from './components/Modals/ColumnFilters/ColumnFilterNumberModal.vue';
 import ColumnFilterDateModal from './components/Modals/ColumnFilters/ColumnFilterDateModal.vue';
+import ColumnFilterBooleanModal from './components/Modals/ColumnFilters/ColumnFilterBooleanModal.vue';
+import ColumnFilterEnumModal from './components/Modals/ColumnFilters/ColumnFilterEnumModal.vue';
 import AboutModal from './components/Modals/AboutModal.vue';
 import { onMounted } from 'vue';
 import useFields from './composables/useFields';

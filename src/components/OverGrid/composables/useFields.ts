@@ -1,6 +1,7 @@
 import { OverGridField } from '../types/OverGridField'
 import { ref, computed } from 'vue'
 import type { Ref } from 'vue'
+import type { OverGridEnumMapping } from '../types/OverGridEnumMapping'
 
 class OverGridFields {
   mapping: Ref<OverGridField[]>
@@ -30,8 +31,14 @@ class OverGridFields {
     return field
   }
 
-  addTextField(key: string, title: string) {
+  addTextField(key: string, title: string, extraConfig: any = {}) {
     let field: OverGridField = this.addField(key, title)
+    field.columnFilter = {
+      active: true,
+      type: 'text',
+      config: {},
+      ...(extraConfig.columnFilter ? extraConfig.columnFilter : {}),
+    }
     return field
   }
 
@@ -46,13 +53,27 @@ class OverGridFields {
     return field
   }
 
-  addEnumField(key: string, title: string) {
+  addEnumField(key: string, title: string, enumMapping: OverGridEnumMapping, extraConfig: any = {}) {
     let field: OverGridField = this.addField(key, title)
+    field.columnFilter = {
+      active: true,
+      type: 'enum',
+      config: {
+        mapping: enumMapping,
+      },
+      ...(extraConfig.columnFilter ? extraConfig.columnFilter : {}),
+    }
     return field
   }
 
-  addBooleanField(key: string, title: string) {
+  addBooleanField(key: string, title: string, extraConfig: any = {}) {
     let field: OverGridField = this.addField(key, title)
+    field.columnFilter = {
+      active: true,
+      type: 'boolean',
+      config: {},
+      ...(extraConfig.columnFilter ? extraConfig.columnFilter : {}),
+    }
     return field
   }
 }

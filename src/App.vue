@@ -96,7 +96,16 @@ onMounted(() => {
     .addTextField('name', 'Name').commit()
     .addNumberField('age', 'Age').commit()
     .addDateField('birthDate', 'Birth Date').commit()
-    .addEnumField('gender', 'Gender').commit()
+    .addEnumField('gender', 'Gender', {
+      male: {
+        title: 'Férfi',
+        class: 'text-blue-500'
+      },
+      female: {
+        title: 'Nő',
+        class: 'text-pink-500'
+      },
+    }).commit()
     .addBooleanField('isActive', 'Active').commit();
 
 });
