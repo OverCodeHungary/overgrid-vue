@@ -20,6 +20,7 @@ const config = {
   endpoint: 'https://robber.hu/overgrid-api/overgrid-demo-api.php',
   rootkey: 'data',
   idkey: 'id',
+  locale: 'hu',
   pagination: {
     active: true,
     initialPage: 0,
@@ -88,6 +89,11 @@ const config = {
   columnFilters: {
     active: true
   },
+  search: {
+    active: true,
+    initialQuery: '',
+    debounceTime: 500
+  }
 }
 
 onMounted(() => {

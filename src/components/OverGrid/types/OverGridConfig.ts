@@ -7,6 +7,7 @@ import type { OverGridCurrentPageExportConfig } from './OverGridCurrentPageExpor
 import type { OverGridBulkOperationsConfig } from './OverGridBulkOperationsConfig'
 import type { OverGridExtraRowConfig } from './OverGridExtraRowConfig'
 import type { OverGridColumnFiltersConfig } from './OverGridColumnFIltersConfig'
+import type { OverGridSearchConfig } from './OverGridSearchConfig'
 
 /**
  * The full configuration object for the OverGrid
@@ -63,7 +64,7 @@ interface OverGridConfig {
    * @param filters List of filters. Each filter has a key, an operator and a value.
    * @returns The modified URLSearchParams object.
    */
-  serverTransformation?: (orders: any, pagination: any, filters: any) => URLSearchParams
+  serverTransformation?: (orders: any, pagination: any, filters: any, searchQuery?: string) => URLSearchParams
 
   /**
    * You can modify the axios instance before sending the request to the server. This function is called before the request is sent. You can modify the axios instance in order to your needs. If not set, the grid will use the default axios instance.
@@ -97,6 +98,14 @@ interface OverGridConfig {
    * If you want to use the column filters, you can set the active property to true
    */
   columnFilters?: OverGridColumnFiltersConfig
+
+  /**
+   * The search configuration object for the grid.
+   * If not set, the search is disabled.
+   * If you want to use the search, you can set the active property to true.
+   */
+  search?: OverGridSearchConfig
+
   /*
    * The extra row configuration object for the grid.
    */

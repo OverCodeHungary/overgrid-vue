@@ -1,6 +1,6 @@
 <template>
   <CustomContentModal :show="props.columnFilters.fieldUnderAdding?.value?.columnFilter?.type == filterType"
-    :title="i18n.l('column_filter_text_modal_title')" :close="props.columnFilters.closeColumnFilterConfigModal"
+    :title="i18n.l('column_filter_boolean_modal_title')" :close="props.columnFilters.closeColumnFilterConfigModal"
     :cancelButtonTitle="i18n.l('close')" :disableOkButton="!isValid" :ok="addFilter">
     <template #content>
       <label class="inline-flex items-center space-x-2">

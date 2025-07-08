@@ -6,6 +6,7 @@ import useLogger from './useLogger'
 import axios from 'axios'
 import useAutoRefresh from './useAutoRefresh'
 import useColumnFilters from './useColumnFilters'
+import useSearch from './useSearch'
 import DefaultServerTransformation from '../serverTransformations/DefaultServerTransformation'
 
 export default (gridConfig: OverGridConfig) => {
@@ -13,6 +14,7 @@ export default (gridConfig: OverGridConfig) => {
   const pagination = usePagination(gridConfig.pagination, gridConfig.gridUniqueId)
   const ordering = useOrdering(gridConfig.orderConfiguration)
   const columnFilters = useColumnFilters(gridConfig.columnFilters)
+  const search = useSearch(gridConfig.search)
   const logger = useLogger()
   const loading = ref(false)
 
@@ -20,8 +22,18 @@ export default (gridConfig: OverGridConfig) => {
     loading.value = true
     let response = await axios.get(gridConfig.endpoint, {
       params: gridConfig.serverTransformation
-        ? gridConfig.serverTransformation(ordering.rawState.value, pagination.state, columnFilters.filters.value)
-        : DefaultServerTransformation(ordering.rawState.value, pagination.state, columnFilters.filters.value),
+        ? gridConfig.serverTransformation(
+            ordering.rawState.value,
+            pagination.state,
+            columnFilters.filters.value,
+            search.query.value,
+          )
+        : DefaultServerTransformation(
+            ordering.rawState.value,
+            pagination.state,
+            columnFilters.filters.value,
+            search.query.value,
+          ),
       responseType: 'json',
     })
 
@@ -73,7 +85,7 @@ export default (gridConfig: OverGridConfig) => {
 
   watch(
     () => ordering.rawState,
-    (newOrders) => {
+    () => {
       fetchRecords()
     },
     { deep: true }, // Deep watch to capture changes in the orders array
@@ -81,8 +93,16 @@ export default (gridConfig: OverGridConfig) => {
 
   watch(
     () => columnFilters.filters,
-    (newFilters) => {
+    () => {
       fetchRecords()
+    },
+    { deep: true }, // Deep watch to capture changes in the filters array
+  )
+
+  watch(
+    () => search.query.value,
+    () => {
+      search.debounce(fetchRecords) // Use debounce to avoid too many requests
     },
     { deep: true }, // Deep watch to capture changes in the filters array
   )
@@ -95,5 +115,6 @@ export default (gridConfig: OverGridConfig) => {
     loading,
     autoRefresh,
     columnFilters,
+    search,
   }
 }

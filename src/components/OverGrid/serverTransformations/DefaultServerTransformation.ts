@@ -1,4 +1,4 @@
-export default (orders: any, pagination: any, columnFilters: any): URLSearchParams => {
+export default (orders: any, pagination: any, columnFilters: any, searchQuery?: string): URLSearchParams => {
   let result = new URLSearchParams()
   // result.set('orders', JSON.stringify(orders))
   // result.set('pagination', JSON.stringify(pagination))
@@ -15,6 +15,10 @@ export default (orders: any, pagination: any, columnFilters: any): URLSearchPara
 
   if (columnFilters && Array.isArray(columnFilters) && columnFilters.length > 0) {
     result.set('filters', JSON.stringify(columnFilters))
+  }
+
+  if (searchQuery && typeof searchQuery == 'string' && searchQuery.trim().length > 0) {
+    result.set('query', searchQuery.trim())
   }
 
   console.log('Server transformation orders:', orders)

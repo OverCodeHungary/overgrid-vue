@@ -2,7 +2,8 @@
   <div class="overgrid relative" :data-theme="props.config.theme || 'default'"
     :grid-unique-id="props.config.gridUniqueId">
     <div class="overgrid-toolbar flex flex-row">
-      <span>@TODO: Filtering</span>
+      <SearchSection v-if="props.config.search?.active" :searchConfig="props.config.search"
+        :searcher="records.search" />
       <span class="overgrid-toolbar-spacer flex grow"></span>
       <button v-if="props.config.refreshable?.manualActive" @click="records.fetchRecords"
         class="overgrid-btn overgrid-btn-manual-refresh">
@@ -151,6 +152,7 @@ import ColumnFilterNumberModal from './components/Modals/ColumnFilters/ColumnFil
 import ColumnFilterDateModal from './components/Modals/ColumnFilters/ColumnFilterDateModal.vue';
 import ColumnFilterBooleanModal from './components/Modals/ColumnFilters/ColumnFilterBooleanModal.vue';
 import ColumnFilterEnumModal from './components/Modals/ColumnFilters/ColumnFilterEnumModal.vue';
+import SearchSection from './components/SearchSection.vue';
 import AboutModal from './components/Modals/AboutModal.vue';
 import { onMounted } from 'vue';
 import useFields from './composables/useFields';

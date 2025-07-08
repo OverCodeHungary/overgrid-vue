@@ -1,6 +1,6 @@
 <template>
   <CustomContentModal :show="props.columnFilters.fieldUnderAdding?.value?.columnFilter?.type == filterType"
-    :title="i18n.l('column_filter_text_modal_title')" :close="props.columnFilters.closeColumnFilterConfigModal"
+    :title="i18n.l('column_filter_enum_modal_title')" :close="props.columnFilters.closeColumnFilterConfigModal"
     :cancelButtonTitle="i18n.l('close')" :disableOkButton="!isValid" :ok="addFilter">
     <template #content>
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
