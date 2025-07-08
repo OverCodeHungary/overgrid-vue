@@ -72,7 +72,7 @@
       </thead>
       <tbody class="overgrid-body">
         <template v-for="(record, index) in records.records.value" :key="'record_' + index">
-          <tr>
+          <tr :class="rowHighlighter.getClassList(record)">
             <td class="overgrid-cell overgrid-extra-row-cell"
               v-if="props.config.extraRow && props.config.extraRow.active && props.config.idkey">
               <button @click="extraRow.toggleRow(record[props.config.idkey]?.toString())"
@@ -163,6 +163,7 @@ import useI18n from './composables/useI18n';
 import './themes/default.css'
 import useColumnSelector from './composables/useColumnSelector';
 import useCurrentPageExport from './composables/useCurrentPageExport';
+import useRowHighlighter from './composables/useRowHighlighter';
 import useAboutModal from './composables/useAboutModal';
 import useBulkOperations from './composables/useBulkOperations';
 import BulkOperationsDropdown from './components/BulkOperationsDropdown.vue';
@@ -181,6 +182,7 @@ const currentPageExporter = useCurrentPageExport(props.config.currentPageExport)
 const aboutModal = useAboutModal();
 const bulkOperations = useBulkOperations(props.config.bulkOperations, props.config.idkey);
 const extraRow = useExtraRow(props.config.extraRow, props.config.idkey);
+const rowHighlighter = useRowHighlighter(props.config.rowHighlighter);
 
 onMounted(() => {
   records.fetchRecords();

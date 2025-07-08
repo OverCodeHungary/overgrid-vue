@@ -21,6 +21,10 @@ const config = {
   rootkey: 'data',
   idkey: 'id',
   locale: 'hu',
+  axiosConfigurator: (axiosInstance: any) => {
+    // Example of configuring axios instance
+    return axiosInstance;
+  },
   pagination: {
     active: true,
     initialPage: 0,
@@ -93,6 +97,14 @@ const config = {
     active: true,
     initialQuery: '',
     debounceTime: 500
+  },
+  rowHighlighter: {
+    active: true,
+    classList: 'bg-yellow-100',
+    fn: (record: any) => {
+      // Example condition: highlight rows where age is greater than 30
+      return record.age > 20;
+    }
   }
 }
 

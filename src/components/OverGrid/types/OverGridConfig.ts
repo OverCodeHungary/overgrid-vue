@@ -8,6 +8,7 @@ import type { OverGridBulkOperationsConfig } from './OverGridBulkOperationsConfi
 import type { OverGridExtraRowConfig } from './OverGridExtraRowConfig'
 import type { OverGridColumnFiltersConfig } from './OverGridColumnFIltersConfig'
 import type { OverGridSearchConfig } from './OverGridSearchConfig'
+import type { OverGridRowHighlighterConfig } from './OverGridRowHighlighterConfig'
 
 /**
  * The full configuration object for the OverGrid
@@ -68,6 +69,8 @@ interface OverGridConfig {
 
   /**
    * You can modify the axios instance before sending the request to the server. This function is called before the request is sent. You can modify the axios instance in order to your needs. If not set, the grid will use the default axios instance.
+   * Use this function to set custom headers, base URL, or any other axios configuration.
+   * This function should return the modified axios instance.
    * @param axios The default axios instance.
    * @returns The modified axios instance.
    */
@@ -78,19 +81,11 @@ interface OverGridConfig {
    */
   pagination?: OverGridPaginationConfig
 
-  rowHighlighter?: {
-    /**
-     * Row highlighter: You can highlight any row in the grid (e.g. you can set a slightly darker background color). For example you can set background color based on a priority value in record.
-     * If true, the row highlighter is active. If false, the row highlighter is disabled.
-     */
-    active: boolean
-
-    /**
-     * Define the highlighter function. This function should return a boolean value. If the function returns true, the row will be highlighted.
-     * @param record The current record with all fields.
-     */
-    fn: (record: any) => boolean
-  }
+  /**
+   * The row highlighter configuration object for the grid.
+   * If not set, the row highlighter is disabled.
+   */
+  rowHighlighter?: OverGridRowHighlighterConfig
 
   /**
    * Setup the column filters for the grid.

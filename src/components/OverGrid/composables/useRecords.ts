@@ -3,10 +3,10 @@ import type { OverGridConfig } from '../types/OverGridConfig'
 import usePagination from './usePagination'
 import useOrdering from './useOrdering'
 import useLogger from './useLogger'
-import axios from 'axios'
 import useAutoRefresh from './useAutoRefresh'
 import useColumnFilters from './useColumnFilters'
 import useSearch from './useSearch'
+import useAxios from './useAxios'
 import DefaultServerTransformation from '../serverTransformations/DefaultServerTransformation'
 
 export default (gridConfig: OverGridConfig) => {
@@ -17,6 +17,7 @@ export default (gridConfig: OverGridConfig) => {
   const search = useSearch(gridConfig.search)
   const logger = useLogger()
   const loading = ref(false)
+  const axios = useAxios(gridConfig.axiosConfigurator)
 
   const fetchRecords = async () => {
     loading.value = true
