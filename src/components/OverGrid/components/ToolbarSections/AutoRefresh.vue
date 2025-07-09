@@ -1,5 +1,5 @@
 <template>
-  <ul class="overgrid-toolbar-dropdown-section mt-2">
+  <ul class="overgrid-toolbar-dropdown-section mt-2 px-1">
     <li>
       <h3 class="overgrid-toolbar-dropdown-section-title font-bold">
         {{ i18n.l('auto_refresh_menu_title') }}

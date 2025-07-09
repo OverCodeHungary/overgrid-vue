@@ -12,7 +12,7 @@
             <OverGridCheckbox :disabled="!overGridField.selectable" :value="overGridField.key" v-model="selectedFields"
               customClass="overgrid-checkbox-current-page-exporter" variant="black" />
             <p :class="[{ 'opacity-40': !overGridField.selectable }]" class="cursor-pointer">{{ overGridField.title
-            }}</p>
+              }}</p>
           </span>
         </label>
       </div>
@@ -24,12 +24,12 @@
         <label v-if="props.currentPageExporterConfig?.xlsxEnabled"
           class="flex flex-row gap-2 items-center overgrid-radio-label">
           <OverGridRadio v-model="format" value="xlsx" class="overgrid-radio-current-page-exporter" variant="black" />
-          <p class="cursor-pointer">XLSX</p>
+          <p class="cursor-pointer text-sm">XLSX</p>
         </label>
         <label v-if="props.currentPageExporterConfig?.csvEnabled"
           class="flex flex-row gap-2 items-center overgrid-radio-label">
           <OverGridRadio v-model="format" value="csv" class="overgrid-radio-current-page-exporter" variant="black" />
-          <p class="cursor-pointer">CSV</p>
+          <p class="cursor-pointer text-sm">CSV</p>
         </label>
       </div>
       <jsonExcel :data="sheetData" :name="'data-export-' + moment().unix() + '.' + format" :type="format"

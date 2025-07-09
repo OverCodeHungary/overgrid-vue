@@ -6,7 +6,7 @@
       <OverGridIcon type="filter" class="w-3 h-3" />
     </template>
   </OverGridBtn>
-  <Dropdown extraClass="w-[200px]" v-else :orientation="((clientWidth < 640) ? 'right' : 'left')"
+  <Dropdown extraClass="w-[230px]" v-else :orientation="((clientWidth < 640) ? 'right' : 'left')"
     ref="columnFilterDropdown" class="overgrid-column-filter-dropdown">
     <template #iconButton>
       <OverGridBtn iconOnly rounded variant="danger" size="sm"
@@ -18,25 +18,18 @@
     </template>
     <template #content>
       <ul class="overgrid-column-filter-dropdown-section flex flex-col gap-2 text-left">
-        <li class="overgrid-column-filter-dropdown-section-item">
-          <a @click.stop.prevent="props.columnFilter.editColumnFilter(props.field)" href="javascript:void(null)"
-            class="font-normal text-left flex flex-row items-center" @click="">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-              stroke="currentColor" class="size-6">
-              <path stroke-linecap="round" stroke-linejoin="round"
-                d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
-            </svg>
+        <li class="overgrid-column-filter-dropdown-section-item hover:bg-black/5 rounded-sm">
+          <a @click.stop.prevent="() => { props.columnFilter.editColumnFilter(props.field); columnFilterDropdown?.close() }"
+            href="javascript:void(null)" class="font-normal text-left flex flex-row items-center p-3 py-1.5 gap-1"
+            @click="">
+            <OverGridIcon type="edit" class="w-5 h-5 opacity-50" />
             <span>{{ i18n.l('column_filters_edit_filter') }}</span>
           </a>
         </li>
-        <li class="overgrid-column-filter-dropdown-section-item">
-          <a @click.stop.prevent="props.columnFilter.removeColumnFilter(props.field)" href="javascript:void(null)"
-            class="font-normal text-left flex flex-row items-center">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-              stroke="currentColor" class="size-6">
-              <path stroke-linecap="round" stroke-linejoin="round"
-                d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-            </svg>
+        <li class="overgrid-column-filter-dropdown-section-item hover:bg-black/5 rounded-sm">
+          <a @click.stop.prevent="() => { props.columnFilter.removeColumnFilter(props.field); columnFilterDropdown?.close() }"
+            href="javascript:void(null)" class="font-normal text-left flex flex-row items-center p-3 py-1.5 gap-1">
+            <OverGridIcon type="trash" class="w-5 h-5 opacity-50" />
             <span>{{ i18n.l('column_filters_remove_filter') }}</span>
           </a>
         </li>
@@ -56,6 +49,7 @@ import useI18n from '../composables/useI18n';
 import OverGridBtn from './OverGridBtn.vue';
 const i18n = useI18n();
 
+const columnFilterDropdown = ref<InstanceType<typeof Dropdown> | null>(null);
 const clientWidth = ref(document.documentElement.clientWidth)
 
 const props = defineProps<{

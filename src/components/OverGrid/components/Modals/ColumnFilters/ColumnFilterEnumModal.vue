@@ -6,7 +6,8 @@
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
         <label class="overgrid-checkbox-label flex items-center gap-2"
           v-for="(item, key) in props.columnFilters.fieldUnderAdding?.value?.columnFilter?.config?.mapping" :key="key">
-          <input :value="key" v-model="value" class="overgrid-checkbox" type="checkbox" />
+          <OverGridCheckbox :value="key" v-model="value" customClass="overgrid-checkbox-column-selector-boolean"
+            variant="black" />
           <p class="cursor-pointer">{{ item.title }}</p>
         </label>
       </div>
@@ -17,6 +18,7 @@
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue';
 import CustomContentModal from '../../CustomContentModal.vue';
+import OverGridCheckbox from '../../FormElements/OverGridCheckbox.vue';
 import useI18n from '../../../composables/useI18n';
 import type { OverGridUseColumnFiltersInterface } from '@/components/OverGrid/types/OverGridUseColumnFiltersInterface';
 const i18n = useI18n();

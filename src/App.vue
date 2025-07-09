@@ -23,6 +23,7 @@ const config = {
   rootkey: 'data',
   idkey: 'id',
   locale: 'hu',
+  theme: 'default', // or 'pink'
   axiosConfigurator: (axiosInstance: any) => {
     // Example of configuring axios instance
     return axiosInstance;
@@ -113,7 +114,7 @@ const config = {
 onMounted(() => {
   overgrid.value?.fields
     .addNumberField('id', 'ID').setOrderKey('id2').setFilterKey('id2').commit()
-    .addTextField('name', 'Name').setOrderable(false).commit()
+    .addTextField('name', 'Name').commit()
     .addNumberField('age', 'Age').commit()
     .addDateField('birthDate', 'Birth Date').commit()
     .addEnumField('gender', 'Gender', {

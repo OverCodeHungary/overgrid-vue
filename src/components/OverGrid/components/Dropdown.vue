@@ -7,7 +7,7 @@
       <div v-show="state.open"
         class="absolute mt-2 z-20 flex items-center justify-start p-2 px-3 rounded-md overgrid-dropdown-panel bg-white shadow-sm"
         :class="[{ 'right-0': props.orientation == 'left' }, { 'left-0': props.orientation == 'right' }, props.extraClass]">
-        <div class="flex flex-col p-1.5 w-full">
+        <div class="flex flex-col p-1 px-0 w-full">
           <slot name="content"></slot>
         </div>
       </div>

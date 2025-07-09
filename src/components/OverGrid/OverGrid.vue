@@ -165,6 +165,7 @@ import type { OverGridConfig } from './types/OverGridConfig';
 import { ref } from 'vue';
 import useI18n from './composables/useI18n';
 import './themes/default.css'
+import './themes/pink.css'
 import useColumnSelector from './composables/useColumnSelector';
 import useCurrentPageExport from './composables/useCurrentPageExport';
 import useRowHighlighter from './composables/useRowHighlighter';

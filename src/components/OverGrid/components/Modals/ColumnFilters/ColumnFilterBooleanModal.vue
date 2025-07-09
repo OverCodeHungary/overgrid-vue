@@ -4,8 +4,8 @@
     :cancelButtonTitle="i18n.l('close')" :disableOkButton="!isValid" :ok="addFilter">
     <template #content>
       <label class="inline-flex items-center space-x-2">
-        <input v-model="value" class="overgrid-checkbox" type="checkbox">
-        <span>{{ i18n.l('check_if_you_want_to_filter_yes') }}</span>
+        <OverGridCheckboxSimple variant="black" v-model="value" customClass="overgrid-checkbox-column-filter-boolean" />
+        <span class="text-sm">{{ i18n.l('check_if_you_want_to_filter_yes') }}</span>
       </label>
     </template>
   </CustomContentModal>
@@ -15,6 +15,7 @@
 import { ref, computed, watch } from 'vue';
 import CustomContentModal from '../../CustomContentModal.vue';
 import useI18n from '../../../composables/useI18n';
+import OverGridCheckboxSimple from '../../FormElements/OverGridCheckboxSimple.vue';
 import type { OverGridUseColumnFiltersInterface } from '@/components/OverGrid/types/OverGridUseColumnFiltersInterface';
 const i18n = useI18n();
 
