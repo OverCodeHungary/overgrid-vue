@@ -47,4 +47,6 @@ export default {
   auto_refresh_menu_title: 'Automatic refresh',
   automatic_list_update_disabled: 'Disabled',
   page_size: 'Page size',
+  selected_rows: '{selectedCount} selected',
+  loading_data: 'Loading data...',
 }

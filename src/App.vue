@@ -1,12 +1,14 @@
 <template>
-  <OverGrid :config="config" ref="overgrid">
-    <template #extraRow="{ record, extraSlotParams }">
-      <div class="overgrid-extra-row-content">
-        <p>Extra Row Content for ID: {{ record }}</p>
-        <p>More data can be added here...</p>
-      </div>
-    </template>
-  </OverGrid>
+  <div class="p-4">
+    <OverGrid :config="config" ref="overgrid">
+      <template #extraRow="{ record, extraSlotParams }">
+        <div class="overgrid-extra-row-content">
+          <p>Extra Row Content for ID: {{ record }}</p>
+          <p>More data can be added here...</p>
+        </div>
+      </template>
+    </OverGrid>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -99,7 +101,7 @@ const config = {
     debounceTime: 500
   },
   rowHighlighter: {
-    active: true,
+    active: false,
     classList: 'bg-yellow-100',
     fn: (record: any) => {
       // Example condition: highlight rows where age is greater than 30
@@ -111,7 +113,7 @@ const config = {
 onMounted(() => {
   overgrid.value?.fields
     .addNumberField('id', 'ID').setOrderKey('id2').setFilterKey('id2').commit()
-    .addTextField('name', 'Name').commit()
+    .addTextField('name', 'Name').setOrderable(false).commit()
     .addNumberField('age', 'Age').commit()
     .addDateField('birthDate', 'Birth Date').commit()
     .addEnumField('gender', 'Gender', {

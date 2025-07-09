@@ -21,9 +21,5 @@ export default (orders: any, pagination: any, columnFilters: any, searchQuery?: 
     result.set('query', searchQuery.trim())
   }
 
-  console.log('Server transformation orders:', orders)
-  console.log('Server transformation pagination:', pagination)
-  console.log('Server transformation filters:', columnFilters)
-
   return result
 }

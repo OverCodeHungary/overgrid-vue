@@ -133,6 +133,11 @@ export class OverGridField {
     return this
   }
 
+  setOrderable(orderable: boolean) {
+    this.orderable = orderable
+    return this
+  }
+
   commit() {
     return this.fieldsObject
   }

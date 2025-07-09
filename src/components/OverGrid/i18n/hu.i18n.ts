@@ -53,4 +53,6 @@ export default {
   column_filter_enum_modal_title: 'Szűrés hozzáadása',
   column_filter_boolean_modal_title: 'Szűrés hozzáadása',
   close: 'Bezárás',
+  selected_rows: '{selectedCount} kiválasztva',
+  loading_data: 'Betöltés...',
 }

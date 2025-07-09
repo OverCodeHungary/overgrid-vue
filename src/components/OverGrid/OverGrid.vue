@@ -1,70 +1,74 @@
 <template>
   <div class="overgrid relative" :data-theme="props.config.theme || 'default'"
     :grid-unique-id="props.config.gridUniqueId">
-    <div class="overgrid-toolbar flex flex-row">
+    <div class="overgrid-toolbar flex flex-row h-12 items-center justify-center">
       <SearchSection v-if="props.config.search?.active" :searchConfig="props.config.search"
         :searcher="records.search" />
       <span class="overgrid-toolbar-spacer flex grow"></span>
-      <button v-if="props.config.refreshable?.manualActive" @click="records.fetchRecords"
-        class="overgrid-btn overgrid-btn-manual-refresh">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-          class="size-6">
-          <path stroke-linecap="round" stroke-linejoin="round"
-            d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
-        </svg>
-      </button>
-      <BulkOperationsDropdown
-        v-if="props.config.bulkOperations && props.config.bulkOperations.active && props.config.bulkOperations.methods?.length > 0 && props.config.idkey"
-        :config="props.config.bulkOperations" :bulkOperator="bulkOperations" />
-      <Dropdown :orientation="((clientWidth < 640) ? 'right' : 'left')" ref="operationsDropdown"
-        class="overgrid-operations-dropdown">
-        <template #iconButton>
-          <button class="overgrid-btn overgrid-operations-btn">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
-              stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round"
-                d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
-            </svg>
-          </button>
-        </template>
-        <template #content>
-          <BaseOperations :config="props.config" :columnSelector="columnSelector"
-            :currentPageExporter="currentPageExporter" :aboutModal="aboutModal" />
-          <AutoRefresh :autoRefresher="records.autoRefresh"
-            v-if="props.config?.refreshable && props.config?.refreshable.autoActive"
-            :config="props.config?.refreshable" />
-          <PageSize :paginator="records.pagination"
-            v-if="props.config?.pagination && props.config?.pagination.active && props.config?.pagination.possiblePageSizes"
-            :config="props.config?.pagination" />
-        </template>
-      </Dropdown>
+      <div class="flex flex-row gap-2 items-center justify-center overgrid-toolbar-right-section">
+        <BulkOperationsDropdown
+          v-if="props.config.bulkOperations && props.config.bulkOperations.active && props.config.bulkOperations.methods?.length > 0 && props.config.idkey && bulkOperations.checkedRows.value.length > 0"
+          :config="props.config.bulkOperations" :bulkOperator="bulkOperations" />
+        <OverGridBtn v-if="props.config.refreshable?.manualActive" @click="records.fetchRecords"
+          customClass="overgrid-btn-manual-refresh" variant="primary" size="sm" iconOnly rounded>
+          <template #iconLeft>
+            <OverGridIcon type="refresh" class="w-4 h-4" />
+          </template>
+        </OverGridBtn>
+        <Dropdown :orientation="((clientWidth < 640) ? 'right' : 'left')" ref="operationsDropdown"
+          class="overgrid-operations-dropdown">
+          <template #iconButton>
+            <OverGridBtn v-if="props.config.refreshable?.manualActive" customClass="overgrid-btn-operations"
+              variant="primary" size="sm" iconOnly rounded>
+              <template #iconLeft>
+                <OverGridIcon type="horizontal-dots" class="w-4 h-4" />
+              </template>
+            </OverGridBtn>
+          </template>
+          <template #content>
+            <BaseOperations :config="props.config" :columnSelector="columnSelector"
+              :currentPageExporter="currentPageExporter" :aboutModal="aboutModal"
+              :closeDropdown="operationsDropdown?.close" />
+            <AutoRefresh :autoRefresher="records.autoRefresh"
+              v-if="props.config?.refreshable && props.config?.refreshable.autoActive"
+              :config="props.config?.refreshable" :closeDropdown="operationsDropdown?.close" />
+            <PageSize :paginator="records.pagination"
+              v-if="props.config?.pagination && props.config?.pagination.active && props.config?.pagination.possiblePageSizes"
+              :config="props.config?.pagination" :closeDropdown="operationsDropdown?.close" />
+          </template>
+        </Dropdown>
+      </div>
     </div>
-    <table class="w-full">
-      <thead class="overgrid-header">
+    <table class="overgrid-table w-full rounded-xl overflow-hidden">
+      <thead class="overgrid-header h-12">
         <tr>
-          <th class="overgrid-cell overgrid-extra-row-cell"
+          <th class="overgrid-cell h-12 overgrid-extra-row-cell text-sm w-12"
             v-if="props.config.extraRow && props.config.extraRow.active && props.config.idkey">
             <label class="">
             </label>
           </th>
-          <th class="overgrid-cell overgrid-checkbox-cell"
+          <th class="overgrid-cell h-12 overgrid-checkbox-cell text-sm w-12"
             v-if="props.config.bulkOperations && props.config.bulkOperations.active && props.config.bulkOperations.methods?.length > 0 && props.config.idkey">
             <label class="">
             </label>
           </th>
-          <th class="overgrid-cell" v-for="titleField in columnSelector.filter(fields.mappingVisible())"
+          <th class="overgrid-cell text-sm h-12" v-for="titleField in columnSelector.filter(fields.mappingVisible())"
             :key="'head_' + titleField.key">
-            <div class="flex flex-row items-center overgrid-column-title-container cursor-pointer"
-              @click="() => records.ordering.toggleField(titleField)">
+            <div class="flex flex-row items-center overgrid-column-title-container h-12 px-4"
+              @click="() => records.ordering.toggleField(titleField)"
+              :class="{ 'overgrid-column-title-container-hoverable cursor-pointer': props.config.orderConfiguration?.active && titleField.orderable }">
               <span class="overgrid-column-title">{{ titleField.title }}</span>
               <span class="grow"></span>
-              <div v-if="props.config.orderConfiguration?.active" class="overgrid-orderer-container">
-                <Orderer :orderer="records.ordering" :field="titleField" :config="props.config.orderConfiguration" />
-              </div>
-              <div v-if="props.config.columnFilters?.active && titleField.columnFilter?.active"
-                class="overgrid-column-filters-container">
-                <ColumnFilter :columnFilter="records.columnFilters" :field="titleField"
-                  :config="props.config.columnFilters" />
+              <div class="flex flex-row items-center justify-center gap-2">
+                <div v-if="props.config.orderConfiguration?.active && titleField.orderable"
+                  class="overgrid-orderer-container flex flex-row items-center justify-center">
+                  <Orderer :orderer="records.ordering" :field="titleField" :config="props.config.orderConfiguration" />
+                </div>
+                <div v-if="props.config.columnFilters?.active && titleField.columnFilter?.active"
+                  class="overgrid-column-filters-container flex flex-row items-center justify-center">
+                  <ColumnFilter :columnFilter="records.columnFilters" :field="titleField"
+                    :config="props.config.columnFilters" />
+                </div>
               </div>
             </div>
           </th>
@@ -72,30 +76,26 @@
       </thead>
       <tbody class="overgrid-body">
         <template v-for="(record, index) in records.records.value" :key="'record_' + index">
-          <tr :class="rowHighlighter.getClassList(record)">
-            <td class="overgrid-cell overgrid-extra-row-cell"
+          <tr class="overgrid-row h-12" :class="rowHighlighter.getClassList(record)">
+            <td class="overgrid-cell px-4 overgrid-btn-extra-row text-sm"
               v-if="props.config.extraRow && props.config.extraRow.active && props.config.idkey">
-              <button @click="extraRow.toggleRow(record[props.config.idkey]?.toString())"
-                class="overgrid-btn overgrid-btn-extra-row">
-                <svg v-if="!extraRow.isRowOpened(record[props.config.idkey]?.toString())"
-                  xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                  stroke="currentColor" class="size-6">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
-                </svg>
-                <svg v-else xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                  stroke="currentColor" class="size-6">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
-                </svg>
-              </button>
+              <OverGridBtn @click="extraRow.toggleRow(record[props.config.idkey]?.toString())"
+                customClass="overgrid-btn-manual-refresh" variant="secondary" size="sm" iconOnly rounded>
+                <template #iconLeft>
+                  <OverGridIcon v-if="!extraRow.isRowOpened(record[props.config.idkey]?.toString())"
+                    type="chevron-right" class="w-3 h-3" />
+                  <OverGridIcon v-else type="chevron-down" class="w-3 h-3" />
+                </template>
+              </OverGridBtn>
             </td>
-            <td class="overgrid-cell overgrid-checkbox-cell"
+            <td class="overgrid-cell px-4 overgrid-checkbox-cell text-sm"
               v-if="props.config.bulkOperations && props.config.bulkOperations.active && props.config.bulkOperations.methods?.length > 0 && props.config.idkey">
-              <label class="overgrid-checkbox-label">
+              <label class="overgrid-checkbox-label flex items-center justify-center">
                 <input :value="record[props.config.idkey]?.toString()" v-model="bulkOperations.checkedRows.value"
                   class="overgrid-checkbox" type="checkbox" />
               </label>
             </td>
-            <td class="overgrid-cell" v-for="bodyField in columnSelector.filter(fields.mappingVisible())"
+            <td class="overgrid-cell px-4 text-sm" v-for="bodyField in columnSelector.filter(fields.mappingVisible())"
               :key="'body_' + bodyField.key">
               {{ record[bodyField.key] }}
             </td>
@@ -107,7 +107,8 @@
               <td
                 :colspan="columnSelector.filter(fields.mappingVisible()).length + (props.config.bulkOperations && props.config.bulkOperations.active && props.config.bulkOperations.methods?.length > 0 && props.config.idkey ? 1 : 0) + 1">
                 <slot v-bind:record="record" v-bind:extraSlotParams="props.config.extraRow?.extraSlotParams"
-                  name="extraRow"></slot>
+                  name="extraRow">
+                </slot>
               </td>
             </tr>
           </Transition>
@@ -152,6 +153,8 @@ import ColumnFilterNumberModal from './components/Modals/ColumnFilters/ColumnFil
 import ColumnFilterDateModal from './components/Modals/ColumnFilters/ColumnFilterDateModal.vue';
 import ColumnFilterBooleanModal from './components/Modals/ColumnFilters/ColumnFilterBooleanModal.vue';
 import ColumnFilterEnumModal from './components/Modals/ColumnFilters/ColumnFilterEnumModal.vue';
+import OverGridBtn from './components/OverGridBtn.vue';
+import OverGridIcon from './components/OverGridIcon.vue';
 import SearchSection from './components/SearchSection.vue';
 import AboutModal from './components/Modals/AboutModal.vue';
 import { onMounted } from 'vue';
@@ -174,6 +177,7 @@ const props = defineProps<{
 }>();
 
 const clientWidth = ref(document.documentElement.clientWidth)
+const operationsDropdown = ref<InstanceType<typeof Dropdown> | null>(null);
 const i18n = useI18n(props.config.locale || 'en');
 const fields = useFields();
 const records = useRecords(props.config);

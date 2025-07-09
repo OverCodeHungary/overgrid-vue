@@ -1,21 +1,20 @@
 <template>
-  <button v-if="!columnFilter.isFieldActive(props.field)" @click.stop="columnFilter.initiateColumnFilter(props.field)"
-    class="overgrid-btn overgrid-column-filter-btn">
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-      <path stroke-linecap="round" stroke-linejoin="round"
-        d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 0 1-.659 1.591l-5.432 5.432a2.25 2.25 0 0 0-.659 1.591v2.927a2.25 2.25 0 0 1-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 0 0-.659-1.591L3.659 7.409A2.25 2.25 0 0 1 3 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0 1 12 3Z" />
-    </svg>
-  </button>
+  <OverGridBtn v-if="!columnFilter.isFieldActive(props.field)"
+    @click.stop.prevent="columnFilter.initiateColumnFilter(props.field)" iconOnly rounded variant="primary" size="sm"
+    customClass="overgrid-btn-column-filter">
+    <template #iconLeft>
+      <OverGridIcon type="filter" class="w-3 h-3" />
+    </template>
+  </OverGridBtn>
   <Dropdown extraClass="w-[200px]" v-else :orientation="((clientWidth < 640) ? 'right' : 'left')"
     ref="columnFilterDropdown" class="overgrid-column-filter-dropdown">
     <template #iconButton>
-      <button class="rounded-full overgrid-btn overgrid-column-filter-btn overgrid-column-filter-btn-active">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-          stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round"
-            d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 0 1-.659 1.591l-5.432 5.432a2.25 2.25 0 0 0-.659 1.591v2.927a2.25 2.25 0 0 1-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 0 0-.659-1.591L3.659 7.409A2.25 2.25 0 0 1 3 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0 1 12 3Z" />
-        </svg>
-      </button>
+      <OverGridBtn iconOnly rounded variant="danger" size="sm"
+        customClass="overgrid-btn-column-filter overgrid-btn-column-filter-active">
+        <template #iconLeft>
+          <OverGridIcon type="filter" class="w-3 h-3" />
+        </template>
+      </OverGridBtn>
     </template>
     <template #content>
       <ul class="overgrid-column-filter-dropdown-section flex flex-col gap-2 text-left">
@@ -50,9 +49,11 @@
 import { ref } from 'vue';
 import type { OverGridColumnFiltersConfig } from '../types/OverGridColumnFIltersConfig';
 import type { OverGridField } from '../types/OverGridField';
+import OverGridIcon from './OverGridIcon.vue';
 import type { OverGridUseColumnFiltersInterface } from '../types/OverGridUseColumnFiltersInterface';
 import Dropdown from './Dropdown.vue';
 import useI18n from '../composables/useI18n';
+import OverGridBtn from './OverGridBtn.vue';
 const i18n = useI18n();
 
 const clientWidth = ref(document.documentElement.clientWidth)

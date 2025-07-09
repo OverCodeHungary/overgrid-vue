@@ -56,7 +56,7 @@ const operation = ref<string>('cn')
 const value = ref<string | number>('');
 
 const isValid = computed<boolean>(() => {
-  return value.value !== null;
+  return value.value !== null && value.value !== '';
 });
 
 function resetForm() {

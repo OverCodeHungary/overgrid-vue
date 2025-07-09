@@ -1,53 +1,53 @@
 @import 'tailwindcss';
 
-.overgrid-dropdown-panel {
-  background-color: white;
+.overgrid {
+  --overgrid-color-gray: #f2f2f2;
+  --overgrid-color-gray-hover: #e0e0e0;
+  --overgrid-color-text: white;
 }
 
-.overgrid-btn svg {
-  @apply h-4 w-4;
+.overgrid-header {
+  @apply bg-pink-800 text-white;
 }
 
-.overgrid-toolbar-dropdown-section-title {
-  @apply flex flex-row font-bold;
+.overgrid-column-title-container-hoverable {
+  @apply hover:bg-pink-950;
 }
 
-.overgrid-toolbar-dropdown-section-item {
-  @apply flex flex-row;
+.overgrid-row {
+  @apply bg-pink-700 text-white;
 }
 
-.overgrid-autorefresh-item {
-  @apply flex flex-row items-center justify-between gap-1;
+.overgrid-header .overgrid-cell {
+  @apply border-r-[1px] border-black/5;
 }
 
-.overgrid-autorefresh-item svg {
-  @apply h-4 w-4;
+.overgrid-header .overgrid-cell:last-child {
+  @apply border-r-0;
 }
 
-.overgrid-autorefresh-item-selected {
-  @apply font-bold;
+.overgrid-row {
+  @apply border-b-[1px] border-black/5;
 }
 
-.overgrid-page-size-selector-item {
-  @apply flex flex-row items-center justify-between gap-1;
+/* Button styles */
+.overgrid-btn-primary {
+  @apply bg-amber-400 text-black hover:bg-amber-600 focus:ring-pink-600;
 }
 
-.overgrid-page-size-selector-item svg {
-  @apply h-4 w-4;
+.overgrid-btn-secondary {
+  @apply bg-gray-100 text-gray-900 hover:bg-gray-200 focus:ring-gray-400;
 }
 
-.overgrid-page-size-selector-item-selected {
-  @apply font-bold;
+.overgrid-btn-danger {
+  @apply bg-red-600 text-white hover:bg-red-700 focus:ring-red-500;
 }
 
-.overgrid-base-operator-item {
-  @apply flex flex-row items-center justify-between gap-1;
+.overgrid-btn-ghost {
+  @apply bg-transparent text-gray-700 hover:bg-gray-100 focus:ring-gray-300;
 }
+/* Button styles */
 
-.overgrid-base-operator-item svg {
-  @apply h-4 w-4;
-}
-
-.overgrid-column-filter-btn-active {
-  @apply bg-blue-100 border-blue-500 text-blue-700;
+.overgrid-checkbox {
+  @apply w-5 h-5 cursor-pointer;
 }

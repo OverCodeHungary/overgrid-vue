@@ -27,7 +27,6 @@ export default function useI18n(lang?: string | Record<string, string> | undefin
   }
 
   let l = (key: string, params?: Record<string, string>): string => {
-    console.log(`Translating key: ${key} in language: ${currentLang.value}`)
     if (!i18n[currentLang.value][key]) {
       storeMissingLangKeys(key, currentLang.value)
     }
@@ -47,7 +46,6 @@ export default function useI18n(lang?: string | Record<string, string> | undefin
   }
 
   if (lang && lang !== currentLang.value && ['en', 'hu'].includes(lang as string) && typeof lang === 'string') {
-    console.log(`Language changed to ${lang}`)
     currentLang.value = lang
   }
 

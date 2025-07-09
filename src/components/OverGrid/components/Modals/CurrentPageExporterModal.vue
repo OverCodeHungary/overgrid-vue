@@ -5,28 +5,29 @@
       <h4 class="font-bold overgrid-modal-subtitle">
         {{ i18n.l('export_fields') }}
       </h4>
-      <div class="grid grid-cols-2 overgrid-checkbox-nest">
-        <label class="inline-flex items-center overgrid-checkbox-label"
-          v-for="(overGridField, index) in props.mappingVisible" :key="index">
-          <span class="flex flex-row" v-if="overGridField.title != ''">
+      <div class="grid grid-cols-2 gap-2 overgrid-checkbox-nest">
+        <label class="flex items-center overgrid-checkbox-label" v-for="(overGridField, index) in props.mappingVisible"
+          :key="index">
+          <span class="flex flex-row items-center gap-2" v-if="overGridField.title != ''">
             <input :disabled="!overGridField.selectable" v-model="selectedFields" :value="overGridField.key"
               class="overgrid-checkbox" type="checkbox" />
             <p :class="[{ 'opacity-40': !overGridField.selectable }]" class="cursor-pointer">{{ overGridField.title
-              }}</p>
+            }}</p>
           </span>
         </label>
       </div>
 
-      <h4 class="font-bold overgrid-modal-subtitle">
+      <h4 class="font-bold overgrid-modal-subtitle mt-4">
         {{ i18n.l('export_format') }}
       </h4>
       <div class="flex flex-col items-start overgrid-radio-nest">
         <label v-if="props.currentPageExporterConfig?.xlsxEnabled"
-          class="inline-flex items-center overgrid-radio-label">
+          class="flex flex-row gap-2 items-center overgrid-radio-label">
           <input type="radio" v-model="format" value="xlsx" class="overgrid-radio">
           <p class="cursor-pointer">XLSX</p>
         </label>
-        <label v-if="props.currentPageExporterConfig?.csvEnabled" class="inline-flex items-center">
+        <label v-if="props.currentPageExporterConfig?.csvEnabled"
+          class="flex flex-row gap-2 items-center overgrid-radio-label">
           <input type="radio" v-model="format" value="csv" class="overgrid-radio">
           <p class="cursor-pointer">CSV</p>
         </label>

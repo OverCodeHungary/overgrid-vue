@@ -51,7 +51,7 @@ export default (orderConfig?: OverGridOrderConfig): OverGridUseOrderingInterface
   }
 
   const toggleField = (field: OverGridField) => {
-    if (!orderConfig || !orderConfig.active) {
+    if (!orderConfig || !orderConfig.active || !field.orderable) {
       return
     }
 
