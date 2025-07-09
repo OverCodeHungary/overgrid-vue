@@ -1,6 +1,6 @@
 <template>
   <OverGridBtn v-if="!columnFilter.isFieldActive(props.field)"
-    @click.stop.prevent="columnFilter.initiateColumnFilter(props.field)" iconOnly rounded variant="primary" size="sm"
+    @click.stop.prevent="columnFilter.initiateColumnFilter(props.field)" iconOnly rounded variant="secondary" size="sm"
     customClass="overgrid-btn-column-filter">
     <template #iconLeft>
       <OverGridIcon type="filter" class="w-3 h-3" />

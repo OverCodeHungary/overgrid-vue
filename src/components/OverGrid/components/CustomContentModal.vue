@@ -26,7 +26,7 @@
 
             <div v-if="disableButtons !== true"
               class="flex justify-end items-center gap-2 rounded-t-lgdark:bg-navy-800 overgrid-modal-buttons-bar p-4 px-5">
-              <OverGridBtn class="overgrid-btn-modal-cancel" variant="secondary" size="sm" rounded @click="props.close">
+              <OverGridBtn class="overgrid-btn-modal-cancel" variant="ghost" size="sm" rounded @click="props.close">
                 {{ cancelButtonTitle ? cancelButtonTitle : i18n.l('cancel') }}
               </OverGridBtn>
               <OverGridBtn class="overgrid-btn-modal-ok" variant="primary" size="sm" rounded v-if="!noNeedOkButton"

@@ -2,33 +2,33 @@
   <CustomContentModal :show="props.currentPageExporter.isModalShown" :title="i18n.l('column_selector')"
     :close="() => { props.currentPageExporter.closeModal() }" :ok="exportColumns">
     <template #content>
-      <h4 class="font-bold overgrid-modal-subtitle">
+      <h4 class="font-bold overgrid-modal-subtitle mb-2">
         {{ i18n.l('export_fields') }}
       </h4>
       <div class="grid grid-cols-2 gap-2 overgrid-checkbox-nest">
         <label class="flex items-center overgrid-checkbox-label" v-for="(overGridField, index) in props.mappingVisible"
           :key="index">
           <span class="flex flex-row items-center gap-2" v-if="overGridField.title != ''">
-            <input :disabled="!overGridField.selectable" v-model="selectedFields" :value="overGridField.key"
-              class="overgrid-checkbox" type="checkbox" />
+            <OverGridCheckbox :disabled="!overGridField.selectable" :value="overGridField.key" v-model="selectedFields"
+              customClass="overgrid-checkbox-current-page-exporter" variant="black" />
             <p :class="[{ 'opacity-40': !overGridField.selectable }]" class="cursor-pointer">{{ overGridField.title
             }}</p>
           </span>
         </label>
       </div>
 
-      <h4 class="font-bold overgrid-modal-subtitle mt-4">
+      <h4 class="font-bold overgrid-modal-subtitle mt-4 mb-2">
         {{ i18n.l('export_format') }}
       </h4>
-      <div class="flex flex-col items-start overgrid-radio-nest">
+      <div class="flex flex-col gap-2 items-start overgrid-radio-nest">
         <label v-if="props.currentPageExporterConfig?.xlsxEnabled"
           class="flex flex-row gap-2 items-center overgrid-radio-label">
-          <input type="radio" v-model="format" value="xlsx" class="overgrid-radio">
+          <OverGridRadio v-model="format" value="xlsx" class="overgrid-radio-current-page-exporter" variant="black" />
           <p class="cursor-pointer">XLSX</p>
         </label>
         <label v-if="props.currentPageExporterConfig?.csvEnabled"
           class="flex flex-row gap-2 items-center overgrid-radio-label">
-          <input type="radio" v-model="format" value="csv" class="overgrid-radio">
+          <OverGridRadio v-model="format" value="csv" class="overgrid-radio-current-page-exporter" variant="black" />
           <p class="cursor-pointer">CSV</p>
         </label>
       </div>
@@ -43,13 +43,15 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, computed, watch } from 'vue';
+import { ref, computed, watch } from 'vue';
 import type { Ref } from 'vue';
 import { OverGridField } from '../../types/OverGridField';
 import CustomContentModal from '../CustomContentModal.vue';
 import type { OverGridUseCurrentPageExportInterface } from '../../types/OverGridUseCurrentPageExportInterface';
+import OverGridRadio from '../FormElements/OverGridRadio.vue';
 import useI18n from '../../composables/useI18n';
 import type { OverGridCurrentPageExportConfig } from '../../types/OverGridCurrentPageExportConfig';
+import OverGridCheckbox from '../FormElements/OverGridCheckbox.vue';
 import jsonExcel from 'vue-json-excel3';
 import moment from 'moment';
 const i18n = useI18n();

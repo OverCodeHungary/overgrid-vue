@@ -3,28 +3,30 @@
     :title="i18n.l('column_filter_text_modal_title')" :close="props.columnFilters.closeColumnFilterConfigModal"
     :cancelButtonTitle="i18n.l('close')" :disableOkButton="!isValid" :ok="addFilter">
     <template #content>
-      <div class="flex flex-col">
-        <div class="flex flex-col">
-          <label for="overgrid-operation" class="overgrid-label">
+      <div class="flex flex-col gap-3">
+        <div class="flex flex-col gap-1">
+          <label for="overgrid-column-filter-operation-text" class="overgrid-label text-sm">
             {{ i18n.l('operation') }}
           </label>
-          <select id="overgrid-operation" class="overgrid-select" v-model="operation">
-            <option value="cn">{{ i18n.l('contains') }}</option>
-            <option value="ncn">{{ i18n.l('not_contains') }}</option>
-            <option value="eq">{{ i18n.l('equals') }}</option>
-            <option value="neq">{{ i18n.l('not_equals') }}</option>
-            <option value="sw">{{ i18n.l('starts_with') }}</option>
-            <option value="nsw">{{ i18n.l('not_starts_with') }}</option>
-            <option value="ew">{{ i18n.l('ends_with') }}</option>
-            <option value="new">{{ i18n.l('not_ends_with') }}</option>
-          </select>
+          <OverGridSelect id="overgrid-column-filter-operation-text" rounded="full" variant="primary" size="md"
+            customClass="overgrid-select" v-model="operation" :options="[
+              { key: 'cn', text: i18n.l('contains') },
+              { key: 'ncn', text: i18n.l('not_contains') },
+              { key: 'eq', text: i18n.l('equals') },
+              { key: 'neq', text: i18n.l('not_equals') },
+              { key: 'sw', text: i18n.l('starts_with') },
+              { key: 'nsw', text: i18n.l('not_starts_with') },
+              { key: 'ew', text: i18n.l('ends_with') },
+              { key: 'new', text: i18n.l('not_ends_with') }
+            ]" />
         </div>
-        <div class="flex flex-col">
-          <label for="overgrid-value" class="overgrid-label">
+        <div class="flex flex-col gap-1 py-0.5">
+          <label for="overgrid-column-filter-value-text" class="overgrid-label text-sm">
             {{ i18n.l('value') }}
           </label>
-          <input id="overgrid-value" type="text" class="overgrid-input" v-model="value"
-            :placeholder="i18n.l('please_enter_value')" />
+          <OverGridInputText id="overgrid-column-filter-value-text" rounded="full" size="md" variant="primary"
+            type="text" v-model="value" :placeholder="i18n.l('please_enter_value')"
+            customClass="overgrid-input overgrid-input-column-filter-value" />
         </div>
       </div>
     </template>
@@ -34,7 +36,9 @@
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue';
 import CustomContentModal from '../../CustomContentModal.vue';
+import OverGridSelect from '../../FormElements/OverGridSelect.vue';
 import useI18n from '../../../composables/useI18n';
+import OverGridInputText from '../../FormElements/OverGridInputText.vue';
 import type { OverGridUseColumnFiltersInterface } from '@/components/OverGrid/types/OverGridUseColumnFiltersInterface';
 const i18n = useI18n();
 

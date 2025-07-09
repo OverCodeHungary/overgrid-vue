@@ -1,19 +1,21 @@
 <template>
-  <select :disabled="props.bulkOperator.checkedRows.value.length <= 0" v-model="selectedBulkMethod"
-    @change="onBulkMethod" class="disabled:opacity-40 overgrid-select">
-    <option v-if="props.bulkOperator.checkedRows.value.length <= 0" value="null">{{ i18n.l('bulk_method') }}</option>
-    <option v-else value="null">{{ i18n.l('selected_rows', {
+  <OverGridSelect rounded="full" variant="primary" size="sm" customClass="overgrid-select min-w-48"
+    :disabled="props.bulkOperator.checkedRows.value.length <= 0" v-model="selectedBulkMethod" :options="props.config.methods.map(method => {
+      return {
+        key: method.key,
+        text: method.title
+      };
+    })" @change="onBulkMethod" :enableNullOption="true" :nullOptionText="i18n.l('selected_rows', {
       selectedCount:
         props.bulkOperator.checkedRows.value.length.toString()
-    }) }}</option>
-    <option v-for="method in props.config.methods" :value="method.key" :key="method.key">{{ method.title }}</option>
-  </select>
+    })" />
 </template>
 
 <script lang="ts" setup>
 import { ref } from 'vue';
 import type { OverGridUseBulkOperationsInterface } from '../types/OverGridUseBulkOperationsInterface';
 import type { OverGridBulkOperationsConfig } from '../types/OverGridBulkOperationsConfig';
+import OverGridSelect from './FormElements/OverGridSelect.vue';
 import useI18n from '../composables/useI18n';
 
 const i18n = useI18n();
@@ -22,7 +24,7 @@ const props = defineProps<{
   bulkOperator: OverGridUseBulkOperationsInterface;
 }>();
 
-const selectedBulkMethod = ref<string | null>(null);
+const selectedBulkMethod = ref<string | undefined>("");
 
 function onBulkMethod() {
   let actionFn;
@@ -35,7 +37,7 @@ function onBulkMethod() {
 
   if (actionFn) {
     actionFn(props.bulkOperator.checkedRows.value, () => {
-      selectedBulkMethod.value = null;
+      selectedBulkMethod.value = "";
       props.bulkOperator.checkedRows.value = [];
     });
   }

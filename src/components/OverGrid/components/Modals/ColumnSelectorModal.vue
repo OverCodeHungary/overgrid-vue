@@ -6,10 +6,11 @@
         <label class="flex items-center overgrid-checkbox-label" v-for="(overGridField, index) in props.mappingVisible"
           :key="index">
           <span class="flex flex-row items-center gap-2" v-if="overGridField.title != ''">
-            <input :disabled="!overGridField.selectable" v-model="selectedFields" :value="overGridField.key"
-              class="overgrid-checkbox" type="checkbox" />
-            <p :class="[{ 'opacity-40': !overGridField.selectable }]" class="cursor-pointer">{{ overGridField.title
-            }}</p>
+            <OverGridCheckbox :disabled="!overGridField.selectable" :value="overGridField.key" v-model="selectedFields"
+              customClass="overgrid-checkbox-column-selector" variant="black" />
+            <p :class="[{ 'opacity-40': !overGridField.selectable }]" class="cursor-pointer text-sm">{{
+              overGridField.title
+              }}</p>
           </span>
         </label>
       </div>
@@ -22,6 +23,7 @@ import { onMounted, ref, computed, watch } from 'vue';
 import { OverGridField } from '../../types/OverGridField';
 import type { OverGridUseColumnSelectorInterface } from '../../types/OverGridUseColumnSelectorInterface';
 import CustomContentModal from '../CustomContentModal.vue';
+import OverGridCheckbox from '../FormElements/OverGridCheckbox.vue';
 import useI18n from '../../composables/useI18n';
 const i18n = useI18n();
 

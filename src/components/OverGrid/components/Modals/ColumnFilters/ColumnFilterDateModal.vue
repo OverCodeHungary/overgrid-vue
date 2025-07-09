@@ -3,38 +3,45 @@
     :title="i18n.l('column_filter_date_modal_title')" :close="props.columnFilters.closeColumnFilterConfigModal"
     :cancelButtonTitle="i18n.l('close')" :disableOkButton="!isValid" :ok="addFilter">
     <template #content>
-      <div class="flex flex-col">
-        <div class="flex flex-col">
-          <label for="overgrid-operation" class="overgrid-label">
+      <div class="flex flex-col gap-3">
+        <div class="flex flex-col gap-1">
+          <label for="overgrid-column-filter-operation-date" class="overgrid-label text-sm">
             {{ i18n.l('operation') }}
           </label>
-          <select id="overgrid-operation" class="overgrid-select" v-model="operation">
-            <option value="eq">{{ i18n.l('on_this_day') }}</option>
-            <option value="obd">{{ i18n.l('on_or_before_this_day') }}</option>
-            <option value="bd">{{ i18n.l('before_this_day') }}</option>
-            <option value="oad">{{ i18n.l('on_or_after_this_day') }}</option>
-            <option value="ad">{{ i18n.l('after_this_day') }}</option>
-            <option value="be">{{ i18n.l('in_this_interval') }}</option>
-          </select>
+          <OverGridSelect id="overgrid-column-filter-operation-date" rounded="full" variant="primary" size="md"
+            customClass="overgrid-select" v-model="operation" :options="[
+              { key: 'eq', text: i18n.l('on_this_day') },
+              { key: 'obd', text: i18n.l('on_or_before_this_day') },
+              { key: 'bd', text: i18n.l('before_this_day') },
+              { key: 'oad', text: i18n.l('on_or_after_this_day') },
+              { key: 'ad', text: i18n.l('after_this_day') },
+              { key: 'be', text: i18n.l('in_this_interval') }
+            ]" />
         </div>
-        <div class="flex flex-col" v-if="operation !== 'be'">
-          <label for="overgrid-value" class="overgrid-label">
+        <div class="flex flex-col gap-1 py-0.5" v-if="operation !== 'be'">
+          <label for="overgrid-value" class="overgrid-label text-sm">
             {{ i18n.l('value') }}
           </label>
-          <input class="overgrid-input" type="date" v-model="value" />
+          <OverGridInputText rounded="full" size="md" variant="primary" type="date" v-model="value"
+            :placeholder="i18n.l('please_enter_value')"
+            customClass="overgrid-input overgrid-input-column-filter-value" />
         </div>
-        <div class="flex flex-row gap-2" v-else>
-          <div class="w-1/2 flex flex-col">
-            <label for="overgrid-value" class="overgrid-label">
+        <div class="flex flex-row gap-2 py-0.5" v-else>
+          <div class="w-1/2 flex flex-col gap-1">
+            <label for="overgrid-value" class="overgrid-label text-sm">
               {{ i18n.l('interval_start') }}
             </label>
-            <input class="overgrid-input" type="date" v-model="interval1" />
+            <OverGridInputText rounded="full" size="md" variant="primary" type="date" v-model="interval1"
+              :placeholder="i18n.l('please_enter_value')"
+              customClass="overgrid-input overgrid-input-column-filter-value" />
           </div>
-          <div class="w-1/2 flex flex-col">
-            <label for="overgrid-value" class="overgrid-label">
+          <div class="w-1/2 flex flex-col gap-1">
+            <label for="overgrid-value" class="overgrid-label text-sm">
               {{ i18n.l('interval_end') }}
             </label>
-            <input class="overgrid-input" type="date" v-model="interval2" />
+            <OverGridInputText rounded="full" size="md" variant="primary" type="date" v-model="interval2"
+              :placeholder="i18n.l('please_enter_value')"
+              customClass="overgrid-input overgrid-input-column-filter-value" />
           </div>
         </div>
       </div>
@@ -46,6 +53,8 @@
 import { ref, computed, watch } from 'vue';
 import CustomContentModal from '../../CustomContentModal.vue';
 import useI18n from '../../../composables/useI18n';
+import OverGridInputText from '../../FormElements/OverGridInputText.vue';
+import OverGridSelect from '../../FormElements/OverGridSelect.vue';
 import type { OverGridUseColumnFiltersInterface } from '@/components/OverGrid/types/OverGridUseColumnFiltersInterface';
 const i18n = useI18n();
 
@@ -65,7 +74,7 @@ const isValid = computed<boolean>(() => {
     return interval1.value !== '' && interval2.value !== '' && new Date(interval1.value) <= new Date(interval2.value);
   }
   else {
-    return value.value !== null
+    return value.value !== ''
   }
 });
 

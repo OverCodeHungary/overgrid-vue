@@ -4,7 +4,7 @@
     :cancelButtonTitle="i18n.l('close')" :disableOkButton="!isValid" :ok="addFilter">
     <template #content>
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-        <label class="overgrid-checkbox-label flex items-center justify-center gap-2"
+        <label class="overgrid-checkbox-label flex items-center gap-2"
           v-for="(item, key) in props.columnFilters.fieldUnderAdding?.value?.columnFilter?.config?.mapping" :key="key">
           <input :value="key" v-model="value" class="overgrid-checkbox" type="checkbox" />
           <p class="cursor-pointer">{{ item.title }}</p>

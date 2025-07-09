@@ -3,26 +3,28 @@
     :title="i18n.l('column_filter_number_modal_title')" :close="props.columnFilters.closeColumnFilterConfigModal"
     :cancelButtonTitle="i18n.l('close')" :disableOkButton="!isValid" :ok="addFilter">
     <template #content>
-      <div class="flex flex-col">
-        <div class="flex flex-col">
-          <label for="overgrid-operation" class="overgrid-label">
+      <div class="flex flex-col gap-3">
+        <div class="flex flex-col gap-1">
+          <label for="overgrid-column-filter-operation-number" class="overgrid-label text-sm">
             {{ i18n.l('operation') }}
           </label>
-          <select id="overgrid-operation" class="overgrid-select" v-model="operation">
-            <option value="eq">{{ i18n.l('equals') }}</option>
-            <option value="neq">{{ i18n.l('not_equals') }}</option>
-            <option value="lt">{{ i18n.l('less_than') }}</option>
-            <option value="lte">{{ i18n.l('less_than_equals') }}</option>
-            <option value="gt">{{ i18n.l('greater_than') }}</option>
-            <option value="gte">{{ i18n.l('greater_than_equals') }}</option>
-          </select>
+          <OverGridSelect id="overgrid-column-filter-operation-number" rounded="full" variant="primary" size="md"
+            customClass="overgrid-select" v-model="operation" :options="[
+              { key: 'eq', text: i18n.l('equals') },
+              { key: 'neq', text: i18n.l('not_equals') },
+              { key: 'lt', text: i18n.l('less_than') },
+              { key: 'lte', text: i18n.l('less_than_equals') },
+              { key: 'gt', text: i18n.l('greater_than') },
+              { key: 'gte', text: i18n.l('greater_than_equals') }
+            ]" />
         </div>
-        <div class="flex flex-col">
-          <label for="overgrid-value" class="overgrid-label">
+        <div class="flex flex-col gap-1 py-0.5">
+          <label for="overgrid-column-filter-label-value" class="overgrid-label text-sm">
             {{ i18n.l('value') }}
           </label>
-          <VueNumber class="overgrid-input" :placeholder="i18n.l('please_enter_value')" v-model="value"
-            v-bind="numberConfig" />
+          <VueNumber id="overgrid-column-filter-label-value"
+            class="overgrid-input overgrid-input-column-filter-number-value overgrid-input-primary text-sm px-3 py-2 rounded-full"
+            :placeholder="i18n.l('please_enter_value')" v-model="value" v-bind="numberConfig" />
         </div>
       </div>
     </template>
@@ -32,6 +34,7 @@
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue';
 import CustomContentModal from '../../CustomContentModal.vue';
+import OverGridSelect from '../../FormElements/OverGridSelect.vue';
 import useI18n from '../../../composables/useI18n';
 import type { OverGridUseColumnFiltersInterface } from '@/components/OverGrid/types/OverGridUseColumnFiltersInterface';
 import { component as VueNumber } from '@coders-tm/vue-number-format'

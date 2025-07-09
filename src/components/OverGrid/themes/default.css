@@ -1,9 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
 @import 'tailwindcss';
 
 .overgrid {
   --overgrid-color-gray: #f2f2f2;
   --overgrid-color-gray-hover: #e0e0e0;
   --overgrid-color-text: white;
+
+  font-family: 'Ubuntu', sans-serif;
 }
 
 .overgrid-header {
@@ -19,7 +22,11 @@
 }
 
 .overgrid-header .overgrid-cell {
-  @apply border-r-[1px] border-black/5;
+  @apply border-r-[1px] border-pink-900/50;
+}
+
+.overgrid-body .overgrid-cell {
+  @apply border-r-[1px] border-pink-800/50;
 }
 
 .overgrid-header .overgrid-cell:last-child {
@@ -32,21 +39,87 @@
 
 /* Button styles */
 .overgrid-btn-primary {
-  @apply bg-amber-400 text-black hover:bg-amber-600 focus:ring-pink-600;
+  @apply bg-pink-700 text-white hover:bg-pink-600 focus:ring-pink-600;
 }
 
 .overgrid-btn-secondary {
-  @apply bg-gray-100 text-gray-900 hover:bg-gray-200 focus:ring-gray-400;
+  @apply bg-amber-400 text-black hover:bg-amber-600 focus:ring-pink-600;
 }
 
 .overgrid-btn-danger {
   @apply bg-red-600 text-white hover:bg-red-700 focus:ring-red-500;
 }
 
+.overgrid-btn-light {
+  @apply bg-white/20 text-white hover:bg-white/30;
+}
+
 .overgrid-btn-ghost {
   @apply bg-transparent text-gray-700 hover:bg-gray-100 focus:ring-gray-300;
 }
 /* Button styles */
+
+/* Input styles */
+.overgrid-input-primary {
+  @apply border-[1px] border-black/20 focus:outline-1 outline-offset-1 outline-black/20;
+}
+
+.overgrid-input-secondary {
+  @apply bg-amber-400 text-black hover:bg-amber-600 focus:shadow-sm;
+}
+
+.overgrid-input-danger {
+  @apply bg-red-600 text-white hover:bg-red-700 focus:ring-red-500;
+}
+
+.overgrid-input-light {
+  @apply bg-white/20 text-white hover:bg-white/30;
+}
+
+.overgrid-input-ghost {
+  @apply bg-transparent text-gray-700 hover:bg-gray-100 focus:ring-gray-300;
+}
+/* Input styles */
+
+.overgrid-checkbox-primary {
+  @apply rounded-full border-pink-700;
+}
+
+.overgrid-checkbox-primary svg {
+  @apply w-3 h-3 text-pink-700;
+}
+
+.overgrid-checkbox-black {
+  @apply rounded-full text-black/70;
+}
+
+.overgrid-checkbox-black svg {
+  @apply w-3 h-3 text-black/70;
+}
+
+.overgrid-checkbox-secondary {
+  @apply rounded-full border-white/70;
+}
+
+.overgrid-checkbox-secondary svg {
+  @apply w-3 h-3 text-white;
+}
+
+.overgrid-radio-primary {
+  @apply rounded-full border-pink-700;
+}
+
+.overgrid-radio-primary svg {
+  @apply w-3 h-3 text-pink-700;
+}
+
+.overgrid-radio-black {
+  @apply rounded-full border-black/70;
+}
+
+.overgrid-radio-black svg {
+  @apply w-3 h-3 text-black/70;
+}
 
 .overgrid-checkbox {
   @apply w-5 h-5 cursor-pointer;

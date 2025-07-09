@@ -14,7 +14,7 @@
         <OverGridIcon type="chevron-left" class="w-3 h-3" />
       </template>
     </OverGridBtn>
-    <span class="mx-2">
+    <span class="mx-2 text-sm">
       {{
         i18n.l('page_n_of_m', {
           currentPage: paginator.currentPageForUI?.value.toString() || '0',

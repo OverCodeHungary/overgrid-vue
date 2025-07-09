@@ -80,7 +80,7 @@
             <td class="overgrid-cell px-4 overgrid-btn-extra-row text-sm"
               v-if="props.config.extraRow && props.config.extraRow.active && props.config.idkey">
               <OverGridBtn @click="extraRow.toggleRow(record[props.config.idkey]?.toString())"
-                customClass="overgrid-btn-manual-refresh" variant="secondary" size="sm" iconOnly rounded>
+                customClass="overgrid-btn-manual-refresh" variant="light" size="sm" iconOnly rounded>
                 <template #iconLeft>
                   <OverGridIcon v-if="!extraRow.isRowOpened(record[props.config.idkey]?.toString())"
                     type="chevron-right" class="w-3 h-3" />
@@ -91,8 +91,8 @@
             <td class="overgrid-cell px-4 overgrid-checkbox-cell text-sm"
               v-if="props.config.bulkOperations && props.config.bulkOperations.active && props.config.bulkOperations.methods?.length > 0 && props.config.idkey">
               <label class="overgrid-checkbox-label flex items-center justify-center">
-                <input :value="record[props.config.idkey]?.toString()" v-model="bulkOperations.checkedRows.value"
-                  class="overgrid-checkbox" type="checkbox" />
+                <OverGridCheckbox :value="record[props.config.idkey]?.toString()"
+                  v-model="bulkOperations.checkedRows.value" variant="secondary" />
               </label>
             </td>
             <td class="overgrid-cell px-4 text-sm" v-for="bodyField in columnSelector.filter(fields.mappingVisible())"
@@ -153,6 +153,7 @@ import ColumnFilterNumberModal from './components/Modals/ColumnFilters/ColumnFil
 import ColumnFilterDateModal from './components/Modals/ColumnFilters/ColumnFilterDateModal.vue';
 import ColumnFilterBooleanModal from './components/Modals/ColumnFilters/ColumnFilterBooleanModal.vue';
 import ColumnFilterEnumModal from './components/Modals/ColumnFilters/ColumnFilterEnumModal.vue';
+import OverGridCheckbox from './components/FormElements/OverGridCheckbox.vue';
 import OverGridBtn from './components/OverGridBtn.vue';
 import OverGridIcon from './components/OverGridIcon.vue';
 import SearchSection from './components/SearchSection.vue';
