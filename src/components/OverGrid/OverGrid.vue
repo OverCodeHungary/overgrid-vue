@@ -97,7 +97,19 @@
             </td>
             <td class="overgrid-cell px-4 text-sm" v-for="bodyField in columnSelector.filter(fields.mappingVisible())"
               :key="'body_' + bodyField.key">
-              {{ record[bodyField.key] }}
+              <template
+                v-if="bodyField.formatter && typeof bodyField.formatter == 'object' && bodyField.formatter.type">
+                <RootFormatter :theme="props.config.theme ? props.config.theme : 'default'"
+                  :type="bodyField.formatter.type"
+                  :data="bodyField.middleware ? bodyField.middleware(record[bodyField.key], record) : record[bodyField.key]"
+                  :formatterConfig="bodyField.formatter" :rowid="props.config.idkey ? record[props.config.idkey] : null"
+                  :fieldKey="bodyField.key" :record="record" :refreshGrid="() => { records.fetchRecords() }"
+                  :customFormatters="props.customFormatters"
+                  :openExtraRow="(recordId: any) => { if (props.config.idkey) { extraRow.toggleRow(recordId) } }" />
+              </template>
+              <template v-else>
+                {{ bodyField.middleware ? bodyField.middleware(record[bodyField.key], record) : record[bodyField.key] }}
+              </template>
             </td>
           </tr>
           <Transition name="overgrid-anim-extra-row">
@@ -173,9 +185,14 @@ import useAboutModal from './composables/useAboutModal';
 import useBulkOperations from './composables/useBulkOperations';
 import BulkOperationsDropdown from './components/BulkOperationsDropdown.vue';
 import useExtraRow from './composables/useExtraRow';
+import RootFormatter from './components/Formatters/RootFormatter.vue';
 
 const props = defineProps<{
   config: OverGridConfig;
+  customFormatters?: {
+    name: string;
+    component: any;
+  }[];
 }>();
 
 const clientWidth = ref(document.documentElement.clientWidth)

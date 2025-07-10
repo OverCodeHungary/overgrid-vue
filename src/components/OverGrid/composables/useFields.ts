@@ -1,10 +1,12 @@
 import { OverGridField } from '../types/OverGridField'
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
+import type { OverGridActionButton } from '../types/OverGridActionButton'
 import type { Ref } from 'vue'
 import type { OverGridEnumMapping } from '../types/OverGridEnumMapping'
 
 class OverGridFields {
   mapping: Ref<OverGridField[]>
+  actionButtonFieldCounter: number = 0
 
   constructor() {
     this.mapping = ref<OverGridField[]>([])
@@ -63,6 +65,12 @@ class OverGridFields {
       },
       ...(extraConfig.columnFilter ? extraConfig.columnFilter : {}),
     }
+    field.formatter = {
+      type: 'EnumFormatter',
+      config: {
+        mapping: enumMapping,
+      },
+    }
     return field
   }
 
@@ -74,6 +82,20 @@ class OverGridFields {
       config: {},
       ...(extraConfig.columnFilter ? extraConfig.columnFilter : {}),
     }
+    field.setFormatter('BooleanFormatter')
+    return field
+  }
+
+  addActionButtonField(title: string, buttons: OverGridActionButton[]) {
+    let field: OverGridField = this.addField('actionButtons_' + this.actionButtonFieldCounter++, title)
+    field.setFormatter('ActionButtonsFormatter', {
+      buttons: buttons,
+    })
+    field.exportable = false // Action buttons are not exportable by default
+    field.columnFilter = {
+      active: false, // Action buttons do not have filters
+    }
+    field.orderable = false // Action buttons are not orderable by default
     return field
   }
 }

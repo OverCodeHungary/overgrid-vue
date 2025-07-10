@@ -10,6 +10,7 @@ export class OverGridField {
       filterKey: key,
       config: {},
     }
+    this.visible = true // Default is visible
   }
 
   fieldsObject: any
@@ -135,6 +136,14 @@ export class OverGridField {
 
   setOrderable(orderable: boolean) {
     this.orderable = orderable
+    return this
+  }
+
+  setFormatter(type: string, config?: any) {
+    this.formatter = {
+      type,
+      config: config || {},
+    }
     return this
   }
 

@@ -49,4 +49,7 @@ export default {
   page_size: 'Page size',
   selected_rows: '{selectedCount} selected',
   loading_data: 'Loading data...',
+  actions: 'Actions',
+  yes: 'Yes',
+  no: 'No',
 }

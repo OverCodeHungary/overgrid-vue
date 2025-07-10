@@ -1,6 +1,7 @@
 <template>
   <div class="p-4">
-    <OverGrid :config="config" ref="overgrid">
+    <OverGrid :config="config" ref="overgrid"
+      :customFormatters="[{ name: 'CustomFormatter', component: CustomFormatter }]">
       <template #extraRow="{ record, extraSlotParams }">
         <div class="overgrid-extra-row-content">
           <p>Extra Row Content for ID: {{ record }}</p>
@@ -13,6 +14,7 @@
 
 <script setup lang="ts">
 import OverGrid from './components/OverGrid/OverGrid.vue';
+import CustomFormatter from './CustomFormatter.vue';
 import { onMounted, ref } from 'vue';
 
 const overgrid = ref<InstanceType<typeof OverGrid> | null>(null);
@@ -112,22 +114,63 @@ const config = {
 }
 
 onMounted(() => {
-  overgrid.value?.fields
+  overgrid.value?.fields.addActionButtonField('', [{
+    disabled: false,
+    title: '',
+    icon: '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4"><path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5" /></svg>',
+    classList: 'cursor-pointer bg-[#d92228] hover:bg-green-500 rounded-full w-8 h-8 text-white flex items-center justify-center',
+    testValueAttribute: 'edit-button',
+    dropdowned: false,
+    action: (event: Event, fieldKey: string, data: any, record: any) => {
+    }
+  }, {
+    disabled: false,
+    title: '',
+    icon: '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4"><path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5" /></svg>',
+    classList: 'cursor-pointer bg-[#d92228] hover:bg-green-500 rounded-full w-8 h-8 text-white flex items-center justify-center',
+    testValueAttribute: 'edit-button',
+    dropdowned: false,
+    action: (event: Event, fieldKey: string, data: any, record: any) => {
+    }
+  }, {
+    disabled: false,
+    title: 'hello world',
+    icon: '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4"><path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5" /></svg>',
+    classList: 'cursor-pointer bg-[#d92228] hover:bg-green-500 rounded-full w-8 h-8 text-white flex items-center justify-center',
+    testValueAttribute: 'edit-button',
+    dropdowned: true,
+    action: (event: Event, fieldKey: string, data: any, record: any) => {
+    }
+  }]).commit()
     .addNumberField('id', 'ID').setOrderKey('id2').setFilterKey('id2').commit()
-    .addTextField('name', 'Name').commit()
-    .addNumberField('age', 'Age').commit()
-    .addDateField('birthDate', 'Birth Date').commit()
+    .addTextField('name', 'Name').setFormatter('ClassFormatter', {
+      class: 'font-bold'
+    }).commit()
+    .addNumberField('age', 'Age').setFormatter('NumberFormatter', {
+      class: 'text-red-500 font-bold',
+      locale: 'hu-HU',
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 3,
+      useGrouping: true
+    }).commit()
+    .addDateField('birthDate', 'Birth Date').setFormatter('DateFormatter', {
+      inputFormat: 'YYYY-MM-DD',
+      outputFormat: 'DD/MM/YYYY'
+    }).commit()
     .addEnumField('gender', 'Gender', {
       male: {
         title: 'Férfi',
-        class: 'text-blue-500'
+        class: 'bg-blue-500 text-white p-3 py-1.5 rounded text-xs'
       },
       female: {
         title: 'Nő',
-        class: 'text-pink-500'
+        class: 'bg-pink-500 text-white p-3 py-1.5 rounded text-xs'
       },
     }).commit()
-    .addBooleanField('isActive', 'Active').commit();
+    .addBooleanField('isActive', 'Active').setFormatter('BooleanFormatter', {
+      trueText: 'Igen',
+      falseText: 'Nem'
+    }).commit();
 
 });
 

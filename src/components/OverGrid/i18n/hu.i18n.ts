@@ -55,4 +55,7 @@ export default {
   close: 'Bezárás',
   selected_rows: '{selectedCount} kiválasztva',
   loading_data: 'Betöltés...',
+  actions: 'Műveletek',
+  yes: 'Igen',
+  no: 'Nem',
 }
