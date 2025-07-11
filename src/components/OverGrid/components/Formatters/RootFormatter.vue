@@ -14,6 +14,7 @@ import ClassFormatter from './ClassFormatter.vue';
 import DateFormatter from './DateFormatter.vue';
 import NumberFormatter from './NumberFormatter.vue';
 import ActionButtonsFormatter from './ActionButtonsFormatter.vue';
+import HtmlFormatter from './HtmlFormatter.vue';
 const i18n = useI18n();
 
 const props = defineProps<{
@@ -53,6 +54,9 @@ const formatters = [{
 }, {
   name: 'ActionButtonsFormatter',
   component: ActionButtonsFormatter
+}, {
+  name: 'HtmlFormatter',
+  component: HtmlFormatter
 }].concat(props.customFormatters || []);
 
 </script>

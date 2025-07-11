@@ -6,13 +6,14 @@
         {{ i18n.l('export_fields') }}
       </h4>
       <div class="grid grid-cols-2 gap-2 overgrid-checkbox-nest">
-        <label class="flex items-center overgrid-checkbox-label" v-for="(overGridField, index) in props.mappingVisible"
-          :key="index">
+        <label class="flex items-center overgrid-checkbox-label" v-for="(overGridField, index) in props.mappingVisible?.filter((field: OverGridField) => {
+          return field.exportable !== false
+        })" :key="index">
           <span class="flex flex-row items-center gap-2" v-if="overGridField.title != ''">
             <OverGridCheckbox :disabled="!overGridField.selectable" :value="overGridField.key" v-model="selectedFields"
               customClass="overgrid-checkbox-current-page-exporter" variant="black" />
             <p :class="[{ 'opacity-40': !overGridField.selectable }]" class="cursor-pointer">{{ overGridField.title
-              }}</p>
+            }}</p>
           </span>
         </label>
       </div>

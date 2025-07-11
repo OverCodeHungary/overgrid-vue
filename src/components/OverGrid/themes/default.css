@@ -41,7 +41,7 @@
 }
 
 .overgrid[data-theme='default'] .overgrid-btn-secondary {
-  @apply bg-slate-700 text-white hover:bg-slate-800 focus:bg-slate-700;
+  @apply bg-slate-700 text-white hover:bg-slate-800 focus:ring-slate-700;
 }
 
 .overgrid[data-theme='default'] .overgrid-btn-danger {

@@ -5,11 +5,6 @@ export interface OverGridActionButton {
   title?: string
 
   /**
-   * The tooltip of the button.
-   */
-  tooltip?: string
-
-  /**
    * The icon of the button. You can use any valid FontAwesome icon class here. For example, 'fas fa-edit'.
    */
   icon?: string
@@ -23,6 +18,11 @@ export interface OverGridActionButton {
    * The class list of the button. You can set multiple classes here. For example, 'btn btn-primary'.
    */
   classList?: string
+
+  /**
+   * The variant of the button. You can use any of the variants defined in OverGridBtn.vue. For example, 'primary', 'secondary', 'danger', etc.
+   */
+  variant?: string
 
   /**
    * If true, the button is a dropdown button. If false, the button is a normal button.

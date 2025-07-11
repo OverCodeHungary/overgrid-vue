@@ -95,6 +95,7 @@ class OverGridFields {
     field.columnFilter = {
       active: false, // Action buttons do not have filters
     }
+    field.selectable = false // Action buttons are not selectable by default
     field.orderable = false // Action buttons are not orderable by default
     return field
   }

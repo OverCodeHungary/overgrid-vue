@@ -1,6 +1,11 @@
 <template>
-  <span :class="formatterConfig?.config?.mapping?.[data]?.class || ''">
+  <span v-if="!Array.isArray(data)" :class="formatterConfig?.config?.mapping?.[data]?.class || ''">
     {{ formatterConfig?.config?.mapping?.[data]?.title ? formatterConfig?.config?.mapping?.[data]?.title : data }}
+  </span>
+  <span class="flex flex-row gap-1" v-else>
+    <span v-for="(item, index) in data" :key="index" :class="formatterConfig?.config?.mapping?.[item]?.class || ''">
+      {{ formatterConfig?.config?.mapping?.[item]?.title ? formatterConfig?.config?.mapping?.[item]?.title : item }}
+    </span>
   </span>
 </template>
 

@@ -122,8 +122,43 @@ export class OverGridField {
     config?: any
   }
 
+  setTitle(title: string) {
+    this.title = title
+    return this
+  }
+
+  setVisible(visible: boolean) {
+    this.visible = visible
+    return this
+  }
+
+  setColumnFilter(columnFilter: { active: boolean; type?: string; filterKey?: string; config?: any }) {
+    this.columnFilter = columnFilter
+    return this
+  }
+
+  setSelectable(selectable: boolean) {
+    this.selectable = selectable
+    return this
+  }
+
+  setOrerable(orderable: boolean) {
+    this.orderable = orderable
+    return this
+  }
+
   setOrderKey(orderKey: string) {
     this.orderKey = orderKey
+    return this
+  }
+
+  setExportable(exportable: boolean) {
+    this.exportable = exportable
+    return this
+  }
+
+  setWidth(width: string) {
+    this.width = width
     return this
   }
 
@@ -144,6 +179,16 @@ export class OverGridField {
       type,
       config: config || {},
     }
+    return this
+  }
+
+  setMiddleware(middleware: (data: any, record: any) => any) {
+    this.middleware = middleware
+    return this
+  }
+
+  setExportMiddleware(exportMiddleware: (data: any, record: any, format?: string) => any) {
+    this.exportMiddleware = exportMiddleware
     return this
   }
 

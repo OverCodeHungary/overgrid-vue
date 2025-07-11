@@ -1,5 +1,5 @@
 <template>
-  <div class="overgrid relative" :data-theme="props.config.theme || 'default'"
+  <div class="overgrid relative w-full max-w-full" :data-theme="props.config.theme || 'default'"
     :grid-unique-id="props.config.gridUniqueId">
     <div class="overgrid-toolbar flex flex-row h-12 items-center justify-center">
       <SearchSection v-if="props.config.search?.active" :searchConfig="props.config.search"
@@ -39,94 +39,99 @@
         </Dropdown>
       </div>
     </div>
-    <table class="overgrid-table w-full rounded-xl overflow-hidden">
-      <thead class="overgrid-header h-12">
-        <tr>
-          <th class="overgrid-cell h-12 overgrid-extra-row-cell text-sm w-12"
-            v-if="props.config.extraRow && props.config.extraRow.active && props.config.idkey">
-            <label class="">
-            </label>
-          </th>
-          <th class="overgrid-cell h-12 overgrid-checkbox-cell text-sm w-12"
-            v-if="props.config.bulkOperations && props.config.bulkOperations.active && props.config.bulkOperations.methods?.length > 0 && props.config.idkey">
-            <label class="">
-            </label>
-          </th>
-          <th class="overgrid-cell text-sm h-12" v-for="titleField in columnSelector.filter(fields.mappingVisible())"
-            :key="'head_' + titleField.key">
-            <div class="flex flex-row items-center overgrid-column-title-container h-12 px-4"
-              @click="() => records.ordering.toggleField(titleField)"
-              :class="{ 'overgrid-column-title-container-hoverable cursor-pointer': props.config.orderConfiguration?.active && titleField.orderable }">
-              <span class="overgrid-column-title">{{ titleField.title }}</span>
-              <span class="grow"></span>
-              <div class="flex flex-row items-center justify-center gap-2">
-                <div v-if="props.config.orderConfiguration?.active && titleField.orderable"
-                  class="overgrid-orderer-container flex flex-row items-center justify-center">
-                  <Orderer :orderer="records.ordering" :field="titleField" :config="props.config.orderConfiguration" />
-                </div>
-                <div v-if="props.config.columnFilters?.active && titleField.columnFilter?.active"
-                  class="overgrid-column-filters-container flex flex-row items-center justify-center">
-                  <ColumnFilter :columnFilter="records.columnFilters" :field="titleField"
-                    :config="props.config.columnFilters" />
+    <div class="overgrid-scroller w-full max-w-full overflow-x-auto">
+      <table class="overgrid-table w-full rounded-xl overflow-hidden">
+        <thead class="overgrid-header h-12">
+          <tr>
+            <th class="overgrid-cell h-12 overgrid-extra-row-cell text-sm w-12"
+              v-if="props.config.extraRow && props.config.extraRow.active && props.config.idkey">
+              <label class="">
+              </label>
+            </th>
+            <th class="overgrid-cell h-12 overgrid-checkbox-cell text-sm w-12"
+              v-if="props.config.bulkOperations && props.config.bulkOperations.active && props.config.bulkOperations.methods?.length > 0 && props.config.idkey">
+              <label class="">
+              </label>
+            </th>
+            <th class="overgrid-cell text-sm h-12" v-for="titleField in columnSelector.filter(fields.mappingVisible())"
+              :key="'head_' + titleField.key">
+              <div class="flex flex-row items-center overgrid-column-title-container h-12 px-4"
+                :style="{ width: titleField.width || 'auto' }" @click="() => records.ordering.toggleField(titleField)"
+                :class="{ 'overgrid-column-title-container-hoverable cursor-pointer': props.config.orderConfiguration?.active && titleField.orderable }">
+                <span class="overgrid-column-title whitespace-nowrap">{{ titleField.title }}</span>
+                <span class="grow min-w-3"></span>
+                <div class="flex flex-row items-center justify-center gap-2">
+                  <div v-if="props.config.orderConfiguration?.active && titleField.orderable"
+                    class="overgrid-orderer-container flex flex-row items-center justify-center">
+                    <Orderer :orderer="records.ordering" :field="titleField"
+                      :config="props.config.orderConfiguration" />
+                  </div>
+                  <div v-if="props.config.columnFilters?.active && titleField.columnFilter?.active"
+                    class="overgrid-column-filters-container flex flex-row items-center justify-center">
+                    <ColumnFilter :columnFilter="records.columnFilters" :field="titleField"
+                      :config="props.config.columnFilters" />
+                  </div>
                 </div>
               </div>
-            </div>
-          </th>
-        </tr>
-      </thead>
-      <tbody class="overgrid-body">
-        <template v-for="(record, index) in records.records.value" :key="'record_' + index">
-          <tr class="overgrid-row h-12" :class="rowHighlighter.getClassList(record)">
-            <td class="overgrid-cell px-4 overgrid-btn-extra-row text-sm"
-              v-if="props.config.extraRow && props.config.extraRow.active && props.config.idkey">
-              <OverGridBtn @click="extraRow.toggleRow(record[props.config.idkey]?.toString())"
-                customClass="overgrid-btn-manual-refresh" variant="light" size="sm" iconOnly rounded>
-                <template #iconLeft>
-                  <OverGridIcon v-if="!extraRow.isRowOpened(record[props.config.idkey]?.toString())"
-                    type="chevron-right" class="w-3 h-3" />
-                  <OverGridIcon v-else type="chevron-down" class="w-3 h-3" />
-                </template>
-              </OverGridBtn>
-            </td>
-            <td class="overgrid-cell px-4 overgrid-checkbox-cell text-sm"
-              v-if="props.config.bulkOperations && props.config.bulkOperations.active && props.config.bulkOperations.methods?.length > 0 && props.config.idkey">
-              <label class="overgrid-checkbox-label flex items-center justify-center">
-                <OverGridCheckbox :value="record[props.config.idkey]?.toString()"
-                  v-model="bulkOperations.checkedRows.value" variant="secondary" />
-              </label>
-            </td>
-            <td class="overgrid-cell px-4 text-sm" v-for="bodyField in columnSelector.filter(fields.mappingVisible())"
-              :key="'body_' + bodyField.key">
-              <template
-                v-if="bodyField.formatter && typeof bodyField.formatter == 'object' && bodyField.formatter.type">
-                <RootFormatter :theme="props.config.theme ? props.config.theme : 'default'"
-                  :type="bodyField.formatter.type"
-                  :data="bodyField.middleware ? bodyField.middleware(record[bodyField.key], record) : record[bodyField.key]"
-                  :formatterConfig="bodyField.formatter" :rowid="props.config.idkey ? record[props.config.idkey] : null"
-                  :fieldKey="bodyField.key" :record="record" :refreshGrid="() => { records.fetchRecords() }"
-                  :customFormatters="props.customFormatters"
-                  :openExtraRow="(recordId: any) => { if (props.config.idkey) { extraRow.toggleRow(recordId) } }" />
-              </template>
-              <template v-else>
-                {{ bodyField.middleware ? bodyField.middleware(record[bodyField.key], record) : record[bodyField.key] }}
-              </template>
-            </td>
+            </th>
           </tr>
-          <Transition name="overgrid-anim-extra-row">
-            <tr class="overgrid-extra-row"
-              v-if="props.config.extraRow && props.config.extraRow.active && props.config.idkey"
-              v-show="extraRow.isRowOpened(record[props.config.idkey]?.toString())">
-              <td
-                :colspan="columnSelector.filter(fields.mappingVisible()).length + (props.config.bulkOperations && props.config.bulkOperations.active && props.config.bulkOperations.methods?.length > 0 && props.config.idkey ? 1 : 0) + 1">
-                <slot v-bind:record="record" v-bind:extraSlotParams="props.config.extraRow?.extraSlotParams"
-                  name="extraRow">
-                </slot>
+        </thead>
+        <tbody class="overgrid-body">
+          <template v-for="(record, index) in records.records.value" :key="'record_' + index">
+            <tr class="overgrid-row h-12" :class="rowHighlighter.getClassList(record)">
+              <td class="overgrid-cell px-4 overgrid-btn-extra-row text-sm"
+                v-if="props.config.extraRow && props.config.extraRow.active && props.config.idkey">
+                <OverGridBtn @click="extraRow.toggleRow(record[props.config.idkey]?.toString())"
+                  customClass="overgrid-btn-manual-refresh" variant="light" size="sm" iconOnly rounded>
+                  <template #iconLeft>
+                    <OverGridIcon v-if="!extraRow.isRowOpened(record[props.config.idkey]?.toString())"
+                      type="chevron-right" class="w-3 h-3" />
+                    <OverGridIcon v-else type="chevron-down" class="w-3 h-3" />
+                  </template>
+                </OverGridBtn>
+              </td>
+              <td class="overgrid-cell px-4 overgrid-checkbox-cell text-sm"
+                v-if="props.config.bulkOperations && props.config.bulkOperations.active && props.config.bulkOperations.methods?.length > 0 && props.config.idkey">
+                <label class="overgrid-checkbox-label flex items-center justify-center">
+                  <OverGridCheckbox :value="record[props.config.idkey]?.toString()"
+                    v-model="bulkOperations.checkedRows.value" variant="secondary" />
+                </label>
+              </td>
+              <td class="overgrid-cell px-4 text-sm" v-for="bodyField in columnSelector.filter(fields.mappingVisible())"
+                :key="'body_' + bodyField.key">
+                <template
+                  v-if="bodyField.formatter && typeof bodyField.formatter == 'object' && bodyField.formatter.type">
+                  <RootFormatter :theme="props.config.theme ? props.config.theme : 'default'"
+                    :type="bodyField.formatter.type"
+                    :data="bodyField.middleware ? bodyField.middleware(record[bodyField.key], record) : record[bodyField.key]"
+                    :formatterConfig="bodyField.formatter"
+                    :rowid="props.config.idkey ? record[props.config.idkey] : null" :fieldKey="bodyField.key"
+                    :record="record" :refreshGrid="() => { records.fetchRecords() }"
+                    :customFormatters="props.customFormatters"
+                    :openExtraRow="(recordId: any) => { if (props.config.idkey) { extraRow.toggleRow(recordId) } }" />
+                </template>
+                <template v-else>
+                  {{ bodyField.middleware ? bodyField.middleware(record[bodyField.key], record) : record[bodyField.key]
+                  }}
+                </template>
               </td>
             </tr>
-          </Transition>
-        </template>
-      </tbody>
-    </table>
+            <Transition name="overgrid-anim-extra-row">
+              <tr class="overgrid-extra-row"
+                v-if="props.config.extraRow && props.config.extraRow.active && props.config.idkey"
+                v-show="extraRow.isRowOpened(record[props.config.idkey]?.toString())">
+                <td
+                  :colspan="columnSelector.filter(fields.mappingVisible()).length + (props.config.bulkOperations && props.config.bulkOperations.active && props.config.bulkOperations.methods?.length > 0 && props.config.idkey ? 1 : 0) + 1">
+                  <slot v-bind:record="record" v-bind:extraSlotParams="props.config.extraRow?.extraSlotParams"
+                    name="extraRow">
+                  </slot>
+                </td>
+              </tr>
+            </Transition>
+          </template>
+        </tbody>
+      </table>
+    </div>
 
     <Paginator :paginator="records.pagination" v-if="props.config.pagination?.active" />
 
