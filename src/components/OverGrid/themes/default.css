@@ -31,6 +31,10 @@
   @apply border-r-0;
 }
 
+.overgrid[data-theme='default'] .overgrid-body .overgrid-extra-row-cell {
+  @apply border-l-[1px] border-b-[1px] border-black/5 p-4 bg-black/5;
+}
+
 .overgrid[data-theme='default'] .overgrid-row {
   @apply border-b-[1px] border-black/5;
 }

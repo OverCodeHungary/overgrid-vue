@@ -15,8 +15,7 @@
             <OverGridIcon type="refresh" class="w-4 h-4" />
           </template>
         </OverGridBtn>
-        <Dropdown :orientation="((clientWidth < 640) ? 'right' : 'left')" ref="operationsDropdown"
-          class="overgrid-operations-dropdown">
+        <Dropdown :orientation="'left'" ref="operationsDropdown" class="overgrid-operations-dropdown">
           <template #iconButton>
             <OverGridBtn v-if="props.config.refreshable?.manualActive" customClass="overgrid-btn-operations"
               variant="primary" size="sm" iconOnly rounded>
@@ -120,7 +119,7 @@
               <tr class="overgrid-extra-row"
                 v-if="props.config.extraRow && props.config.extraRow.active && props.config.idkey"
                 v-show="extraRow.isRowOpened(record[props.config.idkey]?.toString())">
-                <td
+                <td class="overgrid-extra-row"
                   :colspan="columnSelector.filter(fields.mappingVisible()).length + (props.config.bulkOperations && props.config.bulkOperations.active && props.config.bulkOperations.methods?.length > 0 && props.config.idkey ? 1 : 0) + 1">
                   <slot v-bind:record="record" v-bind:extraSlotParams="props.config.extraRow?.extraSlotParams"
                     name="extraRow">

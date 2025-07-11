@@ -2,7 +2,7 @@
   <div class="flex flex-row gap-1 items-center relative overgrid-search-container">
     <OverGridInputText rounded="full" size="sm" variant="primary" type="text" v-model="props.searcher.query.value"
       :placeholder="props.searchConfig?.inputPlaceholder ? props.searchConfig.inputPlaceholder : i18n.l('search')"
-      customClass="overgrid-input overgrid-input-search w-60" />
+      customClass="overgrid-input overgrid-input-search w-32 sm:w-60" />
     <OverGridBtn iconOnly rounded size="sm" variant="ghost" v-if="props.searcher.query.value"
       @click="() => { props.searcher.query.value = '' }"
       customClass="overgrid-btn-search-clear w-7 h-7 absolute right-0">

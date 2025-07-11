@@ -1,5 +1,5 @@
 <template>
-  <OverGridSelect rounded="full" variant="primary" size="sm" customClass="overgrid-select min-w-48"
+  <OverGridSelect rounded="full" variant="primary" size="sm" customClass="overgrid-select min-w-32 sm:min-w-48"
     :disabled="props.bulkOperator.checkedRows.value.length <= 0" v-model="selectedBulkMethod" :options="props.config.methods.map(method => {
       return {
         key: method.key,

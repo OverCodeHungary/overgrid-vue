@@ -3,7 +3,7 @@
     <div class="fixed w-full h-full top-0 left-0 z-30 overgrid-modal" v-show="state.show">
       <div class="absolute w-full h-full bg-slate-900/60 overgrid-modal-backdrop"></div>
       <Transition name="overgrid-anim-modal">
-        <div class="flex align-items-center justify-center w-full py-8">
+        <div class="flex align-items-center justify-center w-full py-8 px-4">
           <div
             class="relative flex w-full max-w-2xl origin-top flex-col overflow-hidden rounded-lg overgrid-modal-inner bg-white shadow-sm">
             <div
