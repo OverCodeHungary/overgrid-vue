@@ -1,5 +1,5 @@
 <template>
-  <CustomContentModal :show="props.currentPageExporter.isModalShown" :title="i18n.l('column_selector')"
+  <CustomContentModal :show="props.currentPageExporter.isModalShown.value" :title="i18n.l('column_selector')"
     :close="() => { props.currentPageExporter.closeModal() }" :ok="exportColumns">
     <template #content>
       <h4 class="font-bold overgrid-modal-subtitle mb-2">
@@ -13,7 +13,7 @@
             <OverGridCheckbox :disabled="!overGridField.selectable" :value="overGridField.key" v-model="selectedFields"
               customClass="overgrid-checkbox-current-page-exporter" variant="black" />
             <p :class="[{ 'opacity-40': !overGridField.selectable }]" class="cursor-pointer">{{ overGridField.title
-            }}</p>
+              }}</p>
           </span>
         </label>
       </div>

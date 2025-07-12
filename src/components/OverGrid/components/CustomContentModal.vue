@@ -50,59 +50,20 @@ import OverGridBtn from './OverGridBtn.vue';
 import OverGridIcon from './OverGridIcon.vue';
 const i18n = useI18n();
 
-const props = defineProps({
-  show: {
-    required: true
-  },
-  title: {
-    type: String,
-    required: true
-  },
-  cancelButtonTitle: {
-    type: String
-  },
-  okButtonTitle: {
-    type: String
-  },
-  close: {
-    type: Function,
-    required: true
-  },
-  ok: {
-    type: Function,
-    required: false
-  },
-  disableButtons: {
-    type: Boolean,
-    default: false,
-    required: false
-  },
-  disableOkButton: {
-    type: Boolean,
-    default: false,
-    required: false
-  },
-  okButtonLoading: {
-    type: Boolean,
-    default: false,
-    required: false
-  },
-  noNeedOkButton: {
-    type: Boolean,
-    default: false,
-    required: false
-  },
-  maxWidthClass: {
-    type: String,
-    default: 'max-w-2xl',
-    required: false
-  },
-  overflowVisible: {
-    type: Boolean,
-    default: false,
-    required: false
-  }
-});
+const props = defineProps<{
+  show: boolean;
+  title: string;
+  cancelButtonTitle?: string;
+  okButtonTitle?: string;
+  close: () => void;
+  ok?: () => void;
+  disableButtons?: boolean;
+  disableOkButton?: boolean;
+  okButtonLoading?: boolean;
+  noNeedOkButton?: boolean;
+  maxWidthClass?: string;
+  overflowVisible?: boolean;
+}>();
 
 const state = reactive({
   show: props.show

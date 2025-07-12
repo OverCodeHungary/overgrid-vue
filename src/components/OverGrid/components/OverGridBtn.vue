@@ -1,5 +1,5 @@
 <template>
-  <button :class="computedClass" :type="props.type" :disabled="props.disabled">
+  <button :class="computedClass" :type="props.type || 'button'" :disabled="props.disabled">
     <slot name="iconLeft" />
     <span v-if="hasText">
       <slot />

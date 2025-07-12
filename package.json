@@ -1,14 +1,37 @@
 {
-  "name": "overgrid2",
-  "version": "0.1.0",
-  "private": true,
+  "name": "@overcodehungary/test-package-001",
+  "private": false,
+  "version": "1.0.3",
   "type": "module",
+  "license": "MIT",
+  "main": "./dist/overgrid.umd.js",
+  "module": "./dist/overgrid.es.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "src/components/OverGrid/themes/default.css",
+    "src/components/OverGrid/themes/pink.css"
+  ],
+  "exports": {
+    ".": {
+      "import": "./dist/overgrid.es.js",
+      "require": "./dist/overgrid.umd.js"
+    },
+    "./dist/test-package-001.css": {
+      "default": "./dist/test-package-001.css"
+    }
+  },
+  "peerDependencies": {
+    "vue": "^3.0.0"
+  },
   "scripts": {
     "dev": "vite",
-    "build": "run-p type-check \"build-only {@}\" --",
+    "build": "vite build && vue-tsc --declaration --emitDeclarationOnly --outDir dist",
+    "build-typecheck": "run-p type-check \"build-only {@}\" --",
     "preview": "vite preview",
     "test:unit": "vitest",
     "test:component": "vitest",
+    "test:coverage": "vitest --coverage",
     "build-only": "vite build",
     "type-check": "vue-tsc --build",
     "lint": "eslint . --fix",
@@ -28,6 +51,7 @@
     "@types/node": "^22.15.32",
     "@types/vue": "^1.0.31",
     "@vitejs/plugin-vue": "^6.0.0",
+    "@vitest/coverage-v8": "^3.2.4",
     "@vitest/eslint-plugin": "^1.2.7",
     "@vue/eslint-config-prettier": "^10.2.0",
     "@vue/eslint-config-typescript": "^14.5.1",

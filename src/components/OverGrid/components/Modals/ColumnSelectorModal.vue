@@ -1,5 +1,5 @@
 <template>
-  <CustomContentModal :show="props.columnSelector.isModalShown" :title="i18n.l('column_selector')"
+  <CustomContentModal :show="props.columnSelector.isModalShown.value" :title="i18n.l('column_selector')"
     :close="() => { props.columnSelector.closeModal() }" :ok="setColumns">
     <template #content>
       <div class="grid grid-cols-2 gap-2 overgrid-checkbox-nest">
@@ -11,7 +11,7 @@
               customClass="overgrid-checkbox-column-selector" variant="black" />
             <p :class="[{ 'opacity-40': !overGridField.selectable }]" class="cursor-pointer text-sm">{{
               overGridField.title
-            }}</p>
+              }}</p>
           </span>
         </label>
       </div>

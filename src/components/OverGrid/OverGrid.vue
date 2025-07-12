@@ -119,7 +119,7 @@
               <tr class="overgrid-extra-row"
                 v-if="props.config.extraRow && props.config.extraRow.active && props.config.idkey"
                 v-show="extraRow.isRowOpened(record[props.config.idkey]?.toString())">
-                <td class="overgrid-extra-row"
+                <td class="overgrid-extra-row-cell"
                   :colspan="columnSelector.filter(fields.mappingVisible()).length + (props.config.bulkOperations && props.config.bulkOperations.active && props.config.bulkOperations.methods?.length > 0 && props.config.idkey ? 1 : 0) + 1">
                   <slot v-bind:record="record" v-bind:extraSlotParams="props.config.extraRow?.extraSlotParams"
                     name="extraRow">

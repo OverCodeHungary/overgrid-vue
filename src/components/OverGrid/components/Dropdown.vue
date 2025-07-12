@@ -1,12 +1,13 @@
 <template>
-  <div class="relative overgrid-dropdown" :id="componentId">
-    <span class="overgrid-dropdown-btn z-10" @click.stop.prevent="toggleOpen">
+  <div class="relative overgrid-dropdown">
+    <span class="overgrid-dropdown-btn z-10" @click.stop="toggleOpen">
       <slot name="iconButton"></slot>
     </span>
     <Transition :name="'overgrid-anim-dd-' + props.orientation">
       <div v-show="state.open"
         class="absolute mt-2 z-20 flex items-center justify-start p-2 px-3 rounded-md overgrid-dropdown-panel bg-white shadow-sm"
-        :class="[{ 'right-0': props.orientation == 'left' }, { 'left-0': props.orientation == 'right' }, props.extraClass]">
+        :class="[{ 'right-0': props.orientation == 'left' }, { 'left-0': props.orientation == 'right' }, props.extraClass]"
+        style="z-index: 1000;">
         <div class="flex flex-col p-1 px-0 w-full">
           <slot name="content"></slot>
         </div>
@@ -17,8 +18,6 @@
 
 <script setup lang="ts">
 import { reactive, watch } from 'vue';
-
-const componentId = 'dd' + Math.random().toString(36).substring(7);
 
 const props = defineProps({
   orientation: {
@@ -36,10 +35,7 @@ const state = reactive({
 });
 
 function outsideClickClose(event: MouseEvent) {
-  const componentElement = document.getElementById(componentId);
-  if (event.target instanceof HTMLElement && componentElement && !event.composedPath().includes(componentElement)) {
-    state.open = false;
-  }
+  state.open = false;
 }
 
 watch(() => state.open, (newValue) => {
