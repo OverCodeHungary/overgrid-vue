@@ -36,6 +36,8 @@ semantic_release:
       junit: test-results/results.xml
     paths:
       - test-results/results.xml
+  rules:
+    - if: $CI_COMMIT_BRANCH == "master"
 
 publish_to_npm:
   stage: publish
@@ -45,6 +47,7 @@ publish_to_npm:
   rules:
     - when: manual
       allow_failure: false
+    - if: $CI_COMMIT_BRANCH == "master"
   dependencies:
     - semantic_release
   environment:
