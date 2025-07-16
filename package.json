@@ -13,7 +13,8 @@
     "table",
     "overgrid",
     "datatable",
-    "datagrid"
+    "datagrid",
+    "crud"
   ],
   "files": [
     "dist",
