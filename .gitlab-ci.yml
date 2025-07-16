@@ -31,12 +31,11 @@ tests_and_semantic_release:
     - npm run build
     - npm run test:component:ci
     - npm run semantic-release
+  coverage: '/Statements\s*:\s*([\d.]+)%/'
   artifacts:
     when: always
     reports:
       junit: test-results/results.xml
-    coverage_report:
-      path: coverage
     paths:
       - test-results/results.xml
       - coverage
