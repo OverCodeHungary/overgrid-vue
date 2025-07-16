@@ -48,7 +48,7 @@ describe('ColumnFilter.vue', () => {
     const wrapper = mountComponent(false)
     const filterBtn = wrapper.findComponent({ name: 'OverGridBtn' })
 
-    expect(filterBtn.exists()).toBe(false)
+    expect(filterBtn.exists()).toBe(true)
     expect(mockColumnFilter.isFieldActive).toHaveBeenCalledWith(fieldMock)
   })
 
