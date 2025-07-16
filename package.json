@@ -55,6 +55,9 @@
     "vue-json-excel3": "^1.0.30"
   },
   "devDependencies": {
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/gitlab": "^13.2.6",
+    "@semantic-release/npm": "^12.0.2",
     "@tailwindcss/vite": "^4.1.11",
     "@tsconfig/node22": "^22.0.2",
     "@types/jsdom": "^21.1.7",
