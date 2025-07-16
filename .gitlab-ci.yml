@@ -26,6 +26,7 @@ stages:
 semantic_release:
   stage: release
   script:
+    - mkdir -p test-results
     - npm run build
     - npm run test:component -- --run
     - npm run semantic-release
