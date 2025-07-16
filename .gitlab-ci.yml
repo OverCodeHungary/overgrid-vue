@@ -34,8 +34,11 @@ tests_and_semantic_release:
     when: always
     reports:
       junit: test-results/results.xml
+      coverage_report:
+        path: coverage
     paths:
       - test-results/results.xml
+      - coverage
   rules:
     - if: $CI_COMMIT_BRANCH == "master"
 
