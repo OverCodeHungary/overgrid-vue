@@ -26,8 +26,8 @@
       "import": "./dist/overgrid.es.js",
       "require": "./dist/overgrid.umd.js"
     },
-    "./dist/overgrid.css": {
-      "default": "./dist/overgrid.css"
+    "./dist/overgrid-vue.css": {
+      "default": "./dist/overgrid-vue.css"
     }
   },
   "peerDependencies": {
