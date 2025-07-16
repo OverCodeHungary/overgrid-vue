@@ -27,15 +27,18 @@ tests_and_semantic_release:
   stage: release
   script:
     - mkdir -p test-results
+    - mkdir -p coverage
     - npm run build
-    - npm run test:component -- --run
+    - npm run test:component:ci
     - npm run semantic-release
+  coverage: '/Statements\s*:\s*([\d.]+)%/'
   artifacts:
     when: always
     reports:
       junit: test-results/results.xml
     paths:
       - test-results/results.xml
+      - coverage
   rules:
     - if: $CI_COMMIT_BRANCH == "master"
 
