@@ -1,7 +1,7 @@
 {
-  "name": "@overcodehungary/test-package-001",
+  "name": "overgrid-vue",
   "private": false,
-  "version": "1.0.3",
+  "version": "0.1.0",
   "type": "module",
   "license": "MIT",
   "main": "./dist/overgrid.umd.js",
@@ -17,12 +17,15 @@
       "import": "./dist/overgrid.es.js",
       "require": "./dist/overgrid.umd.js"
     },
-    "./dist/test-package-001.css": {
-      "default": "./dist/test-package-001.css"
+    "./dist/overgrid.css": {
+      "default": "./dist/overgrid.css"
     }
   },
   "peerDependencies": {
     "vue": "^3.0.0"
+  },
+  "publishConfig": {
+    "registry": "https://gitlab.overcode.hu/api/v4/projects/52/packages/npm/"
   },
   "scripts": {
     "dev": "vite",
