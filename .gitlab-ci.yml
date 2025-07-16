@@ -27,9 +27,14 @@ semantic_release:
   stage: release
   script:
     - npm run build
+    - npm run test:component -- --run
     - npm run semantic-release
-  rules:
-    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
+  artifacts:
+    when: always
+    reports:
+      junit: test-results/results.xml
+    paths:
+      - test-results/results.xml
 
 publish_to_npm:
   stage: publish
