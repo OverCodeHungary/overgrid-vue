@@ -21,11 +21,22 @@ variables:
 
 stages:
   - release
+  - publish
 
-publish:
+semantic_release:
   stage: release
   script:
     - npm run build
     - npm run semantic-release
   rules:
-    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
+
+publish_to_npm:
+  stage: publish
+  script:
+    - npm publish
+  rules:
+    - when: manual
+      allow_failure: false
+  environment:
+    name: production
