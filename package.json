@@ -32,9 +32,6 @@
   "peerDependencies": {
     "vue": "^3.0.0"
   },
-  "publishConfig": {
-    "registry": "https://gitlab.overcode.hu/api/v4/projects/52/packages/npm/"
-  },
   "scripts": {
     "dev": "vite",
     "build": "vite build && vue-tsc --declaration --emitDeclarationOnly --outDir dist",
@@ -46,7 +43,8 @@
     "build-only": "vite build",
     "type-check": "vue-tsc --build",
     "lint": "eslint . --fix",
-    "format": "prettier --write src/"
+    "format": "prettier --write src/",
+    "npm-publish": "npm run build && npm publish --access=public"
   },
   "dependencies": {
     "@coders-tm/vue-number-format": "^3.35.4",
