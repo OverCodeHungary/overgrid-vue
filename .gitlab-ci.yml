@@ -26,10 +26,18 @@ stages:
 semantic_release:
   stage: release
   script:
+    - mkdir -p test-results
     - npm run build
+    - npm run test:component -- --run
     - npm run semantic-release
+  artifacts:
+    when: always
+    reports:
+      junit: test-results/results.xml
+    paths:
+      - test-results/results.xml
   rules:
-    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
+    - if: $CI_COMMIT_BRANCH == "master"
 
 publish_to_npm:
   stage: publish
@@ -37,8 +45,10 @@ publish_to_npm:
     - echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
     - npm publish
   rules:
-    - when: manual
+    - if: '$CI_COMMIT_BRANCH == "master"'
+      when: manual
       allow_failure: false
+    - when: never
   dependencies:
     - semantic_release
   environment:
