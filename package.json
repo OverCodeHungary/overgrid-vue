@@ -44,16 +44,20 @@
     "type-check": "vue-tsc --build",
     "lint": "eslint . --fix",
     "format": "prettier --write src/",
-    "npm-publish": "npm run build && npm publish --access=public"
+    "npm-publish": "npm run build && npm publish --access=public",
+    "semantic-release": "semantic-release"
   },
   "dependencies": {
     "@coders-tm/vue-number-format": "^3.35.4",
     "axios": "^1.10.0",
     "moment": "^2.30.1",
-    "vue": "^3.5.17",
+    "vue": "^3.0.0",
     "vue-json-excel3": "^1.0.30"
   },
   "devDependencies": {
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/gitlab": "^13.2.6",
+    "@semantic-release/npm": "^12.0.2",
     "@tailwindcss/vite": "^4.1.11",
     "@tsconfig/node22": "^22.0.2",
     "@types/jsdom": "^21.1.7",
@@ -72,6 +76,7 @@
     "jsdom": "^26.1.0",
     "npm-run-all2": "^8.0.4",
     "prettier": "3.5.3",
+    "semantic-release": "^24.2.7",
     "tailwindcss": "^4.1.11",
     "typescript": "~5.8.0",
     "vite": "^6.3.5",
