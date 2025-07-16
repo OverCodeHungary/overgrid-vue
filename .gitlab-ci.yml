@@ -34,10 +34,18 @@ semantic_release:
 publish_to_npm:
   stage: publish
   script:
-    - echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
-    - npm publish
+    - |
+      if git diff --name-only HEAD~1 HEAD | grep -q "^package.json$"; then
+        echo "package.json changed, publishing to npm..."
+        echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
+        npm publish
+      else
+        echo "package.json did not change, skipping npm publish."
+      fi
   rules:
     - when: manual
       allow_failure: false
+  dependencies:
+    - semantic_release
   environment:
     name: production
