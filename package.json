@@ -7,6 +7,14 @@
   "main": "./dist/overgrid.umd.js",
   "module": "./dist/overgrid.es.js",
   "types": "./dist/index.d.ts",
+  "keywords": [
+    "vue",
+    "grid",
+    "table",
+    "overgrid",
+    "datatable",
+    "datagrid"
+  ],
   "files": [
     "dist",
     "src/components/OverGrid/themes/default.css",
