@@ -23,7 +23,7 @@ stages:
   - release
   - publish
 
-semantic_release:
+tests_and_semantic_release:
   stage: release
   script:
     - mkdir -p test-results
@@ -50,6 +50,6 @@ publish_to_npm:
       allow_failure: false
     - when: never
   dependencies:
-    - semantic_release
+    - tests_and_semantic_release
   environment:
     name: production
