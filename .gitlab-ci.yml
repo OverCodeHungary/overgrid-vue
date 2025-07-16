@@ -27,8 +27,9 @@ tests_and_semantic_release:
   stage: release
   script:
     - mkdir -p test-results
+    - mkdir -p coverage
     - npm run build
-    - npm run test:component -- --run
+    - npm run test:component:ci
     - npm run semantic-release
   artifacts:
     when: always
