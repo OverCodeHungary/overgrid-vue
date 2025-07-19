@@ -19,10 +19,12 @@
   "files": [
     "dist",
     "src/components/OverGrid/themes/default.css",
-    "src/components/OverGrid/themes/pink.css"
+    "src/components/OverGrid/themes/pink.css",
+    "src/index.ts"
   ],
   "exports": {
     ".": {
+      "types": "./dist/index.d.ts",
       "import": "./dist/overgrid.es.js",
       "require": "./dist/overgrid.umd.js"
     },

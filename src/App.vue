@@ -1,7 +1,7 @@
 <template>
   <div class="p-4">
     <OverGrid :config="config" ref="overgrid"
-      :customFormatters="[{ name: 'CustomFormatter', component: CustomFormatter }]">
+      :customFormatters="[{ name: 'CustomFormatter', component: CustomFormatter, }, { name: 'DotEnumFormatter', component: DotEnumFormatter }]">
       <template #extraRow="{ record, extraSlotParams }">
         <div class="overgrid-extra-row-content">
           <p>Extra Row Content for ID: {{ record }}</p>
@@ -15,6 +15,7 @@
 <script setup lang="ts">
 import OverGrid from './components/OverGrid/OverGrid.vue';
 import CustomFormatter from './CustomFormatter.vue';
+import DotEnumFormatter from './DotEnumFormatter.vue';
 import { onMounted, ref } from 'vue';
 
 const overgrid = ref<InstanceType<typeof OverGrid> | null>(null);
