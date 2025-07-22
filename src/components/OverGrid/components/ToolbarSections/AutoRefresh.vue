@@ -8,7 +8,7 @@
     <li class="overgrid-toolbar-dropdown-section-item p-3 py-1 hover:bg-black/5 rounded-sm"
       v-if="props.config?.autoCanBeDisabled">
       <a href="javascript:void(null)" @click="props.autoRefresher.changeAutoRefreshValue('disabled')"
-        class="overgrid-autorefresh-item flex flex-row items-center gap-1 opacity-50"
+        class="overgrid-toolbar-item overgrid-autorefresh-item flex flex-row items-center gap-1 opacity-50"
         :class="[{ 'overgrid-autorefresh-item-selected opacity-100': props.autoRefresher.autoRefresh.value == 'disabled' }]">
         <OverGridIcon type="check" class="w-5 h-5" />
         <span class="text-sm">{{ i18n.l('automatic_list_update_disabled') }}</span>
@@ -17,7 +17,7 @@
     <li class="overgrid-toolbar-dropdown-section-item p-3 py-1 hover:bg-black/5 rounded-sm"
       v-for="(value) in props.config?.autoValues" :key="value.key">
       <a href="javascript:void(null)" @click="props.autoRefresher.changeAutoRefreshValue(value.key)"
-        class="overgrid-autorefresh-item flex flex-row items-center gap-1 opacity-50"
+        class="overgrid-toolbar-item overgrid-autorefresh-item flex flex-row items-center gap-1 opacity-50"
         :class="[{ 'overgrid-autorefresh-item-selected opacity-100': props.autoRefresher.autoRefresh.value == value.key }]">
         <OverGridIcon type="check" class="w-5 h-5" />
         <span class="text-sm">{{ value.title }}</span>

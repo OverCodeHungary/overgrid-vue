@@ -8,7 +8,7 @@
     <li class="overgrid-toolbar-dropdown-section-item hover:bg-black/5 rounded-sm"
       v-if="props.config?.columnSelector?.active">
       <a href="javascript:void(null)" @click="() => { props.columnSelector.showModal(); props.closeDropdown?.() }"
-        class="overgrid-base-operator-item p-3 py-1 flex flex-row items-center gap-1">
+        class="overgrid-toolbar-item overgrid-base-operator-item p-3 py-1 flex flex-row items-center gap-1">
         <OverGridIcon type="table" class="w-5 h-5 opacity-50" />
         <span class="text-sm">{{ i18n.l('column_selector') }}</span>
       </a>
@@ -16,7 +16,7 @@
     <li class="overgrid-toolbar-dropdown-section-item hover:bg-black/5 rounded-sm"
       v-if="props.config?.currentPageExport?.active && (props.config.currentPageExport?.xlsxEnabled || props.config.currentPageExport?.csvEnabled)">
       <a href="javascript:void(null)" @click="() => { props.currentPageExporter.showModal(); props.closeDropdown?.() }"
-        class="overgrid-base-operator-item p-3 py-1 flex flex-row items-center gap-1">
+        class="overgrid-toolbar-item overgrid-base-operator-item p-3 py-1 flex flex-row items-center gap-1">
         <OverGridIcon type="cloud-download" class="w-5 h-5 opacity-50" />
         <span class="text-sm">{{ i18n.l('current_page_export') }}</span>
       </a>
@@ -24,7 +24,7 @@
     <li class="overgrid-toolbar-dropdown-section-item hover:bg-black/5 rounded-sm"
       v-if="!props.config?.hideAboutWindow">
       <a href="javascript:void(null)" @click="() => { props.aboutModal.showModal(); props.closeDropdown?.() }"
-        class="overgrid-base-operator-item p-3 py-1 flex flex-row items-center gap-1">
+        class="overgrid-toolbar-item overgrid-base-operator-item p-3 py-1 flex flex-row items-center gap-1">
         <OverGridIcon type="info" class="w-5 h-5 opacity-50" />
         <span class="text-sm">{{ i18n.l('about') }}</span>
       </a>

@@ -5,7 +5,7 @@
     </span>
     <Transition :name="'overgrid-anim-dd-' + props.orientation">
       <div v-show="state.open"
-        class="absolute mt-2 z-20 flex items-center justify-start p-2 px-3 rounded-md overgrid-dropdown-panel bg-white shadow-sm"
+        class="absolute mt-2 z-20 flex items-center justify-start p-2 px-3 rounded-md overgrid-dropdown-panel bg-white dark:bg-gray-800 shadow-sm"
         :class="[{ 'right-0': props.orientation == 'left' }, { 'left-0': props.orientation == 'right' }, props.extraClass]"
         style="z-index: 1000;">
         <div class="flex flex-col p-1 px-0 w-full">

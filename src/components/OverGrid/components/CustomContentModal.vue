@@ -5,7 +5,7 @@
       <Transition name="overgrid-anim-modal">
         <div class="flex align-items-center justify-center w-full py-8 px-4">
           <div
-            class="relative flex w-full max-w-2xl origin-top flex-col overflow-hidden rounded-lg overgrid-modal-inner bg-white shadow-sm">
+            class="relative flex w-full max-w-2xl origin-top flex-col overflow-hidden rounded-lg overgrid-modal-inner bg-white dark:bg-gray-800 shadow-sm">
             <div
               class="flex justify-between items-center rounded-t-lg  dark:bg-navy-800 overgrid-modal-title-bar p-4 px-5">
               <h3 class="text-base font-medium overgrid-modal-title">
