@@ -1,5 +1,7 @@
+import { OverGridFields } from './OverGridFields'
+
 export class OverGridField {
-  constructor(key: string, title: string, fieldsObject: any) {
+  constructor(key: string, title: string, fieldsObject: OverGridFields) {
     this.key = key
     this.title = title
     this.fieldsObject = fieldsObject
@@ -13,7 +15,7 @@ export class OverGridField {
     this.visible = true // Default is visible
   }
 
-  fieldsObject: any
+  fieldsObject: OverGridFields
 
   /**
    * The field name is the key of the field in the record object. It is used to access the value of the field in the record object responded from server.
@@ -122,59 +124,59 @@ export class OverGridField {
     config?: any
   }
 
-  setTitle(title: string) {
+  setTitle(title: string): OverGridField {
     this.title = title
     return this
   }
 
-  setVisible(visible: boolean) {
+  setVisible(visible: boolean): OverGridField {
     this.visible = visible
     return this
   }
 
-  setColumnFilter(columnFilter: { active: boolean; type?: string; filterKey?: string; config?: any }) {
+  setColumnFilter(columnFilter: { active: boolean; type?: string; filterKey?: string; config?: any }): OverGridField {
     this.columnFilter = columnFilter
     return this
   }
 
-  setSelectable(selectable: boolean) {
+  setSelectable(selectable: boolean): OverGridField {
     this.selectable = selectable
     return this
   }
 
-  setOrerable(orderable: boolean) {
+  setOrerable(orderable: boolean): OverGridField {
     this.orderable = orderable
     return this
   }
 
-  setOrderKey(orderKey: string) {
+  setOrderKey(orderKey: string): OverGridField {
     this.orderKey = orderKey
     return this
   }
 
-  setExportable(exportable: boolean) {
+  setExportable(exportable: boolean): OverGridField {
     this.exportable = exportable
     return this
   }
 
-  setWidth(width: string) {
+  setWidth(width: string): OverGridField {
     this.width = width
     return this
   }
 
-  setFilterKey(filterKey: string) {
+  setFilterKey(filterKey: string): OverGridField {
     if (this.columnFilter) {
       this.columnFilter.filterKey = filterKey
     }
     return this
   }
 
-  setOrderable(orderable: boolean) {
+  setOrderable(orderable: boolean): OverGridField {
     this.orderable = orderable
     return this
   }
 
-  setFormatter(type: string, config?: any) {
+  setFormatter(type: string, config?: any): OverGridField {
     this.formatter = {
       type,
       config: config || {},
@@ -182,17 +184,17 @@ export class OverGridField {
     return this
   }
 
-  setMiddleware(middleware: (data: any, record: any) => any) {
+  setMiddleware(middleware: (data: any, record: any) => any): OverGridField {
     this.middleware = middleware
     return this
   }
 
-  setExportMiddleware(exportMiddleware: (data: any, record: any, format?: string) => any) {
+  setExportMiddleware(exportMiddleware: (data: any, record: any, format?: string) => any): OverGridField {
     this.exportMiddleware = exportMiddleware
     return this
   }
 
-  commit() {
+  commit(): OverGridFields {
     return this.fieldsObject
   }
 }
