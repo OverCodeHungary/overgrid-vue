@@ -2,6 +2,7 @@
   "extends": "@vue/tsconfig/tsconfig.dom.json",
   "include": [
     "env.d.ts",
+    "src/index.ts",
     "src/**/*",
     "src/**/*.vue",
     "src/components/OverGrid/*"
@@ -12,10 +13,17 @@
   "compilerOptions": {
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
     "declaration": true,
-    "emitDeclarationOnly": false,
-    "declarationDir": "dist",
+    "emitDeclarationOnly": true,
+    "declarationDir": "dist/components/OverGrid",
     "outDir": "dist",
     "baseUrl": ".",
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "allowJs": false,
     "composite": true,
     "paths": {
       "@/*": [

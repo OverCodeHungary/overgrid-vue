@@ -22,7 +22,7 @@ class OverGridFields {
     return field
   }
 
-  addNumberField(key: string, title: string, extraConfig: any = {}) {
+  addNumberField(key: string, title: string, extraConfig: any = {}): OverGridField {
     let field: OverGridField = this.addField(key, title)
     field.columnFilter = {
       active: true,
@@ -33,7 +33,7 @@ class OverGridFields {
     return field
   }
 
-  addTextField(key: string, title: string, extraConfig: any = {}) {
+  addTextField(key: string, title: string, extraConfig: any = {}): OverGridField {
     let field: OverGridField = this.addField(key, title)
     field.columnFilter = {
       active: true,
@@ -44,7 +44,7 @@ class OverGridFields {
     return field
   }
 
-  addDateField(key: string, title: string, extraConfig: any = {}) {
+  addDateField(key: string, title: string, extraConfig: any = {}): OverGridField {
     let field: OverGridField = this.addField(key, title)
     field.columnFilter = {
       active: true,
@@ -55,7 +55,7 @@ class OverGridFields {
     return field
   }
 
-  addEnumField(key: string, title: string, enumMapping: OverGridEnumMapping, extraConfig: any = {}) {
+  addEnumField(key: string, title: string, enumMapping: OverGridEnumMapping, extraConfig: any = {}): OverGridField {
     let field: OverGridField = this.addField(key, title)
     field.columnFilter = {
       active: true,
@@ -74,7 +74,7 @@ class OverGridFields {
     return field
   }
 
-  addBooleanField(key: string, title: string, extraConfig: any = {}) {
+  addBooleanField(key: string, title: string, extraConfig: any = {}): OverGridField {
     let field: OverGridField = this.addField(key, title)
     field.columnFilter = {
       active: true,
@@ -86,7 +86,7 @@ class OverGridFields {
     return field
   }
 
-  addActionButtonField(title: string, buttons: OverGridActionButton[]) {
+  addActionButtonField(title: string, buttons: OverGridActionButton[]): OverGridField {
     let field: OverGridField = this.addField('actionButtons_' + this.actionButtonFieldCounter++, title)
     field.setFormatter('ActionButtonsFormatter', {
       buttons: buttons,

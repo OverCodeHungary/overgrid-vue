@@ -207,7 +207,7 @@ const records = useRecords(props.config);
 const columnSelector = useColumnSelector(props.config.columnSelector, props.config.gridUniqueId);
 const currentPageExporter = useCurrentPageExport(props.config.currentPageExport);
 const aboutModal = useAboutModal();
-const bulkOperations = useBulkOperations(props.config.bulkOperations, props.config.idkey);
+const bulkOperations = useBulkOperations(props.config.bulkOperations, props.config.idkey, props.config.events?.onBulkSelectChanges);
 const extraRow = useExtraRow(props.config.extraRow, props.config.idkey);
 const rowHighlighter = useRowHighlighter(props.config.rowHighlighter);
 

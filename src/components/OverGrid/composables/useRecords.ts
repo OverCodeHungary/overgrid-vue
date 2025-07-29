@@ -40,8 +40,6 @@ export default (gridConfig: OverGridConfig) => {
 
     pagination.setByResponse(response.data)
 
-    // @TODO: Event handling: registeredEvents.onDataLoad
-
     let cRecords =
       gridConfig.rootkey && response.data[gridConfig.rootkey] ? response.data[gridConfig.rootkey] : response.data
 
