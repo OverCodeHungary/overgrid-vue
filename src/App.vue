@@ -73,6 +73,11 @@ const config = {
   columnSelector: {
     active: true
   },
+  events: {
+    onBulkSelectChanges: (selectedRows: any[]) => {
+      console.log('Selected rows:', selectedRows);
+    }
+  },
   currentPageExport: {
     active: true,
     xlsxEnabled: true,
