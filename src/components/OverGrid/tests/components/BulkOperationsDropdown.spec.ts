@@ -2,7 +2,7 @@ import { describe, it, expect, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
 import BulkOperationsDropdown from '../../components/BulkOperationsDropdown.vue'
 import type { Ref } from 'vue'
-import { ref } from 'vue'
+import { compile, computed, ref } from 'vue'
 
 describe('BulkOperationsDropdown', () => {
   const mockAction = vi.fn()
@@ -19,6 +19,7 @@ describe('BulkOperationsDropdown', () => {
         },
         bulkOperator: {
           checkedRows: checkedRows,
+          isToolbarOptionEnabled: computed(() => checkedRows.value.length > 0),
         },
       },
       global: {
