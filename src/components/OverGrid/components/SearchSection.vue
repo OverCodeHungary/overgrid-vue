@@ -23,7 +23,7 @@ import OverGridIcon from './OverGridIcon.vue';
 const i18n = useI18n();
 
 const props = defineProps<{
-  searchConfig: OverGridSearchConfig,
+  searchConfig?: OverGridSearchConfig,
   searcher: OverGridUseSearchInterface
 }>();
 </script>

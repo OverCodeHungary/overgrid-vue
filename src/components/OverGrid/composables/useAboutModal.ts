@@ -1,7 +1,7 @@
 import type { OverGridUseAboutModalInterface } from '../types/OverGridUseAboutModalInterface'
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 
-export default (): OverGridUseAboutModalInterface => {
+export default (hideAboutWindow: boolean): OverGridUseAboutModalInterface => {
   const isModalShown = ref(false)
 
   function showModal() {
@@ -12,9 +12,14 @@ export default (): OverGridUseAboutModalInterface => {
     isModalShown.value = false
   }
 
+  const isToolbarOptionEnabled = computed<boolean>(() => {
+    return hideAboutWindow !== true
+  })
+
   return {
     showModal,
     closeModal,
     isModalShown,
+    isToolbarOptionEnabled,
   }
 }

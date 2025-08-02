@@ -1,7 +1,7 @@
 import type { OverGridColumnSelectorConfig } from '../types/OverGridColumnSelectorConfig'
 import type { OverGridUseColumnSelectorInterface } from '../types/OverGridUseColumnSelectorInterface'
 import { OverGridField } from '../types/OverGridField'
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 
 export default (
   columnSelectorConfig?: OverGridColumnSelectorConfig,
@@ -36,6 +36,10 @@ export default (
     selectedFields.value = storedColumns.length > 0 ? storedColumns : null
   }
 
+  const isToolbarOptionEnabled = computed<boolean>(() => {
+    return !!(columnSelectorConfig && columnSelectorConfig.active)
+  })
+
   return {
     showModal,
     closeModal,
@@ -43,5 +47,6 @@ export default (
     selectedFields,
     setColumns,
     filter,
+    isToolbarOptionEnabled,
   }
 }

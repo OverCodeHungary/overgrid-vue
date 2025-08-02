@@ -18,6 +18,7 @@ import CustomFormatter from './CustomFormatter.vue';
 import DotEnumFormatter from './DotEnumFormatter.vue';
 import { onMounted, ref } from 'vue';
 
+
 const overgrid = ref<InstanceType<typeof OverGrid> | null>(null);
 
 const config = {
@@ -27,96 +28,89 @@ const config = {
   idkey: 'id',
   locale: 'hu',
   theme: 'default', // or 'pink'
-  axiosConfigurator: (axiosInstance: any) => {
-    // Example of configuring axios instance
-    return axiosInstance;
-  },
-  pagination: {
-    active: true,
-    initialPage: 0,
-    initialSize: 5,
-    startWithZero: true,
-    allRecordsCountKey: 'totalRecords',
-    possiblePageSizes: [1, 2, 5, 10, 20],
-  },
-  orderConfiguration: {
-    active: true,
-    orderMultiple: true,
-    initialOrderDirection: 'DESC',
-    defaultOrder: {
-      key: 'id',
-      orderKey: 'id2', // This is the key used for ordering, can be different from the field key
-      direction: 'DESC'
-    }
-  },
-  refreshable: {
-    manualActive: true,
-    autoActive: true,
-    autoCanBeDisabled: true,
-    autoValues: [{
-      key: 'every5Seconds',
-      refreshInterval: 5000,
-      title: 'Every 5 seconds',
-      default: false
-    }, {
-      key: 'every30Seconds',
-      refreshInterval: 30000,
-      title: 'Every 30 seconds',
-      default: true
-    }, {
-      key: 'every60Seconds',
-      refreshInterval: 60000,
-      title: 'Every 60 seconds',
-      default: true
-    }]
-  },
-  columnSelector: {
-    active: true
-  },
-  events: {
-    onBulkSelectChanges: (selectedRows: any[]) => {
-      console.log('Selected rows:', selectedRows);
-    }
-  },
-  currentPageExport: {
-    active: true,
-    xlsxEnabled: true,
-    csvEnabled: true,
-  },
-  bulkOperations: {
-    active: true,
-    methods: [{
-      title: 'Alert me',
-      key: 'alertMe',
-      action: (checkedRows: any[], clearRows: () => void) => {
-        alert(`You have selected ${checkedRows.length} rows.`);
-        clearRows();
-      }
-    }]
-  },
-  extraRow: {
-    active: true,
-    multiOpen: true,
-    extraSlotParams: {
-      test: 'This is a test value',
-    }
-  },
-  columnFilters: {
-    active: true
-  },
-  search: {
-    active: true,
-    initialQuery: '',
-    debounceTime: 500
-  },
-  rowHighlighter: {
-    active: false,
-    classList: 'bg-yellow-100',
-    fn: (record: any) => {
-      // Example condition: highlight rows where age is greater than 30
-      return record.age > 20;
-    }
-  }
+  hideAboutWindow: false,
+  // axiosConfigurator: (axiosInstance: any) => {
+  //   // Example of configuring axios instance
+  //   return axiosInstance;
+  // },
+  // orderConfiguration: {
+  //   active: true,
+  //   orderMultiple: true,
+  //   initialOrderDirection: 'DESC',
+  //   defaultOrder: {
+  //     key: 'id',
+  //     orderKey: 'id2', // This is the key used for ordering, can be different from the field key
+  //     direction: 'DESC'
+  //   }
+  // },
+  // refreshable: {
+  //   manualActive: true,
+  //   autoActive: true,
+  //   autoCanBeDisabled: true,
+  //   autoValues: [{
+  //     key: 'every5Seconds',
+  //     refreshInterval: 5000,
+  //     title: 'Every 5 seconds',
+  //     default: false
+  //   }, {
+  //     key: 'every30Seconds',
+  //     refreshInterval: 30000,
+  //     title: 'Every 30 seconds',
+  //     default: true
+  //   }, {
+  //     key: 'every60Seconds',
+  //     refreshInterval: 60000,
+  //     title: 'Every 60 seconds',
+  //     default: true
+  //   }]
+  // },
+  // columnSelector: {
+  //   active: true
+  // },
+  // events: {
+  //   onBulkSelectChanges: (selectedRows: any[]) => {
+  //     console.log('Selected rows:', selectedRows);
+  //   }
+  // },
+  // currentPageExport: {
+  //   active: true,
+  //   xlsxEnabled: true,
+  //   csvEnabled: true,
+  // },
+  // bulkOperations: {
+  //   active: true,
+  //   methods: [{
+  //     title: 'Alert me',
+  //     key: 'alertMe',
+  //     action: (checkedRows: any[], clearRows: () => void) => {
+  //       alert(`You have selected ${checkedRows.length} rows.`);
+  //       clearRows();
+  //     }
+  //   }]
+  // },
+  // extraRow: {
+  //   active: true,
+  //   multiOpen: true,
+  //   extraSlotParams: {
+  //     test: 'This is a test value',
+  //   }
+  // },
+  // columnFilters: {
+  //   active: true
+  // },
+  // search: {
+  //   active: true,
+  //   initialQuery: '',
+  //   debounceTime: 500
+  // },
+  // rowHighlighter: {
+  //   active: true,
+  //   classList: 'bg-yellow-100',
+  //   fn: (record: any) => {
+  //     // Example condition: highlight rows where age is greater than 30
+  //     return record.age > 20;
+  //   }
+  // }
 }
 
 onMounted(() => {

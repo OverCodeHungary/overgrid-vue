@@ -14,4 +14,5 @@ export interface OverGridUsePaginationInterface {
   currentPageForUI?: ComputedRef<number>
   changePageSize: (newPageSize: number) => void
   pageSize: ComputedRef<number>
+  isToolbarOptionEnabled: ComputedRef<boolean>
 }

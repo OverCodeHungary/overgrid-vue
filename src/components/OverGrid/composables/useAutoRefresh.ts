@@ -30,11 +30,7 @@ export default (
 
     // finding the new refresh type, because we need the interval value
     let newRefreshType = null
-    if (
-      refreshableConfig &&
-      refreshableConfig.autoValues &&
-      refreshableConfig.autoValues.length > 0
-    ) {
+    if (refreshableConfig && refreshableConfig.autoValues && refreshableConfig.autoValues.length > 0) {
       newRefreshType = refreshableConfig.autoValues.find((item) => item.key == autoRefresh.value)
     }
 
@@ -45,17 +41,19 @@ export default (
     }
   }
 
-  if (
-    refreshableConfig?.autoActive &&
-    localStorage.getItem('overgrid-auto-refresh-' + gridUniqueId)
-  ) {
+  if (refreshableConfig?.autoActive && localStorage.getItem('overgrid-auto-refresh-' + gridUniqueId)) {
     autoRefresh.value = localStorage.getItem('overgrid-auto-refresh-' + gridUniqueId) || 'disabled'
   }
 
   setAutoRefreshIntervalIfAny()
 
+  const isToolbarOptionEnabled = computed<boolean>(() => {
+    return !!(refreshableConfig && refreshableConfig.autoActive)
+  })
+
   return {
     autoRefresh,
     changeAutoRefreshValue,
+    isToolbarOptionEnabled,
   }
 }

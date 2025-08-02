@@ -34,7 +34,7 @@ const i18n = useI18n();
 import OverGridIcon from '../OverGridIcon.vue';
 
 const props = defineProps<{
-  config: OverGridRefreshableConfig,
+  config?: OverGridRefreshableConfig,
   autoRefresher: OverGridUseAutoRefreshInterface
 }>();
 

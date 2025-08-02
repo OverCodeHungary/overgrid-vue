@@ -6,7 +6,7 @@
       </h3>
     </li>
     <li class="overgrid-toolbar-dropdown-section-item p-3 py-1 hover:bg-black/5 rounded-sm"
-      v-for="(possiblePageSize, key) in props.config.possiblePageSizes" :key="key">
+      v-for="(possiblePageSize, key) in props.config?.possiblePageSizes" :key="key">
       <a href="javascript:void(null)" @click="props.paginator.changePageSize(possiblePageSize)"
         class="overgrid-toolbar-item overgrid-page-size-selector-item flex flex-row items-center gap-1 opacity-50"
         :class="[{ 'overgrid-page-size-selector-item-selected opacity-100': props.paginator.pageSize.value == possiblePageSize }]">
@@ -27,7 +27,7 @@ const i18n = useI18n();
 import OverGridIcon from '../OverGridIcon.vue';
 
 const props = defineProps<{
-  config: OverGridPaginationConfig,
+  config?: OverGridPaginationConfig,
   paginator: OverGridUsePaginationInterface
 }>();
 

@@ -28,7 +28,7 @@ const props = defineProps<{
   }>, // Options for the select dropdown
 }>()
 
-const base = 'text-sm'
+const base = 'text-sm disabled:opacity-50'
 
 const variants: Record<string, string> = {
   primary: 'overgrid-input-primary',

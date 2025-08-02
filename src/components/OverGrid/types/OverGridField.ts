@@ -1,4 +1,4 @@
-import { OverGridFields } from './OverGridFields'
+import type { OverGridFields } from './OverGridFields'
 
 export class OverGridField {
   constructor(key: string, title: string, fieldsObject: OverGridFields) {
@@ -141,11 +141,6 @@ export class OverGridField {
 
   setSelectable(selectable: boolean): OverGridField {
     this.selectable = selectable
-    return this
-  }
-
-  setOrerable(orderable: boolean): OverGridField {
-    this.orderable = orderable
     return this
   }
 
