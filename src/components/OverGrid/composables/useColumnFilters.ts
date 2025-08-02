@@ -28,7 +28,7 @@ export default (columnFiltersConfig?: OverGridColumnFiltersConfig): OverGridUseC
     }
   }
 
-  function initiateColumnFilter(field: OverGridField): void {
+  function initiateColumnFilter(field: OverGridField | null): void {
     fieldUnderAdding.value = field
   }
 

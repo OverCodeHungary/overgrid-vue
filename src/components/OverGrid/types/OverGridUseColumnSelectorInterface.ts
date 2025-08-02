@@ -1,4 +1,4 @@
-import type { Ref } from 'vue'
+import type { Ref, ComputedRef } from 'vue'
 import { OverGridField } from '../types/OverGridField'
 
 export interface OverGridUseColumnSelectorInterface {
@@ -8,4 +8,5 @@ export interface OverGridUseColumnSelectorInterface {
   setColumns: (selectedColumns: string[]) => void
   selectedFields: Ref<string[] | null>
   filter(fields: OverGridField[]): OverGridField[]
+  isToolbarOptionEnabled: ComputedRef<boolean>
 }

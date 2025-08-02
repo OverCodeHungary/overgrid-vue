@@ -4,6 +4,7 @@ import type { OverGridUsePaginationInterface } from '../types/OverGridUsePaginat
 
 export default (paginationConfig?: OverGridPaginationConfig, gridUniqueId?: string): OverGridUsePaginationInterface => {
   const state = reactive({
+    active: paginationConfig?.active ? true : false,
     page:
       paginationConfig?.initialPage || (paginationConfig?.startWithZero && paginationConfig?.initialPage === 0)
         ? paginationConfig?.initialPage
@@ -99,6 +100,10 @@ export default (paginationConfig?: OverGridPaginationConfig, gridUniqueId?: stri
     return paginationConfig?.startWithZero ? state.page + 1 : state.page
   })
 
+  const isToolbarOptionEnabled = computed<boolean>(() => {
+    return !!(paginationConfig && paginationConfig.active && paginationConfig.possiblePageSizes)
+  })
+
   return {
     state,
     nextPage,
@@ -112,5 +117,6 @@ export default (paginationConfig?: OverGridPaginationConfig, gridUniqueId?: stri
     currentPageForUI,
     changePageSize,
     pageSize: computed(() => state.pageSize),
+    isToolbarOptionEnabled,
   }
 }

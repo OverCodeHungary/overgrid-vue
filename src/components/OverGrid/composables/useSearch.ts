@@ -1,4 +1,4 @@
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import type { OverGridUseSearchInterface } from '../types/OverGridUseSearchInterface'
 import type { OverGridSearchConfig } from '../types/OverGridSearchConfig'
 
@@ -17,8 +17,13 @@ export default (searchConfig?: OverGridSearchConfig): OverGridUseSearchInterface
     }, searchConfig?.debounceTime || 300)
   }
 
+  const isToolbarOptionEnabled = computed<boolean>(() => {
+    return !!searchConfig?.active
+  })
+
   return {
     query,
     debounce,
+    isToolbarOptionEnabled,
   }
 }

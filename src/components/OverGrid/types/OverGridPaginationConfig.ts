@@ -6,12 +6,12 @@ export interface OverGridPaginationConfig {
   /**
    * The initial page number.
    */
-  initialPage: number
+  initialPage?: number
 
   /**
    * The initial page size.
    */
-  initialSize: number
+  initialSize?: number
 
   /**
    * If true, the pagination starts with page 0. If false, it starts with page 1.

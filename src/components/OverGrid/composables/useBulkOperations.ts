@@ -1,7 +1,7 @@
 import type { OverGridBulkOperationsConfig } from '../types/OverGridBulkOperationsConfig'
 import type { OverGridUseBulkOperationsInterface } from '../types/OverGridUseBulkOperationsInterface'
 import useLogger from './useLogger'
-import { ref, watch } from 'vue'
+import { ref, watch, computed } from 'vue'
 
 export default (
   bulkOperationsConfig?: OverGridBulkOperationsConfig,
@@ -27,7 +27,12 @@ export default (
     { deep: true },
   )
 
+  const isToolbarOptionEnabled = computed<boolean>(() => {
+    return !!(bulkOperationsConfig && bulkOperationsConfig.active && bulkOperationsConfig.methods?.length > 0 && idkey)
+  })
+
   return {
     checkedRows,
+    isToolbarOptionEnabled,
   }
 }

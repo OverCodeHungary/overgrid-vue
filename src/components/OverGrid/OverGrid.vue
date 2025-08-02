@@ -1,38 +1,37 @@
 <template>
   <div class="overgrid relative w-full max-w-full" :data-theme="props.config.theme || 'default'"
     :grid-unique-id="props.config.gridUniqueId">
-    <div class="overgrid-toolbar flex flex-row h-12 items-center justify-center">
-      <SearchSection v-if="props.config.search?.active" :searchConfig="props.config.search"
+    <div v-if="isToolbarEnabled" class="overgrid-toolbar flex flex-row items-center justify-center h-12">
+      <SearchSection v-if="records.search.isToolbarOptionEnabled.value" :searchConfig="props.config.search"
         :searcher="records.search" />
       <span class="overgrid-toolbar-spacer flex grow"></span>
       <div class="flex flex-row gap-2 items-center justify-center overgrid-toolbar-right-section">
-        <BulkOperationsDropdown
-          v-if="props.config.bulkOperations && props.config.bulkOperations.active && props.config.bulkOperations.methods?.length > 0 && props.config.idkey && bulkOperations.checkedRows.value.length > 0"
-          :config="props.config.bulkOperations" :bulkOperator="bulkOperations" />
+        <BulkOperationsDropdown v-if="bulkOperations.isToolbarOptionEnabled.value" :config="props.config.bulkOperations"
+          :bulkOperator="bulkOperations" />
         <OverGridBtn v-if="props.config.refreshable?.manualActive" @click="records.fetchRecords"
           customClass="overgrid-btn-manual-refresh" variant="primary" size="sm" iconOnly rounded>
           <template #iconLeft>
             <OverGridIcon type="refresh" class="w-4 h-4" />
           </template>
         </OverGridBtn>
-        <Dropdown :orientation="'left'" ref="operationsDropdown" class="overgrid-operations-dropdown">
+        <Dropdown
+          v-if="columnSelector.isToolbarOptionEnabled.value || currentPageExporter.isToolbarOptionEnabled.value || aboutModal.isToolbarOptionEnabled.value || records.autoRefresh.isToolbarOptionEnabled.value || records.pagination.isToolbarOptionEnabled.value"
+          :orientation="'left'" ref="operationsDropdown" class="overgrid-operations-dropdown">
           <template #iconButton>
-            <OverGridBtn v-if="props.config.refreshable?.manualActive" customClass="overgrid-btn-operations"
-              variant="primary" size="sm" iconOnly rounded>
+            <OverGridBtn customClass="overgrid-btn-operations" variant="primary" size="sm" iconOnly rounded>
               <template #iconLeft>
                 <OverGridIcon type="horizontal-dots" class="w-4 h-4" />
               </template>
             </OverGridBtn>
           </template>
           <template #content>
-            <BaseOperations :config="props.config" :columnSelector="columnSelector"
-              :currentPageExporter="currentPageExporter" :aboutModal="aboutModal"
-              :closeDropdown="operationsDropdown?.close" />
-            <AutoRefresh :autoRefresher="records.autoRefresh"
-              v-if="props.config?.refreshable && props.config?.refreshable.autoActive"
+            <BaseOperations
+              v-if="columnSelector.isToolbarOptionEnabled.value || currentPageExporter.isToolbarOptionEnabled.value || aboutModal.isToolbarOptionEnabled.value"
+              :config="props.config" :columnSelector="columnSelector" :currentPageExporter="currentPageExporter"
+              :aboutModal="aboutModal" :closeDropdown="operationsDropdown?.close" ref="baseOperations" />
+            <AutoRefresh :autoRefresher="records.autoRefresh" v-if="records.autoRefresh.isToolbarOptionEnabled.value"
               :config="props.config?.refreshable" :closeDropdown="operationsDropdown?.close" />
-            <PageSize :paginator="records.pagination"
-              v-if="props.config?.pagination && props.config?.pagination.active && props.config?.pagination.possiblePageSizes"
+            <PageSize :paginator="records.pagination" v-if="records.pagination.isToolbarOptionEnabled.value"
               :config="props.config?.pagination" :closeDropdown="operationsDropdown?.close" />
           </template>
         </Dropdown>
@@ -178,7 +177,7 @@ import { onMounted } from 'vue';
 import useFields from './composables/useFields';
 import useRecords from './composables/useRecords';
 import type { OverGridConfig } from './types/OverGridConfig';
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import useI18n from './composables/useI18n';
 import './themes/default.css'
 import './themes/pink.css'
@@ -206,13 +205,24 @@ const fields = useFields();
 const records = useRecords(props.config);
 const columnSelector = useColumnSelector(props.config.columnSelector, props.config.gridUniqueId);
 const currentPageExporter = useCurrentPageExport(props.config.currentPageExport);
-const aboutModal = useAboutModal();
+const aboutModal = useAboutModal(props.config?.hideAboutWindow ? props.config.hideAboutWindow : false);
 const bulkOperations = useBulkOperations(props.config.bulkOperations, props.config.idkey, props.config.events?.onBulkSelectChanges);
 const extraRow = useExtraRow(props.config.extraRow, props.config.idkey);
 const rowHighlighter = useRowHighlighter(props.config.rowHighlighter);
 
 onMounted(() => {
   records.fetchRecords();
+})
+
+const isToolbarEnabled = computed<boolean>(() => {
+  return records.search.isToolbarOptionEnabled.value ||
+    bulkOperations.isToolbarOptionEnabled.value ||
+    props.config.refreshable?.manualActive ||
+    columnSelector.isToolbarOptionEnabled.value ||
+    currentPageExporter.isToolbarOptionEnabled.value ||
+    aboutModal.isToolbarOptionEnabled.value ||
+    records.autoRefresh.isToolbarOptionEnabled.value ||
+    records.pagination.isToolbarOptionEnabled.value
 })
 
 defineExpose({

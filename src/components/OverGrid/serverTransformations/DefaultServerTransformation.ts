@@ -1,7 +1,7 @@
 export default (orders: any, pagination: any, columnFilters: any, searchQuery?: string): URLSearchParams => {
   let result = new URLSearchParams()
 
-  if (pagination && (pagination.page || pagination.page === 0) && pagination.pageSize) {
+  if (pagination && pagination.active && (pagination.page || pagination.page === 0) && pagination.pageSize) {
     result.set('page', pagination.page.toString())
     result.set('size', pagination.pageSize.toString())
   }

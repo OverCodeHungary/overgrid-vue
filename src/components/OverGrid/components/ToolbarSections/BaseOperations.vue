@@ -1,12 +1,12 @@
 <template>
-  <ul v-if="needsToShow" class="overgrid-toolbar-dropdown-section px-1">
+  <ul class="overgrid-toolbar-dropdown-section px-1">
     <li>
       <h3 class="overgrid-toolbar-dropdown-section-title font-bold">
         {{ i18n.l('base_operations') }}
       </h3>
     </li>
     <li class="overgrid-toolbar-dropdown-section-item hover:bg-black/5 rounded-sm"
-      v-if="props.config?.columnSelector?.active">
+      v-if="props.columnSelector.isToolbarOptionEnabled.value">
       <a href="javascript:void(null)" @click="() => { props.columnSelector.showModal(); props.closeDropdown?.() }"
         class="overgrid-toolbar-item overgrid-base-operator-item p-3 py-1 flex flex-row items-center gap-1">
         <OverGridIcon type="table" class="w-5 h-5 opacity-50" />
@@ -14,7 +14,7 @@
       </a>
     </li>
     <li class="overgrid-toolbar-dropdown-section-item hover:bg-black/5 rounded-sm"
-      v-if="props.config?.currentPageExport?.active && (props.config.currentPageExport?.xlsxEnabled || props.config.currentPageExport?.csvEnabled)">
+      v-if="props.currentPageExporter.isToolbarOptionEnabled.value">
       <a href="javascript:void(null)" @click="() => { props.currentPageExporter.showModal(); props.closeDropdown?.() }"
         class="overgrid-toolbar-item overgrid-base-operator-item p-3 py-1 flex flex-row items-center gap-1">
         <OverGridIcon type="cloud-download" class="w-5 h-5 opacity-50" />
@@ -22,7 +22,7 @@
       </a>
     </li>
     <li class="overgrid-toolbar-dropdown-section-item hover:bg-black/5 rounded-sm"
-      v-if="!props.config?.hideAboutWindow">
+      v-if="props.aboutModal.isToolbarOptionEnabled.value">
       <a href="javascript:void(null)" @click="() => { props.aboutModal.showModal(); props.closeDropdown?.() }"
         class="overgrid-toolbar-item overgrid-base-operator-item p-3 py-1 flex flex-row items-center gap-1">
         <OverGridIcon type="info" class="w-5 h-5 opacity-50" />
@@ -33,7 +33,6 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue';
 import useI18n from '../../composables/useI18n';
 import type { OverGridConfig } from '../../types/OverGridConfig';
 import type { OverGridUseColumnSelectorInterface } from '../../types/OverGridUseColumnSelectorInterface';
@@ -42,12 +41,6 @@ import type { OverGridUseAboutModalInterface } from '../../types/OverGridUseAbou
 import OverGridIcon from '../OverGridIcon.vue';
 const i18n = useI18n();
 
-const needsToShow = computed(() => {
-  return props.config?.columnSelector?.active ||
-    (props.config?.currentPageExport?.active && (props.config.currentPageExport?.xlsxEnabled || props.config.currentPageExport?.csvEnabled)) ||
-    !props.config?.hideAboutWindow
-})
-
 const props = defineProps<{
   config: OverGridConfig,
   columnSelector: OverGridUseColumnSelectorInterface,
@@ -55,6 +48,5 @@ const props = defineProps<{
   aboutModal: OverGridUseAboutModalInterface
   closeDropdown?: () => void
 }>();
-
 
 </script>

@@ -5,12 +5,8 @@ import type { OverGridEnumMapping } from './OverGridEnumMapping'
 import type { OverGridActionButton } from './OverGridActionButton'
 
 export class OverGridFields {
-  mapping: Ref<OverGridField[]>
+  mapping: Ref<OverGridField[]> = ref([])
   actionButtonFieldCounter: number = 0
-
-  constructor() {
-    this.mapping = ref([])
-  }
 
   mappingVisible = (): OverGridField[] => {
     return this.mapping.value.filter((field) => field.visible !== false)
