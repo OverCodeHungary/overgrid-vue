@@ -42,7 +42,7 @@
     "preview": "vite preview",
     "test:unit": "vitest",
     "test:component": "vitest",
-    "test:component:ci": "vitest --run --reporter=verbose",
+    "test:component:ci": "vitest --run --coverage",
     "test:coverage": "vitest --coverage",
     "build-only": "vite build",
     "type-check": "vue-tsc --build",

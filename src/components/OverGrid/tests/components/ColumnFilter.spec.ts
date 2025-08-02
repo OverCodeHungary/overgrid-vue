@@ -4,9 +4,11 @@ import ColumnFilter from '../../components/ColumnFilter.vue'
 import { OverGridField } from '../../types/OverGridField'
 import type { OverGridColumnFilter } from '../../types/OverGridColumnFilter'
 import { ref } from 'vue'
+import { OverGridFields } from '../../types/OverGridFields'
 
 describe('ColumnFilter.vue', () => {
-  const fieldMock = new OverGridField('testField', 'Test Field', null)
+  const fieldsMock = new OverGridFields()
+  const fieldMock = new OverGridField('testField', 'Test Field', fieldsMock)
 
   const mockColumnFilter = {
     filters: ref<OverGridColumnFilter[]>([]),
