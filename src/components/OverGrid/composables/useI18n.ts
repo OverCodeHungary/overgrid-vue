@@ -3,16 +3,17 @@ import i18nen from '../i18n/en.i18n'
 import { ref } from 'vue'
 let currentLang = ref<string>('en')
 
+interface I18n {
+  [key: string]: { [key: string]: string }
+}
+
+let i18n: I18n = {
+  hu: i18nhu,
+  en: i18nen,
+  custom: null as any,
+}
+
 export default function useI18n(lang?: string | Record<string, string> | undefined) {
-  interface I18n {
-    [key: string]: { [key: string]: string }
-  }
-
-  let i18n: I18n = {
-    hu: i18nhu,
-    en: i18nen,
-  }
-
   function storeMissingLangKeys(key: string, lang: string) {
     let cVal = localStorage.getItem('missing-lang-keys-' + lang)
     if (!cVal) {

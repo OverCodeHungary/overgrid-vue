@@ -8,7 +8,6 @@ export default {
   export_fields: 'Mezők',
   export_records: 'Aktuális oldal exportálása',
   about: 'Az OverGridről',
-  column_filter_text_modal_title: 'Szűrés hozzáadása',
   contains: 'tartalmazza',
   not_contains: 'nem tartalmazza',
   equals: 'egyenlő',
@@ -47,7 +46,7 @@ export default {
   auto_refresh_menu_title: 'Automatikus frissítés',
   automatic_list_update_disabled: 'Kikapcsolva',
   page_size: 'Oldalméret',
-
+  column_filter_text_modal_title: 'Szűrés hozzáadása',
   column_filter_number_modal_title: 'Szűrés hozzáadása',
   column_filter_date_modal_title: 'Szűrés hozzáadása',
   column_filter_enum_modal_title: 'Szűrés hozzáadása',
