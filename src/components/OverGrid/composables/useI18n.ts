@@ -1,5 +1,7 @@
 import i18nhu from '../i18n/hu.i18n'
 import i18nen from '../i18n/en.i18n'
+import i18nes from '../i18n/es.i18n'
+import i18nde from '../i18n/de.i18n'
 import { ref } from 'vue'
 let currentLang = ref<string>('en')
 
@@ -10,6 +12,8 @@ interface I18n {
 let i18n: I18n = {
   hu: i18nhu,
   en: i18nen,
+  es: i18nes,
+  de: i18nde,
   custom: null as any,
 }
 
