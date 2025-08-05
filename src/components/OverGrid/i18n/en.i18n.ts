@@ -52,4 +52,9 @@ export default {
   actions: 'Actions',
   yes: 'Yes',
   no: 'No',
+  column_filter_enum_modal_title: 'Add Filter',
+  column_filter_number_modal_title: 'Add Filter',
+  column_filter_date_modal_title: 'Add Filter',
+  column_filter_boolean_modal_title: 'Add Filter',
+  close: 'Close',
 }
