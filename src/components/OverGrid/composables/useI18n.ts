@@ -9,6 +9,8 @@ interface I18n {
   [key: string]: { [key: string]: string }
 }
 
+// Custom language can be set by the user, so it is not included in the predefined languages
+const possibleLanguages = ['hu', 'en', 'es', 'de']
 let i18n: I18n = {
   hu: i18nhu,
   en: i18nen,
@@ -50,7 +52,7 @@ export default function useI18n(lang?: string | Record<string, string> | undefin
     }
   }
 
-  if (lang && lang !== currentLang.value && ['en', 'hu'].includes(lang as string) && typeof lang === 'string') {
+  if (lang && lang !== currentLang.value && possibleLanguages.includes(lang as string) && typeof lang === 'string') {
     currentLang.value = lang
   }
 
