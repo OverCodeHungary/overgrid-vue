@@ -62,8 +62,9 @@ push_tag_to_github:
     - git config --global user.email "overgrid-ci@overcode.hu"
     - git config --global user.name "OverCode CI Bot"
     - git remote add github https://${GITHUB_TOKEN}@github.com/OverCodeHungary/overgrid-vue.git
-    - git push github master --tags
+    - git push github master
   rules:
     - if: '$CI_COMMIT_BRANCH == "master"'
+      when: manual
   dependencies:
     - publish_to_npm
