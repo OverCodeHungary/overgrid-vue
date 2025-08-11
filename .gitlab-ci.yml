@@ -55,3 +55,15 @@ publish_to_npm:
     - tests_and_semantic_release
   environment:
     name: production
+
+push_tag_to_github:
+  stage: publish
+  script:
+    - git config --global user.email "overgrid-ci@overcode.hu"
+    - git config --global user.name "OverCode CI Bot"
+    - git remote add github https://${GITHUB_TOKEN}@github.com/OverCodeHungary/overgrid-vue.git
+    - git push github master --tags
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "master"'
+  dependencies:
+    - publish_to_npm
