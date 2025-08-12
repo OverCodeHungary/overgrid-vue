@@ -55,7 +55,6 @@ publish_to_npm:
     - tests_and_semantic_release
   environment:
     name: production
-
 push_tag_to_github:
   stage: publish
   script:
@@ -66,5 +65,7 @@ push_tag_to_github:
   rules:
     - if: '$CI_COMMIT_BRANCH == "master"'
       when: manual
+      allow_failure: false
+    - when: never
   dependencies:
     - publish_to_npm
